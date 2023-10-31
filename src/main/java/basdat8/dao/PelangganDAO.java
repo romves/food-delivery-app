@@ -19,7 +19,7 @@ public class PelangganDAO {
 
     // Create (Insert) a new Pelanggan
     public boolean createPelanggan(Pelanggan pelanggan) {
-        String sql = "INSERT INTO Pelanggan (nama, nomor_telepon, kode_pos, kota, jalan) " +
+        String sql = "INSERT INTO Pelanggan (nama, nomor_telepon, kode_pos, kota, jalan)" +
                 "VALUES (?, ?, ?, ?, ?)";
 
         try (Connection connection = databaseUtility.getConnection();
@@ -51,7 +51,7 @@ public class PelangganDAO {
             try (ResultSet resultSet = statement.executeQuery()) {
                 if (resultSet.next()) {
                     pelanggan = new Pelanggan();
-                    pelanggan.setIdPelanggan(resultSet.getInt("id_pelanggan"));
+                    pelanggan.setId(resultSet.getInt("id_pelanggan"));
                     pelanggan.setNama(resultSet.getString("nama"));
                     pelanggan.setNomorTelepon(resultSet.getString("nomor_telepon"));
                     pelanggan.setKodePos(resultSet.getString("kode_pos"));
@@ -79,7 +79,7 @@ public class PelangganDAO {
             statement.setString(3, pelanggan.getKodePos());
             statement.setString(4, pelanggan.getKota());
             statement.setString(5, pelanggan.getJalan());
-            statement.setInt(6, pelanggan.getIdPelanggan());
+            statement.setInt(6, pelanggan.getId());
 
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
@@ -116,7 +116,7 @@ public class PelangganDAO {
 
             while (resultSet.next()) {
                 Pelanggan pelanggan = new Pelanggan();
-                pelanggan.setIdPelanggan(resultSet.getInt("id_pelanggan"));
+                pelanggan.setId(resultSet.getInt("id_pelanggan"));
                 pelanggan.setNama(resultSet.getString("nama"));
                 pelanggan.setNomorTelepon(resultSet.getString("nomor_telepon"));
                 pelanggan.setKodePos(resultSet.getString("kode_pos"));

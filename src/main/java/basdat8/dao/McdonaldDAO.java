@@ -1,15 +1,14 @@
 package basdat8.dao;
 
-import basdat8.database.DatabaseUtility;
-import basdat8.models.Mcdonald;
-import basdat8.models.Pelanggan;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import basdat8.database.DatabaseUtility;
+import basdat8.models.Mcdonald;
 
 public class McdonaldDAO {
     private DatabaseUtility databaseUtility;

@@ -20,6 +20,13 @@ public class Main {
 //        pelanggan1.setKota("Malang");
 //        pelanggan1.setJalan("Jl. Panjaitan");
 //        pelanggan1.setKodePos("65122");
+
+//        Pelanggan pelanggan1 = new Pelanggan();
+//        pelanggan1.setNama("Romero Naufal");
+//        pelanggan1.setNomorTelepon("0812345678");
+//        pelanggan1.setKota("Osaka");
+//        pelanggan1.setJalan("Jl. Sultan");
+//        pelanggan1.setKodePos("65122");
 //
 //        boolean success = pelangganDAO.createPelanggan(pelanggan1);
 //
