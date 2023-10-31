@@ -40,7 +40,7 @@ public class McdonaldDAO {
 
             while (resultSet.next()) {
                 Mcdonald mekdi = new Mcdonald();
-                mekdi.setIdMcdonald(resultSet.getInt("id_pelanggan"));
+                mekdi.setIdMcdonald(resultSet.getInt("id_mcd"));
                 mekdi.setNamaCabang(resultSet.getString("nama_cabang"));
                 mcDonaldList.add(mekdi);
             }

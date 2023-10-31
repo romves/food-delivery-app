@@ -43,6 +43,6 @@ public class Main {
 //        }
 
 //        Pelanggan pelanggan = pelangganDAO.getPelangganById(1);
-//        System.out.println(pelanggan.toString());
+//       System.out.println(pelanggan.toString());
     }
 }
