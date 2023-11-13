@@ -30,20 +30,14 @@ public class CourierDAO {
         }
     }
 
-    // Menambahkan seorang kurir ke dalam basis data
-//    public void addCourier(Courier courier) {
-//        String query = "INSERT INTO Couriers (courier_id,delivery_status, courier_name, courier_phone_number, courier_plate_number) VALUES (?, ?, ?, ?, ?)";
-//        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-//            preparedStatement.setInt(1, courier.getCourierId());
-//            preparedStatement.setString(2, courier.getDeliveryStatus());
-//            preparedStatement.setString(3, courier.getName());
-//            preparedStatement.setString(4, courier.getPhoneNumber());
-//            preparedStatement.setString(5, courier.getPlateNumber());
-//            preparedStatement.executeUpdate();
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void closeConnection() {
+        try {
+            this.connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addCourier(Courier courier) {
         String query = "INSERT INTO Couriers (delivery_status, courier_name, courier_phone_number, courier_plate_number) VALUES (?, ?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -65,6 +59,8 @@ public class CourierDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
@@ -85,6 +81,8 @@ public class CourierDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
         return couriers;
     }
@@ -98,10 +96,12 @@ public class CourierDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
-    public static void updateCourier(Courier courier) {
+    public void updateCourier(Courier courier) {
         String sql = "UPDATE Couriers SET delivery_status = ?, courier_name = ?, courier_phone_number = ?, courier_plate_number = ? WHERE courier_id = ?";
         try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -115,11 +115,13 @@ public class CourierDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
     // Delete
-    public static void deleteCourier(int courierId) {
+    public void deleteCourier(int courierId) {
         String sql = "DELETE FROM Couriers WHERE courier_id = ?";
         try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -128,6 +130,8 @@ public class CourierDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 }
