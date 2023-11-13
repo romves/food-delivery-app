@@ -4,17 +4,37 @@
  */
 package FoodDelivery.gui.Restaurant;
 
+import FoodDelivery.dao.RestaurantDAO;
+import FoodDelivery.database.DatabaseUtility;
+import FoodDelivery.gui.LoginPage;
+import FoodDelivery.models.Restaurant;
+import java.math.BigDecimal;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author PC
  */
 public class RestaurantDashboardPage extends javax.swing.JFrame {
 
+    private int restaurantId;
+    private RestaurantDAO restoDB = new RestaurantDAO();
+    DefaultTableModel modelPT;
+
     /**
      * Creates new form RestaurantDashboardPage
      */
-    public RestaurantDashboardPage() {
+    public RestaurantDashboardPage(int id) {
+        this.restaurantId = id;
         initComponents();
+        this.modelPT = (DefaultTableModel) ProductTable.getModel();
+        disableRestaurantField();
+        loadRestaurantData();
+        populateProduct(true);
     }
 
     /**
@@ -47,13 +67,14 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         TopSellingTable = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        ProductsTable = new javax.swing.JTable();
+        ProductTable = new javax.swing.JTable();
         jLabel5 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        editBtn = new javax.swing.JButton();
+        saveBtn = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        cancelBtn = new javax.swing.JButton();
+        LogoutBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,9 +91,13 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
 
         jLabel4.setText("balance:");
 
+        restaurantBalanceField.setEnabled(false);
+
         restaurantNameLabel.setText("Name:");
 
         restaurantIDLabel.setText("ID:");
+
+        restaurantIDField.setEnabled(false);
 
         restaurantDescLabel.setText("Description:");
 
@@ -93,18 +118,18 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(TopSellingTable);
 
-        ProductsTable.setModel(new javax.swing.table.DefaultTableModel(
+        ProductTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+
             }
         ));
-        jScrollPane3.setViewportView(ProductsTable);
+        jScrollPane3.setViewportView(ProductTable);
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         jLabel5.setText("Your Products");
@@ -116,22 +141,36 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setText("Edit");
-
-        jButton3.setText("Save");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        editBtn.setText("Edit");
+        editBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                editBtnActionPerformed(evt);
+            }
+        });
+
+        saveBtn.setText("Save");
+        saveBtn.setEnabled(false);
+        saveBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                saveBtnActionPerformed(evt);
             }
         });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 48)); // NOI18N
         jLabel6.setText("Resto Dashboard");
 
-        jButton4.setText("Cancel");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        cancelBtn.setText("Cancel");
+        cancelBtn.setEnabled(false);
+        cancelBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                cancelBtnActionPerformed(evt);
+            }
+        });
+
+        LogoutBtn.setText("Logout");
+        LogoutBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                LogoutBtnActionPerformed(evt);
             }
         });
 
@@ -140,9 +179,9 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(70, 70, 70)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(109, 109, 109)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addComponent(restaurantIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -158,11 +197,11 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
                             .addComponent(restaurantBalanceField, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addGroup(layout.createSequentialGroup()
-                                    .addComponent(jButton2)
+                                    .addComponent(editBtn)
                                     .addGap(45, 45, 45)
-                                    .addComponent(jButton3)
+                                    .addComponent(saveBtn)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jButton4))
+                                    .addComponent(cancelBtn))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(restaurantPhoneField, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(restaurantPasswordField, javax.swing.GroupLayout.Alignment.LEADING)
@@ -171,8 +210,10 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
                                     .addComponent(restaurantAddressField, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(restaurantIDField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                    .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 450, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 98, Short.MAX_VALUE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(110, 110, 110)
+                        .addComponent(jLabel6)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -189,13 +230,30 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(220, 220, 220))))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addComponent(LogoutBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(46, 46, 46)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(46, 46, 46)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(33, 33, 33)
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(17, 17, 17)
+                        .addComponent(LogoutBtn)
+                        .addGap(2, 2, 2)
                         .addComponent(jLabel6)
                         .addGap(41, 41, 41)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -231,19 +289,9 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
                             .addComponent(restaurantBalanceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(37, 37, 37)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton2)
-                            .addComponent(jButton3)
-                            .addComponent(jButton4)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)))
+                            .addComponent(editBtn)
+                            .addComponent(saveBtn)
+                            .addComponent(cancelBtn))))
                 .addContainerGap(20, Short.MAX_VALUE))
         );
 
@@ -252,15 +300,133 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
+        RestaurantProductPage pages = new RestaurantProductPage(this.restaurantId);
+        pages.setVisible(true);
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+    private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        enableActionBtn();
+        disableRestaurantField();
+    }//GEN-LAST:event_saveBtnActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void cancelBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelBtnActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+        enableActionBtn();
+        disableRestaurantField();
+    }//GEN-LAST:event_cancelBtnActionPerformed
+
+    private void editBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editBtnActionPerformed
+        // TODO add your handling code here:
+        disableActionBtn();
+        enableRestaurantField();
+    }//GEN-LAST:event_editBtnActionPerformed
+
+    private void LogoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutBtnActionPerformed
+        // TODO add your handling code here:
+        LoginPage page = new LoginPage();
+        page.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_LogoutBtnActionPerformed
+
+    void loadRestaurantData() {
+        Restaurant resto = restoDB.getRestaurantById(this.restaurantId);
+        String id = Integer.toString(resto.getId());
+        String name = resto.getName();
+        String email = resto.getEmail();
+        String password = resto.getPassword();
+        String address = resto.getAddress();
+        String description = resto.getDescription();
+        String phoneNumber = resto.getPhoneNumber();
+        double balanceValue = resto.getBalance();
+        String balance;
+        if (balanceValue == 0.0) {
+            balance = "0"; // or any other default value or representation for zero balance
+        } else {
+            balance = Double.toString(balanceValue);
+        }
+
+        setRestaurantField(id, name, email, password, address, description, phoneNumber, balance);
+    }
+
+    public void setRestaurantField(String restaurantID, String restaurantName, String restaurantEmail, String restaurantPassword, String restaurantAddress, String restaurantDesc, String restaurantPhone, String restaurantBalance) {
+        restaurantIDField.setText(restaurantID);
+        restaurantNameField.setText(restaurantName);
+        restaurantEmailField.setText(restaurantEmail);
+        restaurantPasswordField.setText(restaurantPassword);
+        restaurantAddressField.setText(restaurantAddress);
+        restaurantDescArea.setText(restaurantDesc);
+        restaurantPhoneField.setText(restaurantPhone);
+        restaurantBalanceField.setText(restaurantBalance);
+    }
+
+    public void disableRestaurantField() {
+        restaurantIDField.setEditable(false);
+        restaurantNameField.setEditable(false);
+        restaurantEmailField.setEditable(false);
+        restaurantPasswordField.setEditable(false);
+        restaurantAddressField.setEditable(false);
+        restaurantDescArea.setEditable(false);
+        restaurantPhoneField.setEditable(false);
+        restaurantBalanceField.setEditable(false);
+    }
+
+    public void enableActionBtn() {
+        editBtn.setEnabled(true);
+        saveBtn.setEnabled(false);
+        cancelBtn.setEnabled(false);
+    }
+
+    public void disableActionBtn() {
+        editBtn.setEnabled(false);
+        saveBtn.setEnabled(true);
+        cancelBtn.setEnabled(true);
+    }
+
+    public void enableRestaurantField() {
+        restaurantIDField.setEditable(true);
+        restaurantNameField.setEditable(true);
+        restaurantEmailField.setEditable(true);
+        restaurantPasswordField.setEditable(true);
+        restaurantAddressField.setEditable(true);
+        restaurantDescArea.setEditable(true);
+        restaurantPhoneField.setEditable(true);
+        restaurantBalanceField.setEditable(true);
+    }
+
+    void populateProduct(boolean init) {
+        this.modelPT.setRowCount(0);
+        String sql = "select product_id, product_name, product_price, product_type from Products where restaurant_id= ?";
+        try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement statement = connection.prepareStatement(sql);) {
+            statement.setInt(1, this.restaurantId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                ResultSetMetaData metaData = resultSet.getMetaData();
+                int columnCount = metaData.getColumnCount();
+
+                if (init) {
+                    for (int i = 1; i <= columnCount; i++) {
+                        this.modelPT.addColumn(metaData.getColumnName(i));
+                    }
+                }
+
+                Object[] rowData = new Object[columnCount];
+                while (resultSet.next()) {
+                    for (int i = 1; i <= columnCount; i++) {
+                        rowData[i - 1] = resultSet.getString(i);
+                    }
+                    this.modelPT.addRow(rowData);
+                }
+
+                if (ProductTable.getRowCount() > 0) {
+                    ProductTable.setRowSelectionInterval(0, 0);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
 
     /**
      * @param args the command line arguments
@@ -292,18 +458,18 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RestaurantDashboardPage().setVisible(true);
+                new RestaurantDashboardPage(1).setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable ProductsTable;
+    private javax.swing.JButton LogoutBtn;
+    private javax.swing.JTable ProductTable;
     private javax.swing.JTable TopSellingTable;
+    private javax.swing.JButton cancelBtn;
+    private javax.swing.JButton editBtn;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -326,5 +492,6 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
     private javax.swing.JPasswordField restaurantPasswordField;
     private javax.swing.JTextField restaurantPhoneField;
     private javax.swing.JLabel restaurantPhoneLabel;
+    private javax.swing.JButton saveBtn;
     // End of variables declaration//GEN-END:variables
 }

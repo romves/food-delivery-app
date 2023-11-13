@@ -20,7 +20,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class RestaurantProductPage extends javax.swing.JFrame {
 
-    private int RestaurantId;
+    private int restaurantId;
     private DefaultTableModel model;
 
     /**
@@ -30,7 +30,7 @@ public class RestaurantProductPage extends javax.swing.JFrame {
 //        DatabaseUtility db = new DatabaseUtility();
         initComponents();
         this.model = (DefaultTableModel) ProductTable.getModel();
-        this.RestaurantId = id;
+        this.restaurantId = id;
         populateTable(true);
         populateTextField();
         enableActionBtn();
@@ -68,6 +68,7 @@ public class RestaurantProductPage extends javax.swing.JFrame {
         CancelButton = new javax.swing.JButton();
         PriceTextField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
+        BackNavBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -205,53 +206,61 @@ public class RestaurantProductPage extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI Semibold", 0, 48)); // NOI18N
         jLabel6.setText("Product Manager");
 
+        BackNavBtn.setText("< Back to Dashboard");
+        BackNavBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BackNavBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(79, 79, 79)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel4)
+                                        .addComponent(jLabel2)
+                                        .addComponent(jLabel1)
+                                        .addComponent(jLabel3))
+                                    .addGap(18, 18, 18)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(ProductTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(PriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(AddButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(EditButton)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(DeleteButton)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(CancelButton)))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(SaveButton))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(19, 19, 19)
+                            .addComponent(BackNavBtn))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(182, 182, 182)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(AddButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(EditButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(DeleteButton)
-                                .addGap(18, 18, 18)
-                                .addComponent(CancelButton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(SaveButton))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(62, 62, 62)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel4)
-                                            .addComponent(jLabel2)
-                                            .addComponent(jLabel1)
-                                            .addComponent(jLabel3))
-                                        .addGap(18, 18, 18)
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(NameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(ProductTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(PriceTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(FirstNavButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(PrevNavButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(NextNavButton)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(LastNavButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(64, 64, 64))))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 395, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 232, Short.MAX_VALUE)
+                        .addGap(189, 189, 189)
+                        .addComponent(FirstNavButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(PrevNavButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(NextNavButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(LastNavButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 92, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -260,23 +269,16 @@ public class RestaurantProductPage extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ClearSearchButton))
                     .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25))
+                .addGap(16, 16, 16))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(SearchButton)
-                    .addComponent(ClearSearchButton))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
             .addGroup(layout.createSequentialGroup()
-                .addGap(83, 83, 83)
+                .addGap(18, 18, 18)
+                .addComponent(BackNavBtn)
+                .addGap(35, 35, 35)
                 .addComponent(jLabel6)
-                .addGap(81, 81, 81)
+                .addGap(85, 85, 85)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(IDTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -292,20 +294,29 @@ public class RestaurantProductPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(ProductTypeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(38, 38, 38)
+                .addGap(76, 76, 76)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(PrevNavButton)
                     .addComponent(LastNavButton)
                     .addComponent(NextNavButton)
                     .addComponent(FirstNavButton))
-                .addGap(93, 93, 93)
+                .addGap(104, 104, 104)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AddButton)
                     .addComponent(CancelButton)
                     .addComponent(SaveButton)
                     .addComponent(EditButton)
                     .addComponent(DeleteButton))
-                .addGap(184, 184, 184))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(SearchField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(SearchButton)
+                    .addComponent(ClearSearchButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 632, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
 
         pack();
@@ -331,7 +342,7 @@ public class RestaurantProductPage extends javax.swing.JFrame {
             String sql = "delete Products WHERE product_id=? and restaurant_id=?";
             try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement statement = connection.prepareStatement(sql)) {
                 statement.setInt(1, Integer.parseInt(IDTextField.getText()));
-                statement.setInt(2, this.RestaurantId);
+                statement.setInt(2, this.restaurantId);
 
                 int rowsUpdated = statement.executeUpdate();
 
@@ -375,7 +386,7 @@ public class RestaurantProductPage extends javax.swing.JFrame {
             statement.setString(1, NameTextField.getText());
             statement.setDouble(2, Double.parseDouble(PriceTextField.getText()));
             statement.setString(3, ProductTypeComboBox.getSelectedItem().toString());
-            statement.setInt(4, this.RestaurantId);
+            statement.setInt(4, this.restaurantId);
 
             int rowsUpdated = statement.executeUpdate();
             if (rowsUpdated > 0) {
@@ -399,7 +410,7 @@ public class RestaurantProductPage extends javax.swing.JFrame {
         String sql = "select * from Products where product_name like ? and restaurant_id= ?";
         try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement statement = connection.prepareStatement(sql);) {
             statement.setString(1, SearchField.getText() + "%");
-            statement.setInt(2, this.RestaurantId);
+            statement.setInt(2, this.restaurantId);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 ResultSetMetaData metaData = resultSet.getMetaData();
@@ -473,7 +484,7 @@ public class RestaurantProductPage extends javax.swing.JFrame {
                 statement.setDouble(2, Double.parseDouble(PriceTextField.getText()));
                 statement.setString(3, ProductTypeComboBox.getSelectedItem().toString());
                 statement.setInt(4, Integer.parseInt(IDTextField.getText()));
-                statement.setInt(5, this.RestaurantId);
+                statement.setInt(5, this.restaurantId);
 
                 int rowsUpdated = statement.executeUpdate();
 
@@ -528,6 +539,13 @@ public class RestaurantProductPage extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_ProductTableMouseClicked
+
+    private void BackNavBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BackNavBtnActionPerformed
+        // TODO add your handling code here:
+        RestaurantDashboardPage page = new RestaurantDashboardPage(this.restaurantId);
+        page.setVisible(true);
+        dispose();
+    }//GEN-LAST:event_BackNavBtnActionPerformed
 
     /**
      * @param args the command line arguments
@@ -612,7 +630,7 @@ public class RestaurantProductPage extends javax.swing.JFrame {
         this.model.setRowCount(0);
         String sql = "select product_id, product_name, product_price, product_type from Products where restaurant_id= ?";
         try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement statement = connection.prepareStatement(sql);) {
-            statement.setInt(1, this.RestaurantId);
+            statement.setInt(1, this.restaurantId);
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 ResultSetMetaData metaData = resultSet.getMetaData();
@@ -662,6 +680,7 @@ public class RestaurantProductPage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton AddButton;
+    private javax.swing.JButton BackNavBtn;
     private javax.swing.JButton CancelButton;
     private javax.swing.JButton ClearSearchButton;
     private javax.swing.JButton DeleteButton;

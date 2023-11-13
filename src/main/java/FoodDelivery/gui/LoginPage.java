@@ -4,7 +4,9 @@
  */
 package FoodDelivery.gui;
 
+import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
+import FoodDelivery.gui.Restaurant.RestaurantDashboardPage;
 import javax.swing.JFrame;
 
 /**
@@ -277,19 +279,17 @@ public class LoginPage extends javax.swing.JFrame {
 
     private void submitButtonLoginRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonLoginRestaurantActionPerformed
         // TODO add your handling code here:
-        //        LoginPage login=new LoginPage();
-        //        String email = emailFieldLogin.getText();
-        //        String password = new String(passwordFieldLogin.getPassword());
-
-        //        if (Handler.loginHandler(email, password)) {
-        //            this.dispose();
-        //            User user = new User();
-        //            user.setVisible(true);
-        //
-        //        } else {
-        //            JOptionPane.showMessageDialog(null, "Password salah", "Periksa kembali password anda", JOptionPane.WARNING_MESSAGE);
-        //
-        //        }
+        String email = emailFieldLoginRestaurant.getText();
+        String password = new String(passwordFieldLoginRestaurant.getPassword());
+        RestaurantDAO restoDB = new RestaurantDAO();
+        int restoId = restoDB.checkPasswordByEmail(email, password);
+        if (restoId != -1) {
+            RestaurantDashboardPage page = new RestaurantDashboardPage(restoId);
+            page.setVisible(true);
+            this.dispose();
+        } else {
+            System.out.println("Password is incorrect");
+        }
 
     }//GEN-LAST:event_submitButtonLoginRestaurantActionPerformed
 
@@ -319,7 +319,9 @@ public class LoginPage extends javax.swing.JFrame {
         String email = emailFieldLoginCustomer.getText();
         String password = new String(passwordFieldLoginCustomer.getPassword());
         UserDAO userDAO = new UserDAO();
-        if (userDAO.checkPasswordByEmail(email, password)) {
+        int userId = userDAO.checkPasswordByEmail(email, password);
+        if (userId != -1) {
+//            RestaurantDashboardPage page = new RestaurantDashboardPage(userId);
             this.dispose();
         } else {
             System.out.println("Password is incorrect");
