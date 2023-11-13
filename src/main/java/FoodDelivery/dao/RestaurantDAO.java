@@ -32,6 +32,14 @@ public class RestaurantDAO {
         }
     }
 
+    public void closeConnection() {
+        try {
+            this.connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public void addRestaurant(Restaurant restaurant) {
         String query = "INSERT INTO Restaurant (restaurant_name, restaurant_email, restaurant_password, restaurant_address, restaurant_description, restaurant_phone_number, restaurant_balance) VALUES (?, ?, ?, ?, ?, ?, 0.0)";
 
@@ -54,6 +62,8 @@ public class RestaurantDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
@@ -77,6 +87,8 @@ public class RestaurantDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
 
         return restaurants;
@@ -98,6 +110,8 @@ public class RestaurantDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
@@ -112,6 +126,8 @@ public class RestaurantDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 }

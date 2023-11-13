@@ -30,9 +30,17 @@ public class UserDAO {
         }
     }
 
+    public void closeConnection() {
+        try {
+            this.connection.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public boolean addUser(User user) {
-        String query = "INSERT INTO Users (user_name, user_email, user_address, user_phone_number, user_password) " +
-                "VALUES (?, ?, ?, ?, ?)";
+        String query = "INSERT INTO Users (user_name, user_email, user_address, user_phone_number, user_password) "
+                + "VALUES (?, ?, ?, ?, ?)";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, user.getName());
@@ -48,6 +56,8 @@ public class UserDAO {
             e.printStackTrace();
             // Handle the exception appropriately based on your application's requirements.
             return false;
+        } finally {
+            closeConnection();
         }
     }
 
@@ -73,6 +83,8 @@ public class UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle the exception appropriately based on your application's requirements.
+        } finally {
+            closeConnection();
         }
 
         return user;
@@ -82,8 +94,7 @@ public class UserDAO {
         String query = "SELECT * FROM Users";
         List<User> userList = new ArrayList<>();
 
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query);
-             ResultSet resultSet = preparedStatement.executeQuery()) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query); ResultSet resultSet = preparedStatement.executeQuery()) {
 
             while (resultSet.next()) {
                 User user = new User(
@@ -99,14 +110,16 @@ public class UserDAO {
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle the exception appropriately based on your application's requirements.
+        } finally {
+            closeConnection();
         }
 
         return userList;
     }
 
     public boolean updateUser(User user) {
-        String query = "UPDATE Users SET user_name = ?, user_email = ?, user_address = ?, " +
-                "user_phone_number = ?, user_password = ? WHERE user_id = ?";
+        String query = "UPDATE Users SET user_name = ?, user_email = ?, user_address = ?, "
+                + "user_phone_number = ?, user_password = ? WHERE user_id = ?";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, user.getName());
@@ -123,6 +136,8 @@ public class UserDAO {
             e.printStackTrace();
             // Handle the exception appropriately based on your application's requirements.
             return false;
+        } finally {
+            closeConnection();
         }
     }
 
@@ -139,18 +154,8 @@ public class UserDAO {
             e.printStackTrace();
             // Handle the exception appropriately based on your application's requirements.
             return false;
-        }
-    }
-
-    // Close the database connection when the DAO is no longer in use.
-    public void closeConnection() {
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle the exception appropriately based on your application's requirements.
+        } finally {
+            closeConnection();
         }
     }
 
@@ -168,6 +173,8 @@ public class UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
         return false;
     }
