@@ -18,10 +18,9 @@ public class DatabaseUtility {
 
     private static final String DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=FoodDeliveryApp;trustServerCertificate=true;encrypt=false";
     private static final String DB_USER = "sa";
-    private static final String DB_PASSWORD = "mcddb";
+    private static final String DB_PASSWORD = "Y2FwdGFpbnNpbGVuY2VzbGlwbWU=";
 
     public static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
     }
-
 }

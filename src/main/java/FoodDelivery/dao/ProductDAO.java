@@ -1,13 +1,13 @@
+
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package FoodDeliveryApp.dao;
+package FoodDelivery.dao;
 
-import FoodDeliveryApp.database.DatabaseUtility;
-import FoodDeliveryApp.models.Courier;
-import FoodDeliveryApp.models.Product;
-
+import FoodDelivery.database.DatabaseUtility;
+import FoodDelivery.models.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
