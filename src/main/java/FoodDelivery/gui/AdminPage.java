@@ -222,7 +222,7 @@ public class AdminPage extends javax.swing.JFrame {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1441, Short.MAX_VALUE)
+            .addGap(0, 1439, Short.MAX_VALUE)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -542,7 +542,6 @@ public class AdminPage extends javax.swing.JFrame {
         CourierDAO courierDAO = new CourierDAO();
         courierDAO.deleteCourier(id);
         loadCourierTable();
-
     }//GEN-LAST:event_courierDeleteButtonActionPerformed
 
     private void updateCourierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateCourierButtonActionPerformed
@@ -555,12 +554,10 @@ public class AdminPage extends javax.swing.JFrame {
         CourierDAO courierDAO = new CourierDAO();
         courierDAO.updateCourier(courier);
         loadCourierTable();
-
     }//GEN-LAST:event_updateCourierButtonActionPerformed
 
     private void clearCourierActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearCourierActionPerformed
         // TODO add your handling code here:
-
     }//GEN-LAST:event_clearCourierActionPerformed
 
     private void createCourierButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createCourierButtonActionPerformed
@@ -575,6 +572,16 @@ public class AdminPage extends javax.swing.JFrame {
 
         loadCourierTable();
     }//GEN-LAST:event_createCourierButtonActionPerformed
+
+    private void keyPressedRestaurantPanel(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyPressedRestaurantPanel
+        // TODO add your handling code here:
+        //        loadRestaurantTable();
+    }//GEN-LAST:event_keyPressedRestaurantPanel
+
+    private void restaurantPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restaurantPanelMouseClicked
+        // TODO add your handling code here:
+        //        loadRestaurantTable();
+    }//GEN-LAST:event_restaurantPanelMouseClicked
 
     private void deleteRestaurantButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteRestaurantButtonActionPerformed
         int id = Integer.parseInt(restaurantIDField.getText());
@@ -615,16 +622,6 @@ public class AdminPage extends javax.swing.JFrame {
         resDAO.addRestaurant(restaurant);
         loadRestaurantTable();
     }//GEN-LAST:event_createRestaurantButtonActionPerformed
-
-    private void restaurantPanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_restaurantPanelMouseClicked
-        // TODO add your handling code here:
-//        loadRestaurantTable();
-    }//GEN-LAST:event_restaurantPanelMouseClicked
-
-    private void keyPressedRestaurantPanel(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyPressedRestaurantPanel
-        // TODO add your handling code here:
-//        loadRestaurantTable();
-    }//GEN-LAST:event_keyPressedRestaurantPanel
 
     /**
      * @param args the command line arguments

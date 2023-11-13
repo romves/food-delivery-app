@@ -1,3 +1,5 @@
+Drop database FoodDeliveryApp
+GO
 CREATE DATABASE FoodDeliveryApp
 GO
 USE FoodDeliveryApp
