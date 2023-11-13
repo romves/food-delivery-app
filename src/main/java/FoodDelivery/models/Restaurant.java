@@ -19,7 +19,7 @@ public class Restaurant {
     private String address;
     private String description;
     private String phoneNumber;
-    private BigDecimal balance;
+    private Double balance;
 
     // Constructors, getters, and setters
     public Restaurant() {
@@ -33,7 +33,7 @@ public class Restaurant {
         this.address = address;
         this.description = description;
         this.phoneNumber = phoneNumber;
-        this.balance = BigDecimal.ZERO; // Default balance is set to 0.0
+        this.balance = 0.0; // Default balance is set to 0.0
     }
 
     public Restaurant(int restaurantId, String restaurantName, String restaurantEmail, String restaurantPassword, String restaurantAddress, String restaurantDescription, String restaurantPhoneNumber, double balance) {
@@ -103,11 +103,11 @@ public class Restaurant {
         this.phoneNumber = phoneNumber;
     }
 
-    public BigDecimal getBalance() {
+    public double getBalance() {
         return balance;
     }
 
-    public void setBalance(BigDecimal balance) {
+    public void setBalance(double balance) {
         this.balance = balance;
     }
 

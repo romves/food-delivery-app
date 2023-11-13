@@ -82,7 +82,7 @@ public class RestaurantDAO {
                 restaurant.setAddress(resultSet.getString("restaurant_address"));
                 restaurant.setDescription(resultSet.getString("restaurant_description"));
                 restaurant.setPhoneNumber(resultSet.getString("restaurant_phone_number"));
-                restaurant.setBalance(resultSet.getBigDecimal("restaurant_balance"));
+                restaurant.setBalance(resultSet.getDouble("restaurant_balance"));
                 restaurants.add(restaurant);
             }
         } catch (SQLException e) {
@@ -92,6 +92,31 @@ public class RestaurantDAO {
         }
 
         return restaurants;
+    }
+
+    public Restaurant getRestaurantById(int restoId) {
+        String query = "SELECT * FROM Restaurant where restaurant_id=?";
+        Restaurant restaurant = new Restaurant();
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, restoId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                restaurant.setId(resultSet.getInt("restaurant_id"));
+                restaurant.setName(resultSet.getString("restaurant_name"));
+                restaurant.setEmail(resultSet.getString("restaurant_email"));
+                restaurant.setPassword(resultSet.getString("restaurant_password"));
+                restaurant.setAddress(resultSet.getString("restaurant_address"));
+                restaurant.setDescription(resultSet.getString("restaurant_description"));
+                restaurant.setPhoneNumber(resultSet.getString("restaurant_phone_number"));
+                restaurant.setBalance(resultSet.getDouble("restaurant_balance"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return restaurant;
     }
 
     public void updateRestaurant(Restaurant restaurant) {
@@ -129,5 +154,25 @@ public class RestaurantDAO {
         } finally {
             closeConnection();
         }
+    }
+    
+    public int checkPasswordByEmail(String restaurantEmail, String password) {
+        try {
+            String sql = "SELECT restaurant_password, restaurant_id FROM Restaurant WHERE restaurant_email = ?";
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.setString(1, restaurantEmail);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                String storedPassword = resultSet.getString("restaurant_password");
+                if (storedPassword.equals(password)) {
+                    return resultSet.getInt("restaurant_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return -1;
     }
 }

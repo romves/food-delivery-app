@@ -160,23 +160,25 @@ public class UserDAO {
     }
 
 
-    public boolean checkPasswordByEmail(String userEmail, String password) {
+    public int checkPasswordByEmail(String userEmail, String password) {
         try {
-            String sql = "SELECT user_password FROM Users WHERE user_email = ?";
+            String sql = "SELECT user_password, user_id FROM Users WHERE user_email = ?";
             PreparedStatement statement = connection.prepareStatement(sql);
             statement.setString(1, userEmail);
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
                 String storedPassword = resultSet.getString("user_password");
-                return storedPassword.equals(password);
+                if (storedPassword.equals(password)) {
+                    return resultSet.getInt("user_id");
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
             closeConnection();
         }
-        return false;
+        return -1;
     }
 
 }
