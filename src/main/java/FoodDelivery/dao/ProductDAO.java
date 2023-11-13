@@ -4,8 +4,8 @@
  */
 package FoodDeliveryApp.dao;
 
-import FoodDeliveryApp.database.DatabaseUtility;
-import FoodDeliveryApp.models.Courier;
+import FoodDelivery.database.DatabaseUtility;
+import FoodDelivery.models.Courier;
 import FoodDeliveryApp.models.Product;
 
 import java.sql.Connection;
@@ -19,7 +19,6 @@ import java.util.List;
  *
  * @author PC
  */
-
 public class ProductDAO {
 
     private Connection connection;
@@ -28,6 +27,14 @@ public class ProductDAO {
         try {
             this.connection = DatabaseUtility.getConnection();
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void closeConnection() {
+        try {
+            this.connection.close();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -43,6 +50,8 @@ public class ProductDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
@@ -61,6 +70,8 @@ public class ProductDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
         return products;
     }
@@ -73,6 +84,8 @@ public class ProductDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 
@@ -83,6 +96,8 @@ public class ProductDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            closeConnection();
         }
     }
 }
