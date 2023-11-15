@@ -307,6 +307,16 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
 
     private void saveBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveBtnActionPerformed
         // TODO add your handling code here:
+        int id = Integer.parseInt(restaurantIDField.getText());
+        String name = restaurantNameField.getText();
+        String email = restaurantEmailField.getText();
+        String password = new String(restaurantPasswordField.getPassword());
+        String address = restaurantAddressField.getText();
+        String desc = restaurantDescArea.getText();
+        String phone = restaurantPhoneField.getText();
+        Restaurant restaurant = new Restaurant(id, name, email, password, address, desc, phone, 0.0);
+        RestaurantDAO resDAO = new RestaurantDAO();
+        resDAO.updateRestaurant(restaurant);
         enableActionBtn();
         disableRestaurantField();
     }//GEN-LAST:event_saveBtnActionPerformed
