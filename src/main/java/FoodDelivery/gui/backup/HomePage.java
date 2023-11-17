@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package FoodDelivery.gui.styling;
+package FoodDelivery.gui.backup;
 
 import FoodDelivery.gui.styling.eventlistener.RestoCardClickListener;
 import FoodDelivery.dao.RestaurantDAO;
@@ -25,17 +25,21 @@ public class HomePage extends javax.swing.JFrame implements RestoCardClickListen
     /**
      * Creates new form HomePage
      */
+    int x = 210;
+    int y = 600;
     private int userId;
     private int restaurantId;
     private UserDAO userDB = new UserDAO();
-    
+
     public HomePage(int userId) {
         this.setExtendedState(MAXIMIZED_BOTH);
+
         initComponents();
-        this.userId=userId;
+
+        this.userId = userId;
         RestaurantDAO restoDB = new RestaurantDAO();
         RestaurantDAO restoDAO = new RestaurantDAO();
-        
+
         List<Restaurant> topResto = restoDAO.getTop5RestaurantsBySales();
         List<Restaurant> restoList = restoDB.getAllRestaurants();
 
@@ -49,21 +53,22 @@ public class HomePage extends javax.swing.JFrame implements RestoCardClickListen
             String restoName = resto.getName();
             String restoLocation = resto.getAddress();
 
-            restoPanel.add(new RestoCard(this.userId,restoId, restoName, restoLocation, this));
+            restoPanel.add(new RestoCard(this.userId, restoId, restoName, restoLocation, this));
         }
 
         for (Restaurant resto : restoList) {
             int restoId = resto.getId();
             String restoName = resto.getName();
             String restoLocation = resto.getAddress();
-
-            restoPanel2.add(new RestoCard(this.userId,restoId, restoName, restoLocation, this));
+            restoPanel2.add(new RestoCard(this.userId, restoId, restoName, restoLocation, this));
         }
 
         jScrollPane.setViewportView(restoPanel);
         jScrollPane2.setViewportView(restoPanel2);
         setLocationRelativeTo(null);
     }
+
+    
 
     @Override
     public void onRestoCardClick(int restoId) {
@@ -117,6 +122,11 @@ public class HomePage extends javax.swing.JFrame implements RestoCardClickListen
         accountLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FoodDelivery/assets/account-icon.png"))); // NOI18N
 
         sidebarLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FoodDelivery/assets/sidebar-icon.png"))); // NOI18N
+        sidebarLabel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                sidebarLabelMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -142,7 +152,7 @@ public class HomePage extends javax.swing.JFrame implements RestoCardClickListen
                                     .addComponent(jButton1)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(jButton3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(accountLabel)))))
                         .addGap(41, 41, 41))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -181,15 +191,19 @@ public class HomePage extends javax.swing.JFrame implements RestoCardClickListen
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         setBounds(0, 0, 1173, 907);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void sidebarLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sidebarLabelMouseClicked
+//        openMenu();
+    }//GEN-LAST:event_sidebarLabelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -221,8 +235,9 @@ public class HomePage extends javax.swing.JFrame implements RestoCardClickListen
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                LoginCustomer login = new LoginCustomer();
-                login.setVisible(true);
+                //                LoginCustomer login = new LoginCustomer();
+                //                login.setVisible(true);
+//                new HomePage().setVisible(true);
             }
         });
     }

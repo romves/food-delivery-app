@@ -4,6 +4,7 @@
  */
 package FoodDelivery.gui.styling;
 
+import FoodDelivery.gui.backup.HomePage;
 import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.dao.ProductDAO;
 import FoodDelivery.dao.RestaurantDAO;
@@ -288,8 +289,8 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        HomePage page = new HomePage(this.userId);
-        page.setVisible(true);
+        Home home = new Home(this.userId);
+        home.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
