@@ -4,6 +4,7 @@
  */
 package FoodDelivery.gui;
 
+import FoodDelivery.gui.signUp.SignUpUserPage;
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
 import FoodDelivery.gui.restaurant.RestaurantDashboardPage;
@@ -321,7 +322,6 @@ public class LoginPage extends javax.swing.JFrame {
         UserDAO userDAO = new UserDAO();
         int userId = userDAO.checkPasswordByEmail(email, password);
         if (userId != -1) {
-//            RestaurantDashboardPage page = new RestaurantDashboardPage(userId);
             this.dispose();
         } else {
             System.out.println("Password is incorrect");

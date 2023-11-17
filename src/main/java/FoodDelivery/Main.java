@@ -4,7 +4,8 @@
 
 package FoodDelivery;
 
-import FoodDelivery.gui.LoginPage;
+import FoodDelivery.gui.login.LoginChooser;
+
 
 /**
  *
@@ -13,7 +14,8 @@ import FoodDelivery.gui.LoginPage;
 public class Main {
 
     public static void main(String[] args) {
-        LoginPage login = new LoginPage();
+        LoginChooser login = new LoginChooser();
         login.setVisible(true);
+
     }
 }

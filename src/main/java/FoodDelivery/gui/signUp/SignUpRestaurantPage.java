@@ -2,10 +2,12 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package FoodDelivery.gui;
+package FoodDelivery.gui.signUp;
 
+import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
-import FoodDelivery.models.User;
+import FoodDelivery.gui.LoginPage;
+import FoodDelivery.models.Restaurant;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -13,17 +15,25 @@ import javax.swing.JOptionPane;
  *
  * @author UsEr
  */
-public class SignUpUserPage extends javax.swing.JFrame {
+public class SignUpRestaurantPage extends javax.swing.JFrame {
 
     /**
      * Creates new form SignUp
      */
-    public SignUpUserPage() {
+    public SignUpRestaurantPage() {
         this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         initComponents();
 
     }
 
+//    public Restaurant getRestaurantField() {
+//        String userName = restaurantNameField.getText();
+//        String email = restaurantEmailField.getText();
+//        String password = new String(restaurantPasswordSignUpField.getPassword());
+//        String address = restaurantAddressField.getText();
+//        String phoneNumber = restaurantPhoneNumberField.getText();
+////        String confirmPassword = new String(confirmPasswordSignUpField.getPassword());
+//    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -37,21 +47,24 @@ public class SignUpUserPage extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        emailSignUpField = new javax.swing.JTextField();
+        restaurantEmailField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         submitButtonSignUp = new javax.swing.JButton();
-        passwordSignUpField = new javax.swing.JPasswordField();
-        confirmPasswordSignUpField = new javax.swing.JPasswordField();
+        restaurantPasswordSignUpField = new javax.swing.JPasswordField();
+        restaurantConfirmPasswordSignUpField = new javax.swing.JPasswordField();
         jLabel5 = new javax.swing.JLabel();
         buttonToLoginPage = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        userNameField = new javax.swing.JTextField();
+        restaurantNameField = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        addressField = new javax.swing.JTextField();
-        phoneNumberField = new javax.swing.JTextField();
+        restaurantAddressField = new javax.swing.JTextField();
+        restaurantPhoneNumberField = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        restaurantDescArea = new javax.swing.JTextArea();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,9 +90,9 @@ public class SignUpUserPage extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Email: ");
 
-        emailSignUpField.addActionListener(new java.awt.event.ActionListener() {
+        restaurantEmailField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                emailSignUpFieldActionPerformed(evt);
+                restaurantEmailFieldActionPerformed(evt);
             }
         });
 
@@ -110,11 +123,11 @@ public class SignUpUserPage extends javax.swing.JFrame {
         jLabel1.setText("Sign Up");
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel6.setText("Username:");
+        jLabel6.setText("Restaurant Name:");
 
-        userNameField.addActionListener(new java.awt.event.ActionListener() {
+        restaurantNameField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                userNameFieldActionPerformed(evt);
+                restaurantNameFieldActionPerformed(evt);
             }
         });
 
@@ -124,17 +137,24 @@ public class SignUpUserPage extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setText("Phone Number: ");
 
-        addressField.addActionListener(new java.awt.event.ActionListener() {
+        restaurantAddressField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addressFieldActionPerformed(evt);
+                restaurantAddressFieldActionPerformed(evt);
             }
         });
 
-        phoneNumberField.addActionListener(new java.awt.event.ActionListener() {
+        restaurantPhoneNumberField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                phoneNumberFieldActionPerformed(evt);
+                restaurantPhoneNumberFieldActionPerformed(evt);
             }
         });
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel9.setText("Desc:");
+
+        restaurantDescArea.setColumns(20);
+        restaurantDescArea.setRows(5);
+        jScrollPane1.setViewportView(restaurantDescArea);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -154,29 +174,26 @@ public class SignUpUserPage extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(140, 140, 140)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(96, 96, 96)
-                                .addComponent(userNameField, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                                .addGap(42, 42, 42)
-                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(passwordSignUpField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE)
-                                    .addComponent(emailSignUpField, javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(confirmPasswordSignUpField)
-                                    .addComponent(addressField)
-                                    .addComponent(phoneNumberField, javax.swing.GroupLayout.Alignment.LEADING)))))
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(42, 42, 42)
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(restaurantPasswordSignUpField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(restaurantEmailField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(restaurantConfirmPasswordSignUpField)
+                            .addComponent(restaurantAddressField)
+                            .addComponent(restaurantPhoneNumberField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(restaurantNameField)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(301, 301, 301)
                         .addComponent(jLabel1)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(129, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(submitButtonSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -189,31 +206,39 @@ public class SignUpUserPage extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(39, 39, 39)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(restaurantNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel6))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(emailSignUpField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(addressField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(phoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(restaurantEmailField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7)
+                    .addComponent(restaurantAddressField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(27, 27, 27)
+                        .addComponent(jLabel8))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(restaurantPhoneNumberField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(21, 21, 21))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                        .addComponent(passwordSignUpField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)))
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(restaurantPasswordSignUpField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(24, 24, 24)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
-                    .addComponent(confirmPasswordSignUpField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(restaurantConfirmPasswordSignUpField, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
                 .addComponent(submitButtonSignUp, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -235,36 +260,42 @@ public class SignUpUserPage extends javax.swing.JFrame {
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(56, 56, 56)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
-        setSize(new java.awt.Dimension(964, 741));
+        setSize(new java.awt.Dimension(964, 883));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void emailSignUpFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailSignUpFieldActionPerformed
+    private void restaurantEmailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restaurantEmailFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_emailSignUpFieldActionPerformed
+    }//GEN-LAST:event_restaurantEmailFieldActionPerformed
 
     private void submitButtonSignUpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonSignUpActionPerformed
-        String confirmPassword = new String(confirmPasswordSignUpField.getPassword());
-        String userName = userNameField.getText();
-        String email = emailSignUpField.getText();
-        String address = addressField.getText();
-        String phoneNumber = phoneNumberField.getText();
-        String password = new String(passwordSignUpField.getPassword());
+        String name = restaurantNameField.getText();
+        String email = restaurantEmailField.getText();
+        String password = new String(restaurantPasswordSignUpField.getPassword());
+        String address = restaurantAddressField.getText();
+        String desc = restaurantDescArea.getText();
+        String phone = restaurantPhoneNumberField.getText();
+        String confirmPassword = new String(restaurantConfirmPasswordSignUpField.getPassword());
+
         if (password.equals(confirmPassword)) {
-            User user = new User(userName, email, address, phoneNumber, password);
-            UserDAO userDAO = new UserDAO();
-            userDAO.addUser(user);
+            // Password sesuai, lanjutkan proses pendaftaran
+            Restaurant restaurant = new Restaurant(name, email, password, address, desc, phone);
+            RestaurantDAO resDAO = new RestaurantDAO();
+            resDAO.addRestaurant(restaurant);
+            // Tampilkan JOptionPane untuk memberitahu bahwa akun berhasil dibuat
             JOptionPane.showMessageDialog(this, "Akun berhasil dibuat!", "Sukses", JOptionPane.INFORMATION_MESSAGE);
         } else {
+            // Tampilkan JOptionPane untuk memberitahu bahwa konfirmasi password tidak sesuai
             JOptionPane.showMessageDialog(this, "Konfirmasi password tidak sesuai!", "Error", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_submitButtonSignUpActionPerformed
 
     private void buttonToLoginPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonToLoginPageActionPerformed
@@ -274,17 +305,17 @@ public class SignUpUserPage extends javax.swing.JFrame {
         login.setVisible(true);
     }//GEN-LAST:event_buttonToLoginPageActionPerformed
 
-    private void userNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameFieldActionPerformed
+    private void restaurantNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restaurantNameFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_userNameFieldActionPerformed
+    }//GEN-LAST:event_restaurantNameFieldActionPerformed
 
-    private void addressFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addressFieldActionPerformed
+    private void restaurantAddressFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restaurantAddressFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_addressFieldActionPerformed
+    }//GEN-LAST:event_restaurantAddressFieldActionPerformed
 
-    private void phoneNumberFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_phoneNumberFieldActionPerformed
+    private void restaurantPhoneNumberFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_restaurantPhoneNumberFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_phoneNumberFieldActionPerformed
+    }//GEN-LAST:event_restaurantPhoneNumberFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -303,14 +334,18 @@ public class SignUpUserPage extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SignUpUserPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUpRestaurantPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SignUpUserPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUpRestaurantPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SignUpUserPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUpRestaurantPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SignUpUserPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignUpRestaurantPage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -319,16 +354,13 @@ public class SignUpUserPage extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SignUpUserPage().setVisible(true);
+                new SignUpRestaurantPage().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField addressField;
     private javax.swing.JButton buttonToLoginPage;
-    private javax.swing.JPasswordField confirmPasswordSignUpField;
-    private javax.swing.JTextField emailSignUpField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -337,12 +369,18 @@ public class SignUpUserPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPasswordField passwordSignUpField;
-    private javax.swing.JTextField phoneNumberField;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField restaurantAddressField;
+    private javax.swing.JPasswordField restaurantConfirmPasswordSignUpField;
+    private javax.swing.JTextArea restaurantDescArea;
+    private javax.swing.JTextField restaurantEmailField;
+    private javax.swing.JTextField restaurantNameField;
+    private javax.swing.JPasswordField restaurantPasswordSignUpField;
+    private javax.swing.JTextField restaurantPhoneNumberField;
     private javax.swing.JButton submitButtonSignUp;
-    private javax.swing.JTextField userNameField;
     // End of variables declaration//GEN-END:variables
 }
