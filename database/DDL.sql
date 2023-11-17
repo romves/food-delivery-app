@@ -68,7 +68,6 @@ CREATE TABLE OrderDetails (
     order_id INT,
     product_id INT,
     quantity INT NOT NULL,
-    subtotal DECIMAL(10,2),
     PRIMARY KEY (order_id, product_id),
     CHECK (quantity > 0),
     FOREIGN KEY (order_id) REFERENCES OrderTable(order_id),
@@ -85,16 +84,13 @@ AS
 BEGIN
     SET NOCOUNT ON;
 
-    -- Update subtotal in OrderDetails for all affected products
-    UPDATE od
-    SET od.subtotal = i.quantity * p.product_price
-    FROM OrderDetails od
-    INNER JOIN inserted i ON od.product_id = i.product_id
-    INNER JOIN Products p ON i.product_id = p.product_id;
-
     -- Update order_total in OrderTable for all affected orders
     UPDATE ot
-    SET ot.order_total = ISNULL((SELECT SUM(od.subtotal) FROM OrderDetails od WHERE od.order_id = ot.order_id), 0)
+    SET ot.order_total = ISNULL((SELECT SUM(p.product_price * i.quantity)
+                                FROM OrderDetails od
+                                INNER JOIN inserted i ON od.product_id = i.product_id
+                                INNER JOIN Products p ON i.product_id = p.product_id
+                                WHERE od.order_id = ot.order_id), 0)
     FROM OrderTable ot
     INNER JOIN inserted i ON ot.order_id = i.order_id;
 END;
@@ -245,7 +241,7 @@ WITH TopRestaurantsCTE AS (
     SELECT
         r.restaurant_id,
         r.restaurant_name,
-        SUM(od.subtotal) AS total_sales
+        SUM(p.product_price * od.quantity) AS total_sales
     FROM
         OrderTable ot
         JOIN OrderDetails od ON ot.order_id = od.order_id
