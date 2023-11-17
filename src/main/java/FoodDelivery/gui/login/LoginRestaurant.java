@@ -42,6 +42,8 @@ public class LoginRestaurant extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel3.setText("Email ");
 
@@ -150,6 +152,7 @@ public class LoginRestaurant extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void emailFieldLoginRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldLoginRestaurantActionPerformed
