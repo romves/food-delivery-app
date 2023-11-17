@@ -393,63 +393,57 @@ SET payment_id = 10
 WHERE order_id = 10;
 -- Update OrderTable to set order_status to FINISHED
 UPDATE Couriers
-SET delivery_status = 'DELIVERED'
+SET courier_status = 'DELIVERED'
 FROM Couriers c
 INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
 WHERE ot.order_id = 1;
 UPDATE Couriers
-SET delivery_status = 'DELIVERED'
+SET courier_status = 'DELIVERED'
 FROM Couriers c
 INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
 WHERE ot.order_id = 2;
 UPDATE Couriers
-SET delivery_status = 'DELIVERED'
+SET courier_status = 'DELIVERED'
 FROM Couriers c
 INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
 WHERE ot.order_id = 3;
 UPDATE Couriers
-SET delivery_status = 'DELIVERED'
+SET courier_status = 'DELIVERED'
 FROM Couriers c
 INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
 WHERE ot.order_id = 4;
 UPDATE Couriers
-SET delivery_status = 'DELIVERED'
+SET courier_status = 'DELIVERED'
 FROM Couriers c
 INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
 WHERE ot.order_id = 5;
 UPDATE Couriers
-SET delivery_status = 'DELIVERED'
+SET courier_status = 'DELIVERED'
 FROM Couriers c
 INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
 WHERE ot.order_id = 6;
 UPDATE Couriers
-SET delivery_status = 'DELIVERED'
+SET courier_status = 'DELIVERED'
 FROM Couriers c
 INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
 WHERE ot.order_id = 7;
 UPDATE Couriers
-SET delivery_status = 'DELIVERED'
+SET courier_status = 'DELIVERED'
 FROM Couriers c
 INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
 WHERE ot.order_id = 8;
 UPDATE Couriers
-SET delivery_status = 'DELIVERED'
+SET courier_status = 'DELIVERED'
 FROM Couriers c
 INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
 WHERE ot.order_id = 9;
 UPDATE Couriers
-SET delivery_status = 'DELIVERED'
+SET courier_status = 'DELIVERED'
 FROM Couriers c
 INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
 WHERE ot.order_id = 10;
 
-SELECT * FROM Users
-SELECT * FROM Restaurant
-SELECT * FROM Products
-SELECT * FROM Couriers
-SELECT * FROM OrderTable
-SELECT * FROM OrderDetails
-SELECT * FROM Payments
+
 
 INSERT INTO OrderTable (order_date, order_status, user_id, courier_id)
 VALUES
@@ -716,5 +710,11 @@ VALUES
     (40, 48, 5),
     (40, 49, 3);
 
-
+GO
+SELECT * FROM Users
+SELECT * FROM Restaurant
+SELECT * FROM Products
+SELECT * FROM Couriers
 SELECT * FROM OrderTable
+SELECT * FROM OrderDetails
+SELECT * FROM Payments

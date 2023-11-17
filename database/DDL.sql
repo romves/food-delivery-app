@@ -20,7 +20,7 @@ CREATE TABLE Restaurant (
     restaurant_address VARCHAR(255) NOT NULL,
     restaurant_description TEXT,
     restaurant_phone_number VARCHAR(20) UNIQUE NOT NULL,
-    restaurant_balance DECIMAL(10, 2) DEFAULT 0.0, -- New column for saldo
+    restaurant_balance DECIMAL(10, 2) DEFAULT 0.0,
     CHECK (LEN(restaurant_name) > 0)
 );
 
@@ -44,10 +44,11 @@ CREATE TABLE Payments (
 
 CREATE TABLE Couriers (
     courier_id INT PRIMARY KEY IDENTITY(1,1),
-    delivery_status VARCHAR(50) NOT NULL CHECK (delivery_status IN ('PENDING', 'ON_DELIVERY' ,'DELIVERED')) DEFAULT 'PENDING',
+    courier_status VARCHAR(50) NOT NULL CHECK (courier_status IN ('AVAILABLE', 'ON_DELIVERY' ,'DELIVERED')) DEFAULT 'AVAILABLE',
     courier_name VARCHAR(255) NOT NULL,
     courier_phone_number VARCHAR(20) UNIQUE NOT NULL,
     courier_plate_number VARCHAR(20) UNIQUE NOT NULL,
+	balance DECIMAL(10, 2) DEFAULT 0.0,
     CHECK (LEN(courier_name) > 0)
 );
 
@@ -56,6 +57,7 @@ CREATE TABLE OrderTable (
     order_date DATETIME DEFAULT GETDATE() ,
     order_status VARCHAR(50) CHECK (order_status IN ('PENDING', 'ON_PROCESS', 'FINISHED')) DEFAULT 'PENDING',
     order_total DECIMAL(10,2),
+	shipping_cost DECIMAL(10, 2) DEFAULT 10000,
     user_id INT,
     payment_id INT,
     courier_id INT,
@@ -63,7 +65,6 @@ CREATE TABLE OrderTable (
     FOREIGN KEY (payment_id) REFERENCES Payments(payment_id),
     FOREIGN KEY (courier_id) REFERENCES Couriers(courier_id)
 );
-
 CREATE TABLE OrderDetails (
     order_id INT,
     product_id INT,
@@ -158,9 +159,9 @@ BEGIN
     DECLARE @CourierID INT;
     DECLARE @NewDeliveryStatus VARCHAR(50);
 
-    SELECT @CourierID = courier_id, @NewDeliveryStatus = delivery_status FROM inserted;
+    SELECT @CourierID = courier_id, @NewDeliveryStatus = courier_status FROM inserted;
 
-    -- Check if the delivery_status is changed to FINISHED
+    -- Check if the courier_status is changed to FINISHED
     IF @NewDeliveryStatus = 'DELIVERED'
     BEGIN
         -- Update order_status in OrderTable to FINISHED
@@ -198,7 +199,7 @@ BEGIN
         BEGIN
             -- Update delivery_status to 'PENDING' for the courier
             UPDATE Couriers
-            SET delivery_status = 'PENDING'
+            SET courier_status = 'AVAILABLE'
             WHERE courier_id = @CourierID;
         END;
     END;
