@@ -1,5 +1,3 @@
-Drop database FoodDeliveryApp
-GO
 CREATE DATABASE FoodDeliveryApp
 GO
 USE FoodDeliveryApp
@@ -82,7 +80,7 @@ GO
 -- Trigger to update subtotal in OrderDetails when a new product is added
 CREATE TRIGGER UpdateSubtotalAndTotal
 ON OrderDetails
-AFTER INSERT
+AFTER INSERT, UPDATE, DELETE
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -177,6 +175,41 @@ BEGIN
 END;
 GO
 
+
+GO
+
+-- Trigger to update delivery_status to 'PENDING' when order_status is FINISHED
+CREATE TRIGGER UpdateCourierDeliveryStatus
+ON OrderTable
+AFTER UPDATE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    -- Check if order_status is changed to FINISHED
+    IF UPDATE(order_status) 
+    BEGIN
+        DECLARE @CourierID INT;
+        DECLARE @NewOrderStatus VARCHAR(50);
+
+        -- Get the courier_id and new order_status
+        SELECT @CourierID = i.courier_id,
+               @NewOrderStatus = i.order_status
+        FROM inserted i;
+
+        -- Check if the new order_status is FINISHED
+        IF @NewOrderStatus = 'FINISHED'
+        BEGIN
+            -- Update delivery_status to 'PENDING' for the courier
+            UPDATE Couriers
+            SET delivery_status = 'PENDING'
+            WHERE courier_id = @CourierID;
+        END;
+    END;
+END;
+GO
+
+
 CREATE TRIGGER UpdatePaymentStatus
 ON OrderTable
 AFTER UPDATE
@@ -206,3 +239,27 @@ BEGIN
     END;
 END;
 GO
+
+CREATE VIEW TopRestaurantsView AS
+WITH TopRestaurantsCTE AS (
+    SELECT
+        r.restaurant_id,
+        r.restaurant_name,
+        SUM(od.subtotal) AS total_sales
+    FROM
+        OrderTable ot
+        JOIN OrderDetails od ON ot.order_id = od.order_id
+        JOIN Products p ON od.product_id = p.product_id
+        JOIN Restaurant r ON p.restaurant_id = r.restaurant_id
+    WHERE
+        ot.order_status = 'FINISHED'
+        AND ot.order_date >= DATEADD(day, -10, GETDATE())
+    GROUP BY
+        r.restaurant_id, r.restaurant_name
+)
+SELECT
+    restaurant_id,
+    restaurant_name,
+    total_sales
+FROM TopRestaurantsCTE;
+

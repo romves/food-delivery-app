@@ -3,33 +3,34 @@ GO
 -- Inserting sample data into Users table
 INSERT INTO Users (user_name, user_email, user_address, user_phone_number, user_password)
 VALUES
-    ('Budi', 'budi@gmail.com', 'Jl. Cipto Mangunkusumo No. 123, Malang', '081234567890', 'Password123'),
-    ('Siti', 'siti@gmail.com', 'Jl. Gajah Mada No. 456, Malang', '081345678901', 'SecurePass456'),
-    ('Dewi', 'dewi@gmail.com', 'Jl. Sudirman No. 789, Malang', '081456789012', 'StrongPassword789'),
-    ('Joko', 'joko@gmail.com', 'Jl. Merdeka No. 101, Malang', '081567890123', 'P@ssw0rd456'),
-    ('Rini', 'rini@gmail.com', 'Jl. Pahlawan No. 202, Malang', '081678901234', 'SafeP@ss789'),
-    ('Adi', 'adi@gmail.com', 'Jl. Diponegoro No. 303, Malang', '081789012345', '1234AdiPass'),
-    ('Maya', 'maya@gmail.com', 'Jl. Asia Afrika No. 404, Malang', '081890123456', 'MayaP@ssword1'),
-    ('Eko', 'eko@gmail.com', 'Jl. Hayam Wuruk No. 505, Malang', '081901234567', 'Eko1234Pass'),
-    ('Dian', 'dian@gmail.com', 'Jl. Jend. Sudirman No. 606, Malang', '081012345678', 'DianSecurePass1'),
-    ('Faisal', 'faisal@gmail.com', 'Jl. M.H. Thamrin No. 707, Malang', '081123456789', 'Faisal123Secure');
+    ('Budi', 'budi@gmail.com', 'Street Cipto Mangunkusumo No. 123, Malang', '081234567890', 'Password123'),
+    ('Siti', 'siti@gmail.com', 'Street Gajah Mada No. 456, Malang', '081345678901', 'SecurePass456'),
+    ('Dewi', 'dewi@gmail.com', 'Street Sudirman No. 789, Malang', '081456789012', 'StrongPassword789'),
+    ('Joko', 'joko@gmail.com', 'Street Merdeka No. 101, Malang', '081567890123', 'P@ssw0rd456'),
+    ('Rini', 'rini@gmail.com', 'Street Pahlawan No. 202, Malang', '081678901234', 'SafeP@ss789'),
+    ('Adi', 'adi@gmail.com', 'Street Diponegoro No. 303, Malang', '081789012345', '1234AdiPass'),
+    ('Maya', 'maya@gmail.com', 'Street Asia Afrika No. 404, Malang', '081890123456', 'MayaP@ssword1'),
+    ('Eko', 'eko@gmail.com', 'Street Hayam Wuruk No. 505, Malang', '081901234567', 'Eko1234Pass'),
+    ('Dian', 'dian@gmail.com', 'Street Jend. Sudirman No. 606, Malang', '081012345678', 'DianSecurePass1'),
+    ('Faisal', 'faisal@gmail.com', 'Street M.H. Thamrin No. 707, Malang', '081123456789', 'Faisal123Secure');
 
 -- Inserting sample data into Restaurant table
 INSERT INTO Restaurant (restaurant_name, restaurant_email, restaurant_password, restaurant_address, restaurant_description, restaurant_phone_number)
 VALUES
-    ('Warung Makan Sederhana', 'warungsederhana@example.com', 'WarungPass123', 'Jl. Pemuda No. 1, Malang', 'Authentic Indonesian cuisine', '081234567800'),
-    ('Seafood Paradise', 'seafoodparadise@example.com', 'SeafoodPass456', 'Jl. Pantai Indah No. 2, Malang', 'Fresh seafood with a view', '081345678911'),
-    ('Nasi Goreng Express', 'nasigorengexpress@example.com', 'NasiGorengPass789', 'Jl. Merah Putih No. 3, Malang', 'Quick and delicious fried rice', '081456789022'),
-    ('Sate Kambing King', 'satekambingking@example.com', 'SateKingPass101', 'Jl. Hijau No. 4, Malang', 'The king of lamb satay', '081567890133'),
-    ('Bakso Enak Corner', 'baksoenakcorner@example.com', 'BaksoPass202', 'Jl. Kenyal No. 5, Malang', 'Delicious meatball soup', '081678901244'),
-    ('Martabak Manis Heaven', 'martabakmanisheaven@example.com', 'MartabakPass303', 'Jl. Manis No. 6, Malang', 'Sweet and savory pancakes', '081789012355'),
-    ('Soto Ayam Heritage', 'sotoayamheritage@example.com', 'SotoAyamPass404', 'Jl. Heritage No. 7, Malang', 'Traditional chicken soup', '081890123466'),
-    ('Padang Rendang Palace', 'padangrendangpalace@example.com', 'RendangPass505', 'Jl. Rendang No. 8, Malang', 'Spicy and flavorful beef dish', '081901234577'),
-    ('Pecel Lele Lovers', 'pecellelelovers@example.com', 'PecelLelePass606', 'Jl. Lele No. 9, Malang', 'Crunchy fried catfish', '081012345688'),
-    ('Gado-Gado Garden', 'gadogadogarden@example.com', 'GadoGadoPass707', 'Jl. Garden No. 10, Malang', 'Vegetable salad with peanut sauce', '081123456799');
+    ('Hometown Restaurant', 'hometownrestaurant@example.com', 'HometownPass123', 'Street Pemuda No. 1, Malang', 'Authentic Indonesian cuisine', '081234567800'),
+    ('Seafood Paradise', 'seafoodparadise@example.com', 'SeafoodPass456', 'Street Pantai Indah No. 2, Malang', 'Fresh seafood with a view', '081345678911'),
+    ('Cookingg Express', 'cookingexpress@example.com', 'ExpressPass789', 'Street Merah Putih No. 3, Malang', 'Quick and delicious fried rice', '081456789022'),
+    ('King Satay', 'kingsatay@example.com', 'KingSatayPass101', 'Street Hijau No. 4, Malang', 'The king of Authentic satay of Lamb', '081567890133'),
+    ('Meat Ball Corner', 'meatballcorner@example.com', 'MeatBallPass202', 'Street Soehat No. 5, Malang', 'Delicious meatball soup', '081678901244'),
+    ('Heaven Cook Resto', 'heavencookresto@example.com', 'HeavenCookPass303', 'Street Ijen No. 6, Malang', 'Sweet and savory pancakes', '081789012355'),
+    ('Chicken Heritage', 'chickenheritage@example.com', 'ChickenPass404', 'Street Gurita No. 7, Malang', 'Traditional chicken and soup', '081890123466'),
+    ('Steak Palace', 'steakpalace@example.com', 'SteakPass505', 'Street Cengger Ayam No. 8, Malang', 'processed meat of the best quality', '081901234577'),
+    ('Meat and Spicy Lovers', 'meatandspicylovers@example.com', 'SpicyMeatPass606', 'Street Veteran No. 9, Malang', 'Spicy and flavorful beef dish', '081012345688'),
+    ('Cheff Garden', 'cheffgarden@example.com', 'CheffGardenPass707', 'Street Garden No. 10, Malang', 'Vegetable salad with peanut sauce', '081123456799');
 
 -- Inserting sample data into Products table
 
+-- Foods for Hometown Restaurant
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Special Fried Rice', 25000.00, 'Food', 1),
@@ -38,11 +39,13 @@ VALUES
     ('Padang Beef Rendang', 40000.00, 'Food', 1),
     ('Vegetable Salad with Peanut Sauce', 20000.00, 'Food', 1);
 
--- Drinks for Warung Makan Sederhana
+-- Drinks for Hometown Restaurant
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Sweet Iced Tea', 5000.00, 'Drink', 1),
     ('Avocado Juice', 10000.00, 'Drink', 1);
+
+-- Foods for Seafood Paradise
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Grilled Prawns', 60000.00, 'Food', 2),
@@ -51,12 +54,13 @@ VALUES
     ('Spicy Seafood Soup', 45000.00, 'Food', 2),
     ('Squid Ink Pasta', 35000.00, 'Food', 2);
 
+-- Drinks for Seafood Paradise
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Ocean Breeze Cooler', 12000.00, 'Drink', 2),
     ('Tropical Sunset Mocktail', 15000.00, 'Drink', 2);
 
--- Foods for Nasi Goreng Express
+-- Foods for Cookingg Express
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Special Fried Rice with Chicken', 28000.00, 'Food', 3),
@@ -65,13 +69,13 @@ VALUES
     ('Spicy Chicken Noodles', 30000.00, 'Food', 3),
     ('Nasi Goreng with Beef', 35000.00, 'Food', 3);
 
--- Drinks for Nasi Goreng Express
+-- Drinks for Cookingg Express
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Iced Lemongrass Tea', 7000.00, 'Drink', 3),
     ('Fresh Orange Juice', 12000.00, 'Drink', 3);
 
--- Foods for Sate Kambing King
+-- Foods for Sate King Satay
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Lamb Satay Skewers', 40000.00, 'Food', 4),
@@ -80,13 +84,13 @@ VALUES
     ('Lamb Kofta Kebab', 38000.00, 'Food', 4),
     ('Turmeric Marinated Lamb', 42000.00, 'Food', 4);
 
--- Drinks for Sate Kambing King
+-- Drinks for King Satay
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Mint Lemonade', 8000.00, 'Drink', 4),
     ('Rosemary Infused Iced Tea', 10000.00, 'Drink', 4);
 
--- Foods for Bakso Enak Corner
+-- Foods for Meat Ball Corner
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Beef Meatball Soup', 18000.00, 'Food', 5),
@@ -95,13 +99,13 @@ VALUES
     ('Bakso Special Mix', 25000.00, 'Food', 5),
     ('Fried Wonton with Meatballs', 22000.00, 'Food', 5);
 
--- Drinks for Bakso Enak Corner
+-- Drinks for Meat Ball Corner
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Hot Ginger Tea', 5000.00, 'Drink', 5),
     ('Iced Lychee Punch', 10000.00, 'Drink', 5);
 
--- Foods for Martabak Manis Heaven
+-- Foods for Heaven Cook Resto
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Chocolate Banana Martabak', 25000.00, 'Food', 6),
@@ -110,13 +114,13 @@ VALUES
     ('Vanilla Almond Martabak', 28000.00, 'Food', 6),
     ('Caramel Coconut Martabak', 32000.00, 'Food', 6);
 
--- Drinks for Martabak Manis Heaven
+-- Drinks for Heaven Cook Resto
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Hot Chocolate', 7000.00, 'Drink', 6),
     ('Iced Matcha Latte', 12000.00, 'Drink', 6);
 
--- Foods for Soto Ayam Heritage
+-- Foods for Chicken Heritage
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Chicken Soto Soup', 18000.00, 'Food', 7),
@@ -125,13 +129,13 @@ VALUES
     ('Spicy Coconut Chicken Soup', 25000.00, 'Food', 7),
     ('Soto Ayam Special', 22000.00, 'Food', 7);
 
--- Drinks for Soto Ayam Heritage
+-- Drinks for Chicken Heritage
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Warm Ginger Elixir', 5000.00, 'Drink', 7),
     ('Chrysanthemum Iced Tea', 10000.00, 'Drink', 7);
 
--- Foods for Padang Rendang Palace
+-- Foods for Steak Palace
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Beef Rendang', 25000.00, 'Food', 8),
@@ -140,28 +144,28 @@ VALUES
     ('Petai and Anchovies Stir-Fry', 28000.00, 'Food', 8),
     ('Green Chili Beef Curry', 32000.00, 'Food', 8);
 
--- Drinks for Padang Rendang Palace
+-- Drinks for Steak Palace
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Turmeric Tamarind Cooler', 7000.00, 'Drink', 8),
     ('Lime Basil Spritzer', 12000.00, 'Drink', 8);
 
--- Foods for Pecel Lele Lovers
+-- Foods for Meat and Spicy Lovers
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
-    ('Fried Catfish with Sambal', 18000.00, 'Food', 9),
-    ('Grilled Lemongrass Catfish', 15000.00, 'Food', 9),
-    ('Spicy Lime Leaf Catfish', 20000.00, 'Food', 9),
-    ('Pecel Lele Platter', 25000.00, 'Food', 9),
-    ('Crispy Catfish Skin', 22000.00, 'Food', 9);
+    ('Spicy Beef Rendang', 18000.00, 'Food', 9),
+    ('Fiery Chicken Vindaloo', 15000.00, 'Food', 9),
+    ('Hot and Spicy Sichuan Beef', 20000.00, 'Food', 9),
+    ('Spicy Cajun Blackened Steak', 25000.00, 'Food', 9),
+    ('Spicy Chicken Curry', 22000.00, 'Food', 9);
 
--- Drinks for Pecel Lele Lovers
+-- Drinks for Meat and Spicy Lovers
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Iced Roselle Tea', 5000.00, 'Drink', 9),
     ('Lychee Ginger Elixir', 10000.00, 'Drink', 9);
 
--- Foods for Gado-Gado Garden
+-- Foods for Cheff Garden
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Vegetable Gado-Gado Salad', 20000.00, 'Food', 10),
@@ -170,7 +174,7 @@ VALUES
     ('Balinese Spicy Vegetables', 22000.00, 'Food', 10),
     ('Jicama and Cabbage Slaw', 18000.00, 'Food', 10);
 
--- Drinks for Gado-Gado Garden
+-- Drinks for Cheff Garden
 INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
 VALUES
     ('Passionfruit Iced Tea', 6000.00, 'Drink', 10),
@@ -207,46 +211,89 @@ VALUES
 -- Inserting sample data into OrderDetails table with at least two different products for each order
 INSERT INTO OrderDetails (order_id, product_id, quantity,subtotal)
 VALUES
-    -- Order 1 (Same Restaurant - Warung Makan Sederhana)
-    (1, 1, 2,0.0),
-    (1, 2, 1,0.0),
-
-
+    -- Order 1 (Same Restaurant - Hometown Restaurant)
+    (1, 1, 3,0.0),
+    (1, 2, 6,0.0),
+	(1, 3, 3,0.0),
+	(1, 4, 2,0.0),
+    (1, 5, 2,0.0),
+    (1, 6, 3,0.0),
+	(1, 7, 6,0.0),
+	
     -- Order 2 (Same Restaurant - Seafood Paradise)
-    (2, 3, 3, 0),
-    (2, 4, 2, 0),
+    (2, 8, 4, 0),
+    (2, 10, 7, 0),
+    (2, 11, 2, 0),
+    (2, 12, 2, 0),
+	(2, 13, 3, 0),
+    (2, 14, 2, 0),
 
-    -- Order 3 (Same Restaurant - Nasi Goreng Express)
-    (3, 5, 1, 0),
-    (3, 6, 1, 0),
+    -- Order 3 (Same Restaurant - Cookingg Express)
+    (3, 15, 5, 0),
+    (3, 17, 2, 0),
+	(3, 18, 5, 0),
+    (3, 19, 2, 0),
+    (3, 20, 4, 0),
+    (3, 21, 5, 0),
 
-    -- Order 4 (Same Restaurant - Sate Kambing King)
-    (4, 7, 1, 0),
-    (4, 8, 1, 0),
+    -- Order 4 (Same Restaurant - King Satay)
+    (4, 22, 4, 0),
+    (4, 23, 4, 0),
+	(4, 24, 1, 0),
+    (4, 25, 1, 0),
+	(4, 27, 1, 0),
+    (4, 28, 5, 0),
 
-    -- Order 5 (Same Restaurant - Bakso Enak Corner)
-    (5, 9, 1, 0),
-    (5, 10, 1, 0),
+    -- Order 5 (Same Restaurant - Meat Ball Corner)
+    (5, 29, 6, 0),
+    (5, 30, 2, 0),
+	(5, 31, 4, 0),
+    (5, 33, 2, 0),
+	(5, 34, 3, 0),
+    (5, 35, 3, 0),
 
-    -- Order 6 (Same Restaurant - Martabak Manis Heaven)
-    (6, 11, 1, 0),
-    (6, 12, 1, 0),
+    -- Order 6 (Same Restaurant - Heaven Cook Resto)
+    (6, 36, 3, 0),
+	(6, 37, 2, 0),
+	(6, 38, 2, 0),
+	(6, 39, 1, 0),
+    (6, 41, 4, 0),
+    (6, 42, 2, 0),
 
-    -- Order 7 (Same Restaurant - Soto Ayam Heritage)
-    (7, 13, 1, 0),
-    (7, 14, 1, 0),
+    -- Order 7 (Same Restaurant - Chicken Heritage)
+    (7, 43, 4, 0),
+	(7, 44, 3, 0),
+	(7, 45, 3, 0),
+	(7, 46, 1, 0),
+    (7, 48, 4, 0),
+    (7, 49, 3, 0),
 
-    -- Order 8 (Same Restaurant - Padang Rendang Palace)
-    (8, 15, 1, 0),
-    (8, 16, 1, 0),
+    -- Order 8 (Same Restaurant - Steak Palace)
+    (8, 50, 3, 0),
+	(8, 51, 3, 0),
+	(8, 52, 2, 0),
+	(8, 53, 1, 0),
+	(8, 54, 1, 0),
+	(8, 55, 6, 0),
+    (8, 56, 3, 0),
 
-    -- Order 9 (Same Restaurant - Pecel Lele Lovers)
-    (9, 17, 1, 0),
-    (9, 18, 1, 0),
+    -- Order 9 (Same Restaurant - Meat and Spicy Lovers)
+    (9, 57, 3, 0),
+    (9, 58, 1, 0),
+	(9, 59, 1, 0),
+	(9, 60, 2, 0),
+	(9, 61, 2, 0),
+	(9, 62, 3, 0),
+    (9, 63, 3, 0),
 
-    -- Order 10 (Same Restaurant - Gado-Gado Garden)
-    (10, 19, 1, 0),
-    (10, 20, 1, 0);
+    -- Order 10 (Same Restaurant - Cheff Garden)
+    (10, 64, 6, 0),
+	(10, 65, 1, 0),
+    (10, 66, 1, 0),
+	(10, 67, 2, 0),
+	(10, 68, 1, 0),
+	(10, 69, 3, 0),
+    (10, 70, 2, 0);
 
 -- Inserting sample data into Payment table
 INSERT INTO Payments (payment_status, payment_date,payment_method)
@@ -304,7 +351,46 @@ UPDATE OrderTable
 SET payment_id = 10
 WHERE order_id = 10;
 
+-- Update OrderTable with payment_id
+UPDATE OrderTable
+SET payment_id = 11
+WHERE order_id = 11;
 
+UPDATE OrderTable
+SET payment_id = 12
+WHERE order_id = 12;
+
+UPDATE OrderTable
+SET payment_id = 3
+WHERE order_id = 3;
+
+UPDATE OrderTable
+SET payment_id = 4
+WHERE order_id = 4;
+
+UPDATE OrderTable
+SET payment_id = 5
+WHERE order_id = 5;
+
+UPDATE OrderTable
+SET payment_id = 6
+WHERE order_id = 6;
+
+UPDATE OrderTable
+SET payment_id = 7
+WHERE order_id = 7;
+
+UPDATE OrderTable
+SET payment_id = 8
+WHERE order_id = 8;
+
+UPDATE OrderTable
+SET payment_id = 9
+WHERE order_id = 9;
+
+UPDATE OrderTable
+SET payment_id = 10
+WHERE order_id = 10;
 -- Update OrderTable to set order_status to FINISHED
 UPDATE Couriers
 SET delivery_status = 'DELIVERED'
@@ -357,16 +443,278 @@ FROM Couriers c
 INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
 WHERE ot.order_id = 10;
 
-SELECT*FROM Users
-SELECT*FROM Restaurant
-SELECT*FROM Products
-SELECT*FROM Couriers
-SELECT*FROM OrderTable
+SELECT * FROM Users
+SELECT * FROM Restaurant
+SELECT * FROM Products
+SELECT * FROM Couriers
+SELECT * FROM OrderTable
 SELECT * FROM OrderDetails
 SELECT * FROM Payments
 
+INSERT INTO OrderTable (order_date, order_status, user_id, courier_id)
+VALUES
+    (GETDATE(), 'PENDING', 1, 2),
+    (GETDATE(), 'PENDING', 3, 4),
+    (GETDATE(), 'PENDING', 4, 5),
+    (GETDATE(), 'PENDING', 5, 7),
+    (GETDATE(), 'PENDING', 6, 6),
+    (GETDATE(), 'PENDING', 8, 2),
+    (GETDATE(), 'PENDING', 9, 9),
+    (GETDATE(), 'PENDING', 10, 10)
+	;
+INSERT INTO OrderTable (order_date, order_status, user_id, courier_id)
+VALUES
+    (GETDATE(), 'PENDING', 2, 2),
+    (GETDATE(), 'PENDING', 2, 4),
+    (GETDATE(), 'PENDING', 4, 5),
+    (GETDATE(), 'PENDING', 5, 7),
+    (GETDATE(), 'PENDING', 1, 6),
+    (GETDATE(), 'PENDING', 8, 2),
+    (GETDATE(), 'PENDING', 4, 9),
+    (GETDATE(), 'PENDING', 10, 10)
+	;
+
+INSERT INTO OrderTable (order_date, order_status, user_id, courier_id)
+VALUES
+    (GETDATE(), 'PENDING', 1, 2),
+    (GETDATE(), 'PENDING', 8, 2),
+    (GETDATE(), 'PENDING', 3, 3),
+    (GETDATE(), 'PENDING', 4, 4),
+    (GETDATE(), 'PENDING', 5, 5),
+    (GETDATE(), 'PENDING', 6, 6),
+    (GETDATE(), 'PENDING', 3, 7),
+    (GETDATE(), 'PENDING', 8, 8),
+    (GETDATE(), 'PENDING', 9, 2),
+	(GETDATE(), 'PENDING', 5, 3),
+	(GETDATE(), 'PENDING', 6, 9),
+	(GETDATE(), 'PENDING', 6, 4),
+	(GETDATE(), 'PENDING', 9, 9),
+    (GETDATE(), 'PENDING', 10, 10);
+
+INSERT INTO OrderDetails (order_id, product_id, quantity,subtotal)
+VALUES
+    -- Order 1 (Same Restaurant - Hometown Restaurant)
+    (11, 1, 4,0.0),
+    (11, 2, 1,0.0),
+	(11, 3, 3,0.0),
+	(11, 7, 2,0.0),
+	
+    -- Order 2 (Same Restaurant - Seafood Paradise)
+    (12, 8, 3, 0),
+    (12, 10, 2, 0),
+	(12, 13, 2, 0),
+    (12, 14, 1, 0),
+
+    -- Order 3 (Same Restaurant - Cookingg Express)
+    (13, 15, 4, 0),
+    (13, 21, 3, 0),
+
+    -- Order 4 (Same Restaurant - King Satay)
+    (14, 22, 4, 0),
+    (14, 23, 4, 0),
+	(14, 24, 2, 0),
+
+    -- Order 5 (Same Restaurant - Meat Ball Corner)
+    (15, 29, 5, 0),
+    (15, 30, 5, 0),
+	(15, 34, 2, 0),
+    (15, 35, 4, 0),
+
+    -- Order 6 (Same Restaurant - Heaven Cook Resto)
+    (16, 41, 1, 0),
+    (16, 42, 4, 0),
+
+    -- Order 7 (Same Restaurant - Chicken Heritage)
+    (17, 43, 3, 0),
+    (17, 49, 2, 0),
+
+    -- Order 8 (Same Restaurant - Steak Palace)
+    (18, 50, 2, 0),
+	(18, 51, 3, 0),
+	(18, 55, 2, 0),
+    (18, 56, 4, 0);
+
+INSERT INTO OrderDetails (order_id, product_id, quantity,subtotal)
+VALUES
+    -- Order 1 (Same Restaurant - Hometown Restaurant)
+    (19, 1, 3,0.0),
+    (19, 2, 6,0.0),
+	(19, 3, 3,0.0),
+	(19, 4, 2,0.0),
+	(19, 7, 6,0.0),
+
+    -- Order 3 (Same Restaurant - Cookingg Express)
+    (20, 15, 5, 0),
+    (20, 17, 2, 0),
+	(20, 18, 5, 0),
+    (20, 20, 4, 0),
+
+    -- Order 4 (Same Restaurant - King Satay)
+    (21, 22, 4, 0),
+    (21, 23, 4, 0),
+	(21, 24, 1, 0),
+    (21, 25, 1, 0),
+    (21, 28, 5, 0),
+
+    -- Order 5 (Same Restaurant - Meat Ball Corner)
+    (22, 29, 6, 0),
+    (22, 30, 2, 0),
+	(22, 31, 4, 0),
+    (22, 33, 2, 0),
+	(22, 34, 3, 0),
+    (22, 35, 3, 0),
+
+    -- Order 7 (Same Restaurant - Chicken Heritage)
+    (23, 43, 4, 0),
+	(23, 44, 2, 0),
+	(23, 45, 3, 0),
+    (23, 48, 2, 0),
+    (23, 49, 1, 0),
+
+    -- Order 8 (Same Restaurant - Steak Palace)
+    (24, 50, 3, 0),
+	(24, 51, 3, 0),
+	(24, 52, 3, 0),
+	(24, 53, 1, 0),
+	(24, 54, 2, 0),
+	(24, 55, 4, 0),
+    (24, 56, 5, 0),
+
+    -- Order 9 (Same Restaurant - Meat and Spicy Lovers)
+    (25, 57, 3, 0),
+	(25, 59, 1, 0),
+	(25, 60, 2, 0),
+	(25, 62, 3, 0),
+    (25, 63, 3, 0),
+
+    -- Order 10 (Same Restaurant - Cheff Garden)
+    (26, 64, 3, 0),
+	(26, 65, 1, 0),
+    (26, 66, 4, 0),
+	(26, 67, 2, 0),
+	(26, 68, 1, 0),
+	(26, 69, 2, 0),
+    (26, 70, 1, 0);
+
+-- Inserting sample data into OrderDetails table with at least two different products for each order
+INSERT INTO OrderDetails (order_id, product_id, quantity,subtotal)
+VALUES
+    -- Order 1 (Same Restaurant - Hometown Restaurant)
+    (27, 1, 7,0.0),
+    (27, 2, 6,0.0),
+	(27, 3, 3,0.0),
+	(27, 4, 2,0.0),
+    (27, 5, 4,0.0),
+    (27, 6, 9,0.0),
+	(27, 7, 6,0.0),
+	
+    -- Order 2 (Same Restaurant - Seafood Paradise)
+    (28, 8, 4, 0),
+    (28, 10, 1, 0),
+    (28, 11, 1, 0),
+    (28, 12, 1, 0),
+	(28, 13, 1, 0),
+    (28, 14, 2, 0),
+
+    -- Order 3 (Same Restaurant - Cookingg Express)
+    (29, 15, 2, 0),
+    (29, 17, 1, 0),
+	(29, 18, 3, 0),
+    (29, 19, 2, 0),
+    (29, 20, 2, 0),
+    (29, 21, 3, 0),
+
+    -- Order 4 (Same Restaurant - King Satay)
+    (30, 22, 2, 0),
+    (30, 23, 4, 0),
+	(30, 24, 2, 0),
+    (30, 25, 1, 0),
+	(30, 27, 1, 0),
+    (30, 28, 2, 0),
+
+    -- Order 5 (Same Restaurant - Meat Ball Corner)
+    (31, 29, 6, 0),
+    (31, 30, 2, 0),
+	(31, 31, 4, 0),
+    (31, 33, 2, 0),
+	(31, 34, 3, 0),
+    (31, 35, 3, 0),
+
+    -- Order 6 (Same Restaurant - Heaven Cook Resto)
+    (32, 36, 2, 0),
+	(32, 37, 2, 0),
+	(32, 38, 2, 0),
+	(32, 39, 3, 0),
+    (32, 41, 4, 0),
+    (32, 42, 2, 0);
+INSERT INTO OrderDetails (order_id, product_id, quantity,subtotal)
+VALUES
+    -- Order 7 (Same Restaurant - Chicken Heritage)
+    (33, 43, 4, 0),
+	(33, 44, 5, 0),
+	(33, 45, 3, 0),
+	(33, 46, 1, 0),
+    (33, 48, 2, 0),
+    (33, 49, 1, 0),
+
+    -- Order 8 (Same Restaurant - Steak Palace)
+    (34, 50, 1, 0),
+	(34, 51, 3, 0),
+	(34, 52, 2, 0),
+	(34, 53, 1, 0),
+	(34, 54, 1, 0),
+	(34, 55, 4, 0),
+    (34, 56, 3, 0),
+
+    -- Order 9 (Same Restaurant - Meat and Spicy Lovers)
+    (35, 57, 1, 0),
+    (35, 58, 1, 0),
+	(35, 59, 1, 0),
+	(35, 60, 3, 0),
+	(35, 61, 2, 0),
+	(35, 62, 3, 0),
+    (35, 63, 6, 0),
+
+    -- Order 10 (Same Restaurant - Cheff Garden)
+    (36, 64, 6, 0),
+	(36, 65, 1, 0),
+    (36, 66, 1, 0),
+	(36, 67, 2, 0),
+	(36, 68, 1, 0),
+	(36, 69, 3, 0),
+    (36, 70, 2, 0),
+	
+	-- Order 9 (Same Restaurant - Meat and Spicy Lovers)
+    (37, 57, 3, 0),
+    (37, 58, 3, 0),
+	(37, 59, 2, 0),
+	(37, 60, 2, 0),
+	(37, 61, 1, 0),
+	(37, 62, 5, 0),
+    (37, 63, 3, 0),
+
+    -- Order 3 (Same Restaurant - Cookingg Express)
+    (38, 15, 2, 0),
+    (38, 17, 1, 0),
+    (38, 19, 2, 0),
+    (38, 20, 2, 0),
+    (38, 21, 3, 0),
+	
+    -- Order 8 (Same Restaurant - Steak Palace)
+    (39, 50, 3, 0),
+	(39, 51, 1, 0),
+	(39, 52, 2, 0),
+	(39, 54, 1, 0),
+	(39, 55, 2, 0),
+    (39, 56, 3, 0),
+	
+	    -- Order 7 (Same Restaurant - Chicken Heritage)
+    (40, 43, 1, 0),
+	(40, 44, 2, 0),
+	(40, 45, 4, 0),
+	(40, 46, 4, 0),
+    (40, 48, 5, 0),
+    (40, 49, 3, 0);
 
 
-
-
-
+SELECT * FROM OrderTable

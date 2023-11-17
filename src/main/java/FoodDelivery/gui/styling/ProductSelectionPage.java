@@ -24,13 +24,13 @@ import javax.swing.table.DefaultTableModel;
  * @author Naufal Romero
  */
 public class ProductSelectionPage extends javax.swing.JFrame implements ProductCardListener {
-
+    private int userId;
     DefaultTableModel cartTableModel;
 
     /**
      * Creates new form Home
      */
-    public ProductSelectionPage(int restoId) {
+    public ProductSelectionPage(int restoId,int userId) {
         this.setExtendedState(MAXIMIZED_BOTH);
         initComponents();
         ProductDAO productDB = new ProductDAO();
@@ -275,7 +275,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
-        HomePage page = new HomePage();
+        HomePage page = new HomePage(this.userId);
         page.setVisible(true);
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed

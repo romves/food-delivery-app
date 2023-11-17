@@ -202,28 +202,11 @@ public class RestaurantDAO {
 
     public List<Restaurant> getTop5RestaurantsBySales() {
         List<Restaurant> topRestaurants = new ArrayList<>();
-        String query = "WITH RecentOrders AS ( "
-                + "SELECT "
-                + "r.restaurant_id, "
-                + "r.restaurant_name, "
-                + "SUM(od.subtotal) AS total_sales "
-                + "FROM "
-                + "OrderTable ot "
-                + "JOIN OrderDetails od ON ot.order_id = od.order_id "
-                + "JOIN Products p ON od.product_id = p.product_id "
-                + "JOIN Restaurant r ON p.restaurant_id = r.restaurant_id "
-                + "WHERE "
-                + "ot.order_status = 'FINISHED' "
-                + "AND ot.order_date >= DATEADD(day, -10, GETDATE()) "
-                + "GROUP BY "
-                + "r.restaurant_id, r.restaurant_name "
-                + ") "
-                + "SELECT TOP 5 "
+        String query = "SELECT TOP 5 "
                 + "restaurant_id, "
                 + "restaurant_name, "
                 + "total_sales "
-                + "FROM "
-                + "RecentOrders "
+                + "FROM TopRestaurantsView "
                 + "ORDER BY "
                 + "total_sales DESC";
 

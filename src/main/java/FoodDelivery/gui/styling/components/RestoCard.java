@@ -12,16 +12,16 @@ import FoodDelivery.gui.styling.eventlistener.RestoCardClickListener;
  * @author PC
  */
 public class RestoCard extends javax.swing.JPanel {
-
+    private int userId;
     private int restoId;
     private RestoCardClickListener clickListener;
 
     /**
      * Creates new form RestoCard
      */
-    public RestoCard(int restoId, String restoName, String restoLocation, RestoCardClickListener clickListener) {
+    public RestoCard(int userId,int restoId, String restoName, String restoLocation, RestoCardClickListener clickListener) {
         initComponents();
-
+        this.userId = userId;
         this.restoId = restoId;
         this.clickListener = clickListener;
         nameLabel.setText(restoName);
@@ -126,7 +126,7 @@ public class RestoCard extends javax.swing.JPanel {
     private void ViewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewBtnActionPerformed
         // TODO add your handling code here:
         if (clickListener != null) {
-            ProductSelectionPage page = new ProductSelectionPage(restoId);
+            ProductSelectionPage page = new ProductSelectionPage(restoId,this.userId);
             page.setVisible(true);
             clickListener.onRestoCardClick(restoId);
         }

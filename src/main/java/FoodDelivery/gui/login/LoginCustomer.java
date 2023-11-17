@@ -188,7 +188,7 @@ public class LoginCustomer extends javax.swing.JFrame {
         UserDAO userDB = new UserDAO();
         int userId = userDB.checkPasswordByEmail(email, password);
         if (userId != -1) {
-            RestaurantDashboardPage page = new RestaurantDashboardPage(userId);
+            HomePage page = new HomePage(userId);
             page.setVisible(true);
             this.dispose();
         } else {
