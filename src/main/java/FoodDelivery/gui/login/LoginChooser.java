@@ -13,7 +13,7 @@ import FoodDelivery.gui.restaurant.RestaurantDashboardPage;
 
 /**
  *
- * @author Naufal Romero
+ * @author author Kenzie Taqiyassar
  */
 public class LoginChooser extends javax.swing.JFrame {
 

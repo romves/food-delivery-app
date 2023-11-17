@@ -133,6 +133,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         jButton4 = new javax.swing.JButton();
         TotalPriceLabel = new javax.swing.JLabel();
         TotalQtyLabel = new javax.swing.JLabel();
+        jButton5 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -201,6 +202,13 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         TotalQtyLabel.setText("Qty");
         TotalQtyLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
+        jButton5.setText("Add Payment");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout totalLabelLayout = new javax.swing.GroupLayout(totalLabel);
         totalLabel.setLayout(totalLabelLayout);
         totalLabelLayout.setHorizontalGroup(
@@ -210,6 +218,12 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
                 .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(RestoNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(totalLabelLayout.createSequentialGroup()
+                            .addComponent(jButton4)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton3)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton1))
                         .addGroup(totalLabelLayout.createSequentialGroup()
                             .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                 .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -221,14 +235,11 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
                                     .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(TotalPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(TotalQtyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(0, 124, Short.MAX_VALUE))
-                                .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGroup(totalLabelLayout.createSequentialGroup()
-                            .addComponent(jButton4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton1))))
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, totalLabelLayout.createSequentialGroup()
+                                    .addGap(0, 0, Short.MAX_VALUE)
+                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         totalLabelLayout.setVerticalGroup(
@@ -250,6 +261,8 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
                         .addComponent(TotalQtyLabel)
                         .addGap(12, 12, 12)
                         .addComponent(TotalPriceLabel)
+                        .addGap(15, 15, 15)
+                        .addComponent(jButton5)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButton2))
                     .addGroup(totalLabelLayout.createSequentialGroup()
@@ -280,6 +293,10 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton5ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel RestoNameLabel;
@@ -290,6 +307,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
+    private javax.swing.JButton jButton5;
     private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
