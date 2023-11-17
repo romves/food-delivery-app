@@ -31,6 +31,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
      * Creates new form Home
      */
     public ProductSelectionPage(int restoId) {
+        this.setExtendedState(MAXIMIZED_BOTH);
         initComponents();
         ProductDAO productDB = new ProductDAO();
         RestaurantDAO restoDB = new RestaurantDAO();
@@ -269,7 +270,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
             .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        pack();
+        setBounds(0, 0, 1181, 857);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed

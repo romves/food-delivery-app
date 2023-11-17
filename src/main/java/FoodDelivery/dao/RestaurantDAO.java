@@ -8,12 +8,17 @@ import FoodDelivery.database.DatabaseUtility;
 import FoodDelivery.models.Restaurant;
 import java.util.List;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -118,17 +123,17 @@ public class RestaurantDAO {
         }
         return restaurant;
     }
-    
+
     public String getRestaurantName(int restoId) {
         String query = "SELECT restaurant_name FROM Restaurant where restaurant_id=?";
-        
+
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, restoId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getString("restaurant_name");
-               
+
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -174,7 +179,7 @@ public class RestaurantDAO {
             closeConnection();
         }
     }
-    
+
     public int checkPasswordByEmail(String restaurantEmail, String password) {
         try {
             String sql = "SELECT restaurant_password, restaurant_id FROM Restaurant WHERE restaurant_email = ?";
@@ -194,4 +199,50 @@ public class RestaurantDAO {
         }
         return -1;
     }
+
+    public List<Restaurant> getTop5RestaurantsBySales() {
+        List<Restaurant> topRestaurants = new ArrayList<>();
+        String query = "WITH RecentOrders AS ( "
+                + "SELECT "
+                + "r.restaurant_id, "
+                + "r.restaurant_name, "
+                + "SUM(od.subtotal) AS total_sales "
+                + "FROM "
+                + "OrderTable ot "
+                + "JOIN OrderDetails od ON ot.order_id = od.order_id "
+                + "JOIN Products p ON od.product_id = p.product_id "
+                + "JOIN Restaurant r ON p.restaurant_id = r.restaurant_id "
+                + "WHERE "
+                + "ot.order_status = 'FINISHED' "
+                + "AND ot.order_date >= DATEADD(day, -10, GETDATE()) "
+                + "GROUP BY "
+                + "r.restaurant_id, r.restaurant_name "
+                + ") "
+                + "SELECT TOP 5 "
+                + "restaurant_id, "
+                + "restaurant_name, "
+                + "total_sales "
+                + "FROM "
+                + "RecentOrders "
+                + "ORDER BY "
+                + "total_sales DESC";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query); ResultSet resultSet = preparedStatement.executeQuery()) {
+
+            while (resultSet.next()) {
+                Restaurant restaurant = new Restaurant();
+                restaurant.setId(resultSet.getInt("restaurant_id"));
+                restaurant.setName(resultSet.getString("restaurant_name"));
+                restaurant.setBalance(resultSet.getDouble("total_sales"));
+                topRestaurants.add(restaurant);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+
+        return topRestaurants;
+    }
+
 }

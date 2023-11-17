@@ -4,6 +4,7 @@
  */
 package FoodDelivery.gui;
 
+import FoodDelivery.gui.signUp.SignUpUserPage;
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
 import FoodDelivery.gui.restaurant.RestaurantDashboardPage;
