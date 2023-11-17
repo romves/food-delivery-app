@@ -1,5 +1,3 @@
-
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -55,10 +53,36 @@ public class ProductDAO {
         }
     }
 
-    public ArrayList<Product> getAllProducts() {
+    public Product getProductById(int productId) {
+        String query = "SELECT * FROM Products where product_id=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+            preparedStatement.setInt(1, productId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Product product = new Product(
+                        resultSet.getInt("product_id"),
+                        resultSet.getString("product_name"),
+                        resultSet.getDouble("product_price"),
+                        resultSet.getString("product_type")
+                );
+                return product;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return null;
+    }
+
+    public ArrayList<Product> getAllProductsByResto(int restoId) {
         ArrayList<Product> products = new ArrayList<>();
-        String query = "SELECT * FROM Products";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query); ResultSet resultSet = preparedStatement.executeQuery()) {
+        String query = "SELECT * FROM Products where restaurant_id=?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query);) {
+            preparedStatement.setInt(1, restoId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
                 Product product = new Product(
                         resultSet.getInt("product_id"),

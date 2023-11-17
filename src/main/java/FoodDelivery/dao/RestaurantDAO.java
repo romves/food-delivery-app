@@ -118,6 +118,25 @@ public class RestaurantDAO {
         }
         return restaurant;
     }
+    
+    public String getRestaurantName(int restoId) {
+        String query = "SELECT restaurant_name FROM Restaurant where restaurant_id=?";
+        
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, restoId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getString("restaurant_name");
+               
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return "Unknown Resto";
+    }
 
     public void updateRestaurant(Restaurant restaurant) {
         String query = "UPDATE Restaurant SET restaurant_name=?, restaurant_email=?, restaurant_password=?, restaurant_address=?, restaurant_description=?, restaurant_phone_number=? WHERE restaurant_id=?";

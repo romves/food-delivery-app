@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
-package FoodDelivery.gui.styling;
+package FoodDelivery.gui.styling.components;
 
+import FoodDelivery.dao.ProductDAO;
+import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
+import FoodDelivery.models.Product;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
@@ -25,13 +28,16 @@ public class ProductCard extends javax.swing.JPanel {
 
     private int productId;
     private int quantity;
+    private ProductCardListener listener;
 
     /**
      * Creates new form ProductCard
      */
-    public ProductCard(int productId, String productName, double productPrice) {
+    public ProductCard(int productId, String productName, double productPrice, ProductCardListener listener) {
+
         this.productId = productId;
         this.quantity = 0;
+        this.listener = listener;
         initComponents();
         priceLabel.setText(Double.toString(productPrice));
         nameLabel.setText(productName);
@@ -177,40 +183,14 @@ public class ProductCard extends javax.swing.JPanel {
     }//GEN-LAST:event_addToCartButtonActionPerformed
 
     private void addToCart() {
-        System.out.println(quantity + " " + productId);
+        ProductDAO productDB = new ProductDAO();
+        Product product = productDB.getProductById(productId);
+        if (listener != null) {
+            listener.onAddToCart(productId, quantity, product);
+        }
         quantity = 0;
         updateQuantityLabel();
     }
-
-//    public static void main(String[] args) {
-//        // Example of usage
-//        SwingUtilities.invokeLater(() -> {
-//            JFrame frame = new JFrame("Product Card Example");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//
-//            // Replace this with your actual list of products from the database
-//            ArrayList<ProductCard> productCards = new ArrayList<>();
-//            productCards.add(new ProductCard(1, "Product A", 19.99));
-//            productCards.add(new ProductCard(2, "Product B", 29.99));
-//            productCards.add(new ProductCard(3, "Product C", 39.99));
-//
-//            JPanel productPanel = new JPanel();
-//            productPanel.setLayout(new BoxLayout(productPanel, BoxLayout.X_AXIS));
-//
-//            for (ProductCard productCard : productCards) {
-//                productPanel.add(productCard);
-//                productPanel.add(Box.createRigidArea(new Dimension(0, 10)));
-//            }
-//
-//            JScrollPane scrollPane = new JScrollPane(productPanel);
-//
-//            frame.getContentPane().add(scrollPane);
-//
-//            frame.pack();
-//            frame.setSize(400, 300);
-//            frame.setVisible(true);
-//        });
-//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addToCartButton;

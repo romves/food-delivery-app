@@ -6,7 +6,7 @@ package FoodDelivery.gui;
 
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
-import FoodDelivery.gui.Restaurant.RestaurantDashboardPage;
+import FoodDelivery.gui.restaurant.RestaurantDashboardPage;
 import javax.swing.JFrame;
 
 /**

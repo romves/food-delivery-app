@@ -5,7 +5,7 @@
 package FoodDelivery.gui.styling;
 
 import FoodDelivery.dao.RestaurantDAO;
-import FoodDelivery.gui.Restaurant.RestaurantDashboardPage;
+import FoodDelivery.gui.restaurant.RestaurantDashboardPage;
 
 /**
  *
