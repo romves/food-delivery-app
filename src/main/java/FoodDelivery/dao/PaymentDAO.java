@@ -6,26 +6,27 @@ package FoodDelivery.dao;
 
 import FoodDelivery.database.DatabaseUtility;
 import FoodDelivery.models.Payment;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 
 /**
  *
  * @author Kenzie Taqiyassar
  */
 public class PaymentDAO {
-    
-//    private Connection connection;
-//    public PaymentDAO() {
-//        try {
-//            
-//        } catch (Exception e) {
-//        }
-//    }
-    
-    
+
+    private Connection connection;
+
+    public PaymentDAO() {
+        try {
+            connection = DatabaseUtility.getConnection();
+        } catch (Exception e) {
+        }
+    }
 
     public int insertPayment(String paymentStatus, String paymentMethod) {
         String INSERT_PAYMENT_QUERY = "INSERT INTO Payments (payment_status, payment_method) VALUES (?, ?)";
@@ -111,4 +112,32 @@ public class PaymentDAO {
         }
         return null; // Payment not found
     }
+
+    public void createOrderFromPayment(
+            String paymentStatus,
+            String paymentMethod,
+            int restaurantId,
+            int userId
+    ) {
+        String procedureCall = "{call CreateOrderFromPayment(?, ?, ?, ?, ?)}";
+
+        try (CallableStatement callableStatement = connection.prepareCall(procedureCall)) {
+            callableStatement.registerOutParameter(1, Types.INTEGER); // Output parameter for payment_id
+            callableStatement.setString(2, paymentStatus);
+            callableStatement.setString(3, paymentMethod);
+            callableStatement.setInt(4, restaurantId);
+            callableStatement.setInt(5, userId);
+
+            callableStatement.execute();
+
+            // Retrieve the generated payment_id
+            int paymentId = callableStatement.getInt(1);
+
+            System.out.println("Order created successfully with payment_id: " + paymentId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        }
+    }
+
 }

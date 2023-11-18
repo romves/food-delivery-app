@@ -124,4 +124,36 @@ public class ProductDAO {
             closeConnection();
         }
     }
+
+    public List<String> getTop3FrequentlyBoughtTogetherProducts(int restaurantId) {
+        List<String> topProducts = new ArrayList<>();
+        String query = "SELECT TOP 3 * FROM FrequentlyBoughtTogetherProductView "
+                + "WHERE product_id1 IN (SELECT product_id FROM Products WHERE restaurant_id = ?) "
+                + "OR product_id2 IN (SELECT product_id FROM Products WHERE restaurant_id = ?)";
+
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, restaurantId);
+            preparedStatement.setInt(2, restaurantId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String productInfo = resultSet.getString("product_name1") + " and "
+                        + resultSet.getString("product_name2")
+                        + " (Frequency: " + resultSet.getInt("frequency") + ")";
+                topProducts.add(productInfo);
+
+                // Logging for debugging
+                System.out.println("Debug: Product Info - " + productInfo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+
+        return topProducts;
+    }
+    
+    
+
 }

@@ -1,3 +1,4 @@
+
 CREATE DATABASE FoodDeliveryApp
 GO
 USE FoodDeliveryApp
@@ -30,6 +31,7 @@ CREATE TABLE Products (
     product_name VARCHAR(255) NOT NULL,
     product_price DECIMAL(10, 2) NOT NULL,
     product_type VARCHAR(10) CHECK (product_type IN ('Food', 'Drink')),
+	stock INT DEFAULT 0,
     restaurant_id INT,
     CHECK (product_price >= 0),
     FOREIGN KEY (restaurant_id) REFERENCES Restaurant(restaurant_id)
@@ -61,9 +63,11 @@ CREATE TABLE OrderTable (
     user_id INT,
     payment_id INT,
     courier_id INT,
+	restaurant_id INT,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (payment_id) REFERENCES Payments(payment_id),
-    FOREIGN KEY (courier_id) REFERENCES Couriers(courier_id)
+    FOREIGN KEY (courier_id) REFERENCES Couriers(courier_id),
+	FOREIGN KEY (restaurant_id) REFERENCES Restaurant(restaurant_id)
 );
 CREATE TABLE OrderDetails (
     order_id INT,
@@ -173,6 +177,9 @@ END;
 GO
 
 
+
+
+
 GO
 
 -- Trigger to update delivery_status to 'PENDING' when order_status is FINISHED
@@ -259,4 +266,47 @@ SELECT
     restaurant_name,
     total_sales
 FROM TopRestaurantsCTE;
+GO
 
+CREATE PROCEDURE CreateOrderFromPayment
+    @PaymentID INT,
+	@UserID INT,
+	@RestaurantID INT
+AS
+BEGIN
+    BEGIN TRANSACTION; -- Start the transaction
+
+    BEGIN TRY
+        -- Insert a new order with the provided payment ID
+        INSERT INTO OrderTable (order_date, order_status, payment_id,user_id,restaurant_id)
+        VALUES (GETDATE(), 'PENDING', @PaymentID,@UserID,@RestaurantID);
+
+        -- Get the newly created order ID
+        DECLARE @OrderID INT;
+        SET @OrderID = SCOPE_IDENTITY();
+
+        -- Update the payment status to 'PAID' for non-cash payments
+        UPDATE Payments
+        SET payment_status = 'PAID'
+        WHERE payment_id = @PaymentID
+          AND payment_method <> 'CASH';
+
+        -- Update the new order's status to 'ON_PROCESS' if payment_method is not null
+        UPDATE OrderTable
+        SET order_status = 'ON_PROCESS'
+        WHERE order_id = @OrderID
+          AND EXISTS (
+              SELECT 1
+              FROM Payments
+              WHERE payment_id = @PaymentID
+                AND payment_method IS NOT NULL
+          );
+
+        COMMIT; -- Commit the transaction if all statements succeed
+    END TRY
+    BEGIN CATCH
+        ROLLBACK; -- Roll back the transaction if an error occurs
+        -- Handle the error as needed (log, re-throw, etc.)
+        THROW;
+    END CATCH;
+END;

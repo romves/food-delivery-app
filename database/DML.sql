@@ -1,3 +1,4 @@
+
 USE FoodDeliveryApp
 GO
 -- Inserting sample data into Users table
@@ -31,154 +32,155 @@ VALUES
 -- Inserting sample data into Products table
 
 -- Foods for Hometown Restaurant
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Special Fried Rice', 25000.00, 'Food', 1),
-    ('Crunchy Fried Chicken', 30000.00, 'Food', 1),
-    ('Madura Chicken Satay', 35000.00, 'Food', 1),
-    ('Padang Beef Rendang', 40000.00, 'Food', 1),
-    ('Vegetable Salad with Peanut Sauce', 20000.00, 'Food', 1);
+    ('Special Fried Rice', 25000.00, 'Food', 50, 1),
+    ('Crunchy Fried Chicken', 30000.00, 'Food', 50, 1),
+    ('Madura Chicken Satay', 35000.00, 'Food', 50, 1),
+    ('Padang Beef Rendang', 40000.00, 'Food', 50, 1),
+    ('Vegetable Salad with Peanut Sauce', 20000.00, 'Food', 50, 1);
 
 -- Drinks for Hometown Restaurant
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Sweet Iced Tea', 5000.00, 'Drink', 1),
-    ('Avocado Juice', 10000.00, 'Drink', 1);
+    ('Sweet Iced Tea', 5000.00, 'Drink', 50, 1),
+    ('Avocado Juice', 10000.00, 'Drink', 50, 1);
 
 -- Foods for Seafood Paradise
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Grilled Prawns', 60000.00, 'Food', 2),
-    ('Fishermans Catch', 75000.00, 'Food', 2),
-    ('Garlic Butter Crab', 80000.00, 'Food', 2),
-    ('Spicy Seafood Soup', 45000.00, 'Food', 2),
-    ('Squid Ink Pasta', 35000.00, 'Food', 2);
+    ('Grilled Prawns', 60000.00, 'Food', 50, 2),
+    ('Fishermans Catch', 75000.00, 'Food', 50, 2),
+    ('Garlic Butter Crab', 80000.00, 'Food', 50, 2),
+    ('Spicy Seafood Soup', 45000.00, 'Food', 50, 2),
+    ('Squid Ink Pasta', 35000.00, 'Food', 50, 2);
 
 -- Drinks for Seafood Paradise
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Ocean Breeze Cooler', 12000.00, 'Drink', 2),
-    ('Tropical Sunset Mocktail', 15000.00, 'Drink', 2);
+    ('Ocean Breeze Cooler', 12000.00, 'Drink', 50, 2),
+    ('Tropical Sunset Mocktail', 15000.00, 'Drink', 50, 2);
 
 -- Foods for Cookingg Express
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Special Fried Rice with Chicken', 28000.00, 'Food', 3),
-    ('Shrimp Fried Rice', 32000.00, 'Food', 3),
-    ('Vegetarian Fried Rice', 25000.00, 'Food', 3),
-    ('Spicy Chicken Noodles', 30000.00, 'Food', 3),
-    ('Nasi Goreng with Beef', 35000.00, 'Food', 3);
+    ('Special Fried Rice with Chicken', 28000.00, 'Food', 50, 3),
+    ('Shrimp Fried Rice', 32000.00, 'Food', 50, 3),
+    ('Vegetarian Fried Rice', 25000.00, 'Food', 50, 3),
+    ('Spicy Chicken Noodles', 30000.00, 'Food', 50, 3),
+    ('Nasi Goreng with Beef', 35000.00, 'Food', 50, 3);
 
 -- Drinks for Cookingg Express
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Iced Lemongrass Tea', 7000.00, 'Drink', 3),
-    ('Fresh Orange Juice', 12000.00, 'Drink', 3);
+    ('Iced Lemongrass Tea', 7000.00, 'Drink', 50, 3),
+    ('Fresh Orange Juice', 12000.00, 'Drink', 50, 3);
 
 -- Foods for Sate King Satay
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Lamb Satay Skewers', 40000.00, 'Food', 4),
-    ('Grilled Lamb Chops', 45000.00, 'Food', 4),
-    ('Spicy Lamb Soup', 35000.00, 'Food', 4),
-    ('Lamb Kofta Kebab', 38000.00, 'Food', 4),
-    ('Turmeric Marinated Lamb', 42000.00, 'Food', 4);
+    ('Lamb Satay Skewers', 40000.00, 'Food', 50, 4),
+    ('Grilled Lamb Chops', 45000.00, 'Food', 50, 4),
+    ('Spicy Lamb Soup', 35000.00, 'Food', 50, 4),
+    ('Lamb Kofta Kebab', 38000.00, 'Food', 50, 4),
+    ('Turmeric Marinated Lamb', 42000.00, 'Food', 50, 4);
 
 -- Drinks for King Satay
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Mint Lemonade', 8000.00, 'Drink', 4),
-    ('Rosemary Infused Iced Tea', 10000.00, 'Drink', 4);
+    ('Mint Lemonade', 8000.00, 'Drink', 50, 4),
+    ('Rosemary Infused Iced Tea', 10000.00, 'Drink', 50, 4);
 
 -- Foods for Meat Ball Corner
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Beef Meatball Soup', 18000.00, 'Food', 5),
-    ('Chicken Noodle Soup', 15000.00, 'Food', 5),
-    ('Spicy Tofu Meatballs', 20000.00, 'Food', 5),
-    ('Bakso Special Mix', 25000.00, 'Food', 5),
-    ('Fried Wonton with Meatballs', 22000.00, 'Food', 5);
+    ('Beef Meatball Soup', 18000.00, 'Food', 50, 5),
+    ('Chicken Noodle Soup', 15000.00, 'Food', 50, 5),
+    ('Spicy Tofu Meatballs', 20000.00, 'Food', 50, 5),
+    ('Bakso Special Mix', 25000.00, 'Food', 50, 5),
+    ('Fried Wonton with Meatballs', 22000.00, 'Food', 50, 5);
 
 -- Drinks for Meat Ball Corner
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Hot Ginger Tea', 5000.00, 'Drink', 5),
-    ('Iced Lychee Punch', 10000.00, 'Drink', 5);
+    ('Hot Ginger Tea', 5000.00, 'Drink', 50, 5),
+    ('Iced Lychee Punch', 10000.00, 'Drink', 50, 5);
 
 -- Foods for Heaven Cook Resto
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Chocolate Banana Martabak', 25000.00, 'Food', 6),
-    ('Cheese Pandan Martabak', 30000.00, 'Food', 6),
-    ('Strawberry Nutella Martabak', 35000.00, 'Food', 6),
-    ('Vanilla Almond Martabak', 28000.00, 'Food', 6),
-    ('Caramel Coconut Martabak', 32000.00, 'Food', 6);
+    ('Chocolate Banana Martabak', 25000.00, 'Food', 50, 6),
+    ('Cheese Pandan Martabak', 30000.00, 'Food', 50, 6),
+    ('Strawberry Nutella Martabak', 35000.00, 'Food', 50, 6),
+    ('Vanilla Almond Martabak', 28000.00, 'Food', 50, 6),
+    ('Caramel Coconut Martabak', 32000.00, 'Food', 50, 6);
 
 -- Drinks for Heaven Cook Resto
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Hot Chocolate', 7000.00, 'Drink', 6),
-    ('Iced Matcha Latte', 12000.00, 'Drink', 6);
+    ('Hot Chocolate', 7000.00, 'Drink', 50, 6),
+    ('Iced Matcha Latte', 12000.00, 'Drink', 50, 6);
 
 -- Foods for Chicken Heritage
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Chicken Soto Soup', 18000.00, 'Food', 7),
-    ('Beef Soto Soup', 15000.00, 'Food', 7),
-    ('Vegetarian Soto', 20000.00, 'Food', 7),
-    ('Spicy Coconut Chicken Soup', 25000.00, 'Food', 7),
-    ('Soto Ayam Special', 22000.00, 'Food', 7);
+    ('Chicken Soto Soup', 18000.00, 'Food', 50, 7),
+    ('Beef Soto Soup', 15000.00, 'Food', 50, 7),
+    ('Vegetarian Soto', 20000.00, 'Food', 50, 7),
+    ('Spicy Coconut Chicken Soup', 25000.00, 'Food', 50, 7),
+    ('Soto Ayam Special', 22000.00, 'Food', 50, 7);
 
 -- Drinks for Chicken Heritage
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Warm Ginger Elixir', 5000.00, 'Drink', 7),
-    ('Chrysanthemum Iced Tea', 10000.00, 'Drink', 7);
+    ('Warm Ginger Elixir', 5000.00, 'Drink', 50, 7),
+    ('Chrysanthemum Iced Tea', 10000.00, 'Drink', 50, 7);
 
 -- Foods for Steak Palace
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Beef Rendang', 25000.00, 'Food', 8),
-    ('Sambalado Fried Chicken', 30000.00, 'Food', 8),
-    ('Egg Rendang Sandwich', 35000.00, 'Food', 8),
-    ('Petai and Anchovies Stir-Fry', 28000.00, 'Food', 8),
-    ('Green Chili Beef Curry', 32000.00, 'Food', 8);
+    ('Beef Rendang', 25000.00, 'Food', 50, 8),
+    ('Sambalado Fried Chicken', 30000.00, 'Food', 50, 8),
+    ('Egg Rendang Sandwich', 35000.00, 'Food', 50, 8),
+    ('Petai and Anchovies Stir-Fry', 28000.00, 'Food', 50, 8),
+    ('Green Chili Beef Curry', 32000.00, 'Food', 50, 8);
 
 -- Drinks for Steak Palace
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Turmeric Tamarind Cooler', 7000.00, 'Drink', 8),
-    ('Lime Basil Spritzer', 12000.00, 'Drink', 8);
+    ('Turmeric Tamarind Cooler', 7000.00, 'Drink', 50, 8),
+    ('Lime Basil Spritzer', 12000.00, 'Drink', 50, 8);
 
 -- Foods for Meat and Spicy Lovers
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Spicy Beef Rendang', 18000.00, 'Food', 9),
-    ('Fiery Chicken Vindaloo', 15000.00, 'Food', 9),
-    ('Hot and Spicy Sichuan Beef', 20000.00, 'Food', 9),
-    ('Spicy Cajun Blackened Steak', 25000.00, 'Food', 9),
-    ('Spicy Chicken Curry', 22000.00, 'Food', 9);
+    ('Spicy Beef Rendang', 18000.00, 'Food', 50, 9),
+    ('Fiery Chicken Vindaloo', 15000.00, 'Food', 50, 9),
+    ('Hot and Spicy Sichuan Beef', 20000.00, 'Food', 50, 9),
+    ('Spicy Cajun Blackened Steak', 25000.00, 'Food', 50, 9),
+    ('Spicy Chicken Curry', 22000.00, 'Food', 50, 9);
 
 -- Drinks for Meat and Spicy Lovers
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Iced Roselle Tea', 5000.00, 'Drink', 9),
-    ('Lychee Ginger Elixir', 10000.00, 'Drink', 9);
+    ('Iced Roselle Tea', 5000.00, 'Drink', 50, 9),
+    ('Lychee Ginger Elixir', 10000.00, 'Drink', 50, 9);
 
 -- Foods for Cheff Garden
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Vegetable Gado-Gado Salad', 20000.00, 'Food', 10),
-    ('Tofu and Tempeh Satay', 25000.00, 'Food', 10),
-    ('Avocado and Peanut Rice Bowl', 18000.00, 'Food', 10),
-    ('Balinese Spicy Vegetables', 22000.00, 'Food', 10),
-    ('Jicama and Cabbage Slaw', 18000.00, 'Food', 10);
+    ('Vegetable Gado-Gado Salad', 20000.00, 'Food', 50, 10),
+    ('Tofu and Tempeh Satay', 25000.00, 'Food', 50, 10),
+    ('Avocado and Peanut Rice Bowl', 18000.00, 'Food', 50, 10),
+    ('Balinese Spicy Vegetables', 22000.00, 'Food', 50, 10),
+    ('Jicama and Cabbage Slaw', 18000.00, 'Food', 50, 10);
 
 -- Drinks for Cheff Garden
-INSERT INTO Products (product_name, product_price, product_type, restaurant_id)
+INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
-    ('Passionfruit Iced Tea', 6000.00, 'Drink', 10),
-    ('Mango Mint Refresher', 11000.00, 'Drink', 10);
+    ('Passionfruit Iced Tea', 6000.00, 'Drink', 50, 10),
+    ('Mango Mint Refresher', 11000.00, 'Drink', 50, 10);
+
 
 INSERT INTO Couriers (courier_name, courier_phone_number, courier_plate_number)
 VALUES
@@ -195,18 +197,18 @@ VALUES
 
 
 -- Inserting sample data into OrderTable table without payment_id
-INSERT INTO OrderTable (order_date, order_status, user_id, courier_id)
+INSERT INTO OrderTable (order_date, order_status, user_id, courier_id,restaurant_id)
 VALUES
-    (GETDATE(), 'PENDING', 1, 1),
-    (GETDATE(), 'PENDING', 2, 2),
-    (GETDATE(), 'PENDING', 3, 3),
-    (GETDATE(), 'PENDING', 4, 4),
-    (GETDATE(), 'PENDING', 5, 5),
-    (GETDATE(), 'PENDING', 6, 6),
-    (GETDATE(), 'PENDING', 7, 7),
-    (GETDATE(), 'PENDING', 8, 8),
-    (GETDATE(), 'PENDING', 9, 9),
-    (GETDATE(), 'PENDING', 10, 10);
+    (GETDATE(), 'PENDING', 1, 1,1),
+    (GETDATE(), 'PENDING', 2, 2,2),
+    (GETDATE(), 'PENDING', 3, 3,3),
+    (GETDATE(), 'PENDING', 4, 4,4),
+    (GETDATE(), 'PENDING', 5, 5,5),
+    (GETDATE(), 'PENDING', 6, 6,6),
+    (GETDATE(), 'PENDING', 7, 7,7),
+    (GETDATE(), 'PENDING', 8, 8,8),
+    (GETDATE(), 'PENDING', 9, 9,9),
+    (GETDATE(), 'PENDING', 10, 10,10);
 
 -- Inserting sample data into OrderDetails table with at least two different products for each order
 INSERT INTO OrderDetails (order_id, product_id, quantity)
