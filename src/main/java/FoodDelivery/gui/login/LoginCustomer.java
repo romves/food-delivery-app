@@ -6,8 +6,8 @@ package FoodDelivery.gui.login;
 
 import FoodDelivery.gui.styling.*;
 import FoodDelivery.dao.UserDAO;
-import FoodDelivery.gui.signUp.SignUpUserPage;
 import FoodDelivery.gui.restaurant.RestaurantDashboardPage;
+import FoodDelivery.gui.signUp.SignUpUser;
 
 /**
  *
@@ -38,7 +38,6 @@ public class LoginCustomer extends javax.swing.JFrame {
         passwordFieldLoginRestaurant = new javax.swing.JPasswordField();
         submitButtonLoginRestaurant = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        buttonToSignUpPage = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         createAccountLabel = new javax.swing.JLabel();
 
@@ -79,18 +78,6 @@ public class LoginCustomer extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel1.setText("Dont have account?");
 
-        buttonToSignUpPage.setBackground(javax.swing.UIManager.getDefaults().getColor("Button.disabledBackground"));
-        buttonToSignUpPage.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        buttonToSignUpPage.setForeground(new java.awt.Color(1, 127, 245));
-        buttonToSignUpPage.setText("Create an account");
-        buttonToSignUpPage.setBorder(null);
-        buttonToSignUpPage.setPreferredSize(new java.awt.Dimension(75, 25));
-        buttonToSignUpPage.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                buttonToSignUpPageActionPerformed(evt);
-            }
-        });
-
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
         jLabel4.setText("For Customer");
 
@@ -108,26 +95,21 @@ public class LoginCustomer extends javax.swing.JFrame {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(49, 49, 49)
-                                .addComponent(jLabel1)
-                                .addGap(18, 18, 18)
-                                .addComponent(createAccountLabel))
-                            .addComponent(jLabel4)
-                            .addComponent(submitButtonLoginRestaurant, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(passwordFieldLoginRestaurant, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(emailFieldLoginRestaurant, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGap(79, 79, 79)
-                        .addComponent(buttonToSignUpPage, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                        .addGap(49, 49, 49)
+                        .addComponent(jLabel1)
+                        .addGap(18, 18, 18)
+                        .addComponent(createAccountLabel))
+                    .addComponent(jLabel4)
+                    .addComponent(submitButtonLoginRestaurant, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(passwordFieldLoginRestaurant, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(emailFieldLoginRestaurant, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -142,31 +124,24 @@ public class LoginCustomer extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(9, 9, 9)
                 .addComponent(passwordFieldLoginRestaurant, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
                 .addComponent(submitButtonLoginRestaurant, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(createAccountLabel))
-                .addGap(26, 26, 26)
-                .addComponent(buttonToSignUpPage, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(60, 60, 60))
+                .addGap(111, 111, 111))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(0, 13, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -196,15 +171,10 @@ public class LoginCustomer extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_submitButtonLoginRestaurantActionPerformed
 
-    private void buttonToSignUpPageActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonToSignUpPageActionPerformed
-        // TODO add your handling code here:
-        this.dispose();
-    }//GEN-LAST:event_buttonToSignUpPageActionPerformed
-
     private void createAccountLabelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_createAccountLabelMouseClicked
         // TODO add your handling code here:
         this.dispose();
-        SignUpUserPage signUp = new SignUpUserPage();
+        SignUpUser signUp = new SignUpUser();
         signUp.setVisible(true);
         
     }//GEN-LAST:event_createAccountLabelMouseClicked
@@ -248,7 +218,6 @@ public class LoginCustomer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton buttonToSignUpPage;
     private javax.swing.JLabel createAccountLabel;
     private javax.swing.JTextField emailFieldLoginRestaurant;
     private javax.swing.JLabel jLabel1;

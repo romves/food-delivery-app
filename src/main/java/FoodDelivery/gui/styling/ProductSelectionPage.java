@@ -8,6 +8,7 @@ import FoodDelivery.gui.backup.HomePage;
 import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.dao.ProductDAO;
 import FoodDelivery.dao.RestaurantDAO;
+import FoodDelivery.gui.payment.PaymentPopUp;
 import FoodDelivery.gui.styling.components.ProductCard;
 import FoodDelivery.models.Product;
 import java.awt.Dimension;
@@ -25,6 +26,7 @@ import javax.swing.table.DefaultTableModel;
  * @author Naufal Romero
  */
 public class ProductSelectionPage extends javax.swing.JFrame implements ProductCardListener {
+    private int restoId;
     private int userId;
     DefaultTableModel cartTableModel;
 
@@ -33,6 +35,8 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
      */
     public ProductSelectionPage(int restoId,int userId) {
         this.setExtendedState(MAXIMIZED_BOTH);
+        this.userId=userId;
+        this.restoId=restoId;
         initComponents();
         ProductDAO productDB = new ProductDAO();
         RestaurantDAO restoDB = new RestaurantDAO();
@@ -289,13 +293,15 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         // TODO add your handling code here:
+        
         Home home = new Home(this.userId);
         home.setVisible(true);
-        dispose();
+        this.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        PaymentPopUp payment = new PaymentPopUp();
+        payment.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
 

@@ -54,11 +54,8 @@ public class UserDAO {
             return rowsAffected > 0;
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception appropriately based on your application's requirements.
             return false;
-        } finally {
-            closeConnection();
-        }
+        } 
     }
 
     public User getUserById(int userId) {
@@ -159,7 +156,6 @@ public class UserDAO {
         }
     }
 
-
     public int checkPasswordByEmail(String userEmail, String password) {
         try {
             String sql = "SELECT user_password, user_id FROM Users WHERE user_email = ?";
@@ -175,10 +171,46 @@ public class UserDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
+        } 
         return -1;
+    }
+
+    public boolean isEmailUnique(String userEmail) {
+        String query = "SELECT COUNT(*) AS count FROM Users WHERE user_email = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, userEmail);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt("count");
+                    return count == 0; // If count is 0, email is unique; otherwise, it's not.
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } 
+        return false; // Default to false in case of an exception.
+    }
+
+    public boolean isPhoneNumberUnique(String phoneNumber) {
+        String query = "SELECT COUNT(*) AS count FROM Users WHERE user_phone_number = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setString(1, phoneNumber);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    int count = resultSet.getInt("count");
+                    return count == 0; // If count is 0, phone number is unique; otherwise, it's not.
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception appropriately based on your application's requirements.
+        } finally {
+//            closeConnection();
+        }
+
+        return false; // Default to false in case of an exception.
     }
 
 }
