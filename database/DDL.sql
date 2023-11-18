@@ -173,6 +173,9 @@ END;
 GO
 
 
+
+
+
 GO
 
 -- Trigger to update delivery_status to 'PENDING' when order_status is FINISHED
@@ -260,3 +263,43 @@ SELECT
     total_sales
 FROM TopRestaurantsCTE;
 
+CREATE PROCEDURE CreateOrderFromPayment
+    @PaymentID INT
+AS
+BEGIN
+    BEGIN TRANSACTION; -- Start the transaction
+
+    BEGIN TRY
+        -- Insert a new order with the provided payment ID
+        INSERT INTO OrderTable (order_date, order_status, payment_id)
+        VALUES (GETDATE(), 'PENDING', @PaymentID);
+
+        -- Get the newly created order ID
+        DECLARE @OrderID INT;
+        SET @OrderID = SCOPE_IDENTITY();
+
+        -- Update the payment status to 'PAID' for non-cash payments
+        UPDATE Payments
+        SET payment_status = 'PAID'
+        WHERE payment_id = @PaymentID
+          AND payment_method <> 'CASH';
+
+        -- Update the new order's status to 'ON_PROCESS' if payment_method is not null
+        UPDATE OrderTable
+        SET order_status = 'ON_PROCESS'
+        WHERE order_id = @OrderID
+          AND EXISTS (
+              SELECT 1
+              FROM Payments
+              WHERE payment_id = @PaymentID
+                AND payment_method IS NOT NULL
+          );
+
+        COMMIT; -- Commit the transaction if all statements succeed
+    END TRY
+    BEGIN CATCH
+        ROLLBACK; -- Roll back the transaction if an error occurs
+        -- Handle the error as needed (log, re-throw, etc.)
+        THROW;
+    END CATCH;
+END;
