@@ -40,18 +40,19 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         initComponents();
         ProductDAO productDB = new ProductDAO();
         RestaurantDAO restoDB = new RestaurantDAO();
-
+        ProductDAO productDAO = new ProductDAO();
+//        productDAO.getTop3FrequentlyBoughtTogetherProducts(restoId);
         RestoNameLabel.setText(restoDB.getRestaurantName(restoId));
 
         this.cartTableModel = (DefaultTableModel) cartTable.getModel();
-
+        
         ArrayList<Product> productResto = productDB.getAllProductsByResto(restoId);
 
         JPanel productPanel = new JPanel();
         JPanel productPanel2 = new JPanel();
 
         productPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        productPanel2.setLayout(new GridLayout(0, 4, 10, 10));
+        productPanel2.setLayout(new GridLayout(0, 3, 10, 10));
 
         for (Product product : productResto) {
             int productId = product.getId();
@@ -221,31 +222,28 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
             .addGroup(totalLabelLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(RestoNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(totalLabelLayout.createSequentialGroup()
-                            .addComponent(jButton4)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButton1))
-                        .addGroup(totalLabelLayout.createSequentialGroup()
-                            .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 860, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                                .addGroup(totalLabelLayout.createSequentialGroup()
-                                    .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(TotalPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(TotalQtyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(0, 0, Short.MAX_VALUE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, totalLabelLayout.createSequentialGroup()
-                                    .addGap(0, 0, Short.MAX_VALUE)
-                                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(totalLabelLayout.createSequentialGroup()
+                        .addComponent(RestoNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(totalLabelLayout.createSequentialGroup()
+                        .addComponent(jButton4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(totalLabelLayout.createSequentialGroup()
+                        .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(337, 337, 337)
+                        .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(TotalQtyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(TotalPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(24, 24, 24))))
         );
         totalLabelLayout.setVerticalGroup(
             totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,9 +264,9 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
                         .addComponent(TotalQtyLabel)
                         .addGap(12, 12, 12)
                         .addComponent(TotalPriceLabel)
-                        .addGap(15, 15, 15)
+                        .addGap(28, 28, 28)
                         .addComponent(jButton5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(18, 18, 18)
                         .addComponent(jButton2))
                     .addGroup(totalLabelLayout.createSequentialGroup()
                         .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -288,7 +286,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
             .addComponent(totalLabel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        setBounds(0, 0, 1181, 857);
+        setBounds(0, 0, 1418, 857);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
@@ -300,8 +298,9 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        PaymentPopUp payment = new PaymentPopUp();
+        PaymentPopUp payment = new PaymentPopUp(this.restoId,this.userId);
         payment.setVisible(true);
+        
     }//GEN-LAST:event_jButton5ActionPerformed
 
 

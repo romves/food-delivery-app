@@ -15,6 +15,7 @@ public class Courier {
     private String name;
     private String phoneNumber;
     private String plateNumber;
+    private double balance;
 
     public Courier(String deliveryStatus, String name, String phoneNumber, String plateNumber) {
         this.deliveryStatus = deliveryStatus;
@@ -29,6 +30,16 @@ public class Courier {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.plateNumber = plateNumber;
+    }
+
+    public Courier(int courierId, String deliveryStatus, String name, String phoneNumber, String plateNumber, double balance) {
+        this.courierId = courierId;
+        this.deliveryStatus = deliveryStatus;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.plateNumber = plateNumber;
+        this.balance = balance;
+        
     }
 
     public int getCourierId() {
@@ -70,4 +81,13 @@ public class Courier {
     public void setPlateNumber(String plateNumber) {
         this.plateNumber = plateNumber;
     }
+
+    public double getBalance() {
+        return balance;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = balance;
+    }
+    
 }

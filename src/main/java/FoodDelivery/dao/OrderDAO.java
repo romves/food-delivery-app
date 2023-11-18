@@ -56,26 +56,68 @@ public class OrderDAO {
         }
     }
 
-    public int createOrderFromPayment(int paymentId) {
-        int newOrderId = 0;
+//    public int createOrderFromPayment(int paymentId, int restaurantId,int) {
+//        int newOrderId = 0;
+//        try {
+//            // Prepare the stored procedure call
+//            try (CallableStatement callableStatement = connection.prepareCall("{call CreateOrderFromPayment(?, ?, ?)}")) {
+//                // Set the input parameters
+//                callableStatement.setInt(1, paymentId);
+//                callableStatement.setInt(2, restaurantId);
+//
+//                // Register the output parameter
+//                callableStatement.registerOutParameter(3, java.sql.Types.INTEGER);
+//
+//                // Execute the stored procedure
+//                callableStatement.execute();
+//
+//                // Retrieve the output parameter
+//                newOrderId = callableStatement.getInt(3);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace(); // Handle the exception appropriately in your application
+//        } finally {
+//            closeConnection();
+//        }
+//
+//        return newOrderId;
+//    }
+    public void createOrderFromPayment(int paymentID, int userID, int restaurantID) {
+        Connection connection = null;
+        CallableStatement callableStatement = null;
+
         try {
-            // Prepare the stored procedure call
-            try (CallableStatement callableStatement = connection.prepareCall("{call CreateOrderFromPayment(?)}")) {
-                // Set the input parameter
-                callableStatement.setInt(1, paymentId);
+            // Mengambil koneksi dari DatabaseUtility
+            connection = DatabaseUtility.getConnection();
 
-                // Execute the stored procedure
-                callableStatement.execute();
+            // Membuat pemanggilan prosedur penyimpanan
+            String storedProcedureCall = "{call CreateOrderFromPayment(?, ?, ?)}";
+            callableStatement = connection.prepareCall(storedProcedureCall);
 
-                // Retrieve the output parameter or result set, if any
-                // For example, if the stored procedure returns the new order ID, you can do:
-                newOrderId = callableStatement.getInt("NewOrderID");
-            }
+            // Menetapkan parameter
+            callableStatement.setInt(1, paymentID);
+            callableStatement.setInt(2, userID);
+            callableStatement.setInt(3, restaurantID);
+
+            // Menjalankan pemanggilan prosedur penyimpanan
+            callableStatement.execute();
         } catch (SQLException e) {
-            e.printStackTrace(); // Handle the exception appropriately in your application
+            e.printStackTrace();
+            // Handle exception as needed
+        } finally {
+            // Menutup koneksi dan pernyataan setelah selesai
+            try {
+                if (callableStatement != null) {
+                    callableStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+                // Handle exception as needed
+            }
         }
-
-        return newOrderId;
     }
 
     public Order getOrderById(int orderId) {

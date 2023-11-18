@@ -1,3 +1,4 @@
+
 CREATE DATABASE FoodDeliveryApp
 GO
 USE FoodDeliveryApp
@@ -30,6 +31,7 @@ CREATE TABLE Products (
     product_name VARCHAR(255) NOT NULL,
     product_price DECIMAL(10, 2) NOT NULL,
     product_type VARCHAR(10) CHECK (product_type IN ('Food', 'Drink')),
+	stock INT DEFAULT 0,
     restaurant_id INT,
     CHECK (product_price >= 0),
     FOREIGN KEY (restaurant_id) REFERENCES Restaurant(restaurant_id)
@@ -61,9 +63,11 @@ CREATE TABLE OrderTable (
     user_id INT,
     payment_id INT,
     courier_id INT,
+	restaurant_id INT,
     FOREIGN KEY (user_id) REFERENCES Users(user_id),
     FOREIGN KEY (payment_id) REFERENCES Payments(payment_id),
-    FOREIGN KEY (courier_id) REFERENCES Couriers(courier_id)
+    FOREIGN KEY (courier_id) REFERENCES Couriers(courier_id),
+	FOREIGN KEY (restaurant_id) REFERENCES Restaurant(restaurant_id)
 );
 CREATE TABLE OrderDetails (
     order_id INT,
@@ -262,17 +266,20 @@ SELECT
     restaurant_name,
     total_sales
 FROM TopRestaurantsCTE;
+GO
 
 CREATE PROCEDURE CreateOrderFromPayment
-    @PaymentID INT
+    @PaymentID INT,
+	@UserID INT,
+	@RestaurantID INT
 AS
 BEGIN
     BEGIN TRANSACTION; -- Start the transaction
 
     BEGIN TRY
         -- Insert a new order with the provided payment ID
-        INSERT INTO OrderTable (order_date, order_status, payment_id)
-        VALUES (GETDATE(), 'PENDING', @PaymentID);
+        INSERT INTO OrderTable (order_date, order_status, payment_id,user_id,restaurant_id)
+        VALUES (GETDATE(), 'PENDING', @PaymentID,@UserID,@RestaurantID);
 
         -- Get the newly created order ID
         DECLARE @OrderID INT;

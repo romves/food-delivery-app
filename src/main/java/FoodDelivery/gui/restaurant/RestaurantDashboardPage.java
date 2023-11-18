@@ -6,9 +6,8 @@ package FoodDelivery.gui.restaurant;
 
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.database.DatabaseUtility;
-import FoodDelivery.gui.LoginPage;
+import FoodDelivery.gui.backup.LoginPage;
 import FoodDelivery.models.Restaurant;
-import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

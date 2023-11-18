@@ -16,8 +16,17 @@ public class PaymentPopUp extends javax.swing.JFrame {
     /**
      * Creates new form PaymentPopUp
      */
+    private int restaurantId;
+    private int userId;
+
     public PaymentPopUp() {
         initComponents();
+    }
+
+    public PaymentPopUp(int restaurantId, int userId) {
+        initComponents();
+        this.restaurantId = restaurantId;
+        this.userId = userId;
     }
 
     /**
@@ -158,10 +167,11 @@ public class PaymentPopUp extends javax.swing.JFrame {
         int paymentID;
         if (method.equals("CASH")) {
             paymentID = paymentDAO.insertPayment("UNPAID", method);
-            orderDAO.createOrderFromPayment(paymentID);
+            orderDAO.createOrderFromPayment(paymentID, this.userId, this.restaurantId);
         } else {
             paymentID = paymentDAO.insertPayment("PAID", method);
-            orderDAO.createOrderFromPayment(paymentID);
+            orderDAO.createOrderFromPayment(paymentID, this.userId, this.restaurantId);
+
         }
         this.dispose();
     }//GEN-LAST:event_submitButtonLoginRestaurantActionPerformed

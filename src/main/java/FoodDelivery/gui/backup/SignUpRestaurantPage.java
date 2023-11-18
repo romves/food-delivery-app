@@ -6,7 +6,6 @@ package FoodDelivery.gui.backup;
 
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
-import FoodDelivery.gui.LoginPage;
 import FoodDelivery.models.Restaurant;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;

@@ -5,7 +5,6 @@
 package FoodDelivery.gui.backup;
 
 import FoodDelivery.dao.UserDAO;
-import FoodDelivery.gui.LoginPage;
 import FoodDelivery.models.User;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
