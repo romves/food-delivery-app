@@ -16,15 +16,23 @@ import java.sql.SQLException;
  * @author Kenzie Taqiyassar
  */
 public class PaymentDAO {
+    
+//    private Connection connection;
+//    public PaymentDAO() {
+//        try {
+//            
+//        } catch (Exception e) {
+//        }
+//    }
+    
+    
 
     public int insertPayment(String paymentStatus, String paymentMethod) {
         String INSERT_PAYMENT_QUERY = "INSERT INTO Payments (payment_status, payment_method) VALUES (?, ?)";
         try (Connection connection = DatabaseUtility.getConnection()) {
             connection.setAutoCommit(false);
-
             try (PreparedStatement preparedStatement = connection.prepareStatement(INSERT_PAYMENT_QUERY,
                     PreparedStatement.RETURN_GENERATED_KEYS)) {
-
                 preparedStatement.setString(1, paymentStatus);
                 preparedStatement.setString(2, paymentMethod);
 

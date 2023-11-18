@@ -8,6 +8,7 @@ import FoodDelivery.gui.backup.HomePage;
 import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.dao.ProductDAO;
 import FoodDelivery.dao.RestaurantDAO;
+import FoodDelivery.gui.payment.PaymentPopUp;
 import FoodDelivery.gui.styling.components.ProductCard;
 import FoodDelivery.models.Product;
 import java.awt.Dimension;
@@ -299,7 +300,8 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+        PaymentPopUp payment = new PaymentPopUp();
+        payment.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
 
