@@ -6,12 +6,15 @@ package FoodDelivery.gui.styling;
 
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
+import FoodDelivery.gui.login.LoginChooser;
 import FoodDelivery.gui.styling.components.RestoCard;
 import FoodDelivery.gui.styling.eventlistener.RestoCardClickListener;
 import FoodDelivery.models.Restaurant;
+import FoodDelivery.models.User;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.List;
+import javax.accessibility.AccessibleRole;
 import javax.swing.JPanel;
 
 /**
@@ -28,6 +31,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     private int userId;
     private int restaurantId;
     private UserDAO userDB = new UserDAO();
+    UserDAO userDAO;
 
     public Home() {
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -36,11 +40,11 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
 
     public Home(int userId) {
         this.setExtendedState(MAXIMIZED_BOTH);
+        this.userId = userId;
 
         initComponents();
+        updateUserData();
 
-
-        this.userId = userId;
         RestaurantDAO restoDB = new RestaurantDAO();
         RestaurantDAO restoDAO = new RestaurantDAO();
 
@@ -50,7 +54,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         JPanel restoPanel = new JPanel();
         JPanel restoPanel2 = new JPanel();
 
-        restoPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 10, 10));
+        restoPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
         restoPanel2.setLayout(new GridLayout(0, 5, 10, 10));
         for (Restaurant resto : topResto) {
             int restoId = resto.getId();
@@ -70,6 +74,22 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         jScrollPane.setViewportView(restoPanel);
         jScrollPane2.setViewportView(restoPanel2);
         setLocationRelativeTo(null);
+    }
+
+    public void updateUserData() {
+        this.userDAO = new UserDAO();
+        this.userId = userId;
+        userName.setText(
+                userDAO.getUserById(userId).getName()
+        );
+        this.userDAO = new UserDAO();
+        User user = userDAO.getUserById(this.userId);
+        emailField.setText(user.getEmail());
+        passwordField.setText(user.getPassword());
+        userNameField.setText(user.getName());
+        addressField.setText(user.getAddress());
+        phoneField.setText(user.getPhoneNumber());
+
     }
 
     @Override
@@ -130,16 +150,16 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         lblCloseMenu = new javax.swing.JLabel();
         userName = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        homeMenu = new javax.swing.JPanel();
+        logoutBar = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        profileMenu = new javax.swing.JPanel();
+        homeBar = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        orderHistoryMenu = new javax.swing.JPanel();
+        profileBar = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        homeMenu1 = new javax.swing.JPanel();
+        historyBar = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         sidebarIcon = new javax.swing.JLabel();
@@ -149,10 +169,26 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         jScrollPane = new javax.swing.JScrollPane();
         allRestaurantsLabel = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
+        profile = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        emailField = new javax.swing.JTextField();
+        jLabel14 = new javax.swing.JLabel();
+        passwordField = new javax.swing.JPasswordField();
+        submitButtonLoginRestaurant = new javax.swing.JButton();
+        jLabel16 = new javax.swing.JLabel();
+        userNameField = new javax.swing.JTextField();
+        jLabel17 = new javax.swing.JLabel();
+        addressField = new javax.swing.JTextField();
+        jLabel18 = new javax.swing.JLabel();
+        Email3 = new javax.swing.JLabel();
+        phoneField = new javax.swing.JTextField();
+        history = new javax.swing.JPanel();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        mainPanel.setBackground(new java.awt.Color(255, 255, 255));
+        mainPanel.setBackground(new java.awt.Color(153, 255, 255));
 
         slideBar.setBackground(new java.awt.Color(255, 255, 255));
         slideBar.setPreferredSize(new java.awt.Dimension(190, 800));
@@ -169,141 +205,160 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         });
 
         userName.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        userName.setText("jLabel5");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lblCloseMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(63, 63, 63)
-                .addComponent(userName)
-                .addContainerGap(73, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(lblCloseMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(14, 14, 14))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblCloseMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 62, Short.MAX_VALUE)
-                .addComponent(userName)
-                .addGap(20, 20, 20))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                .addComponent(userName, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        homeMenu.setBackground(new java.awt.Color(255, 255, 255));
+        logoutBar.setBackground(new java.awt.Color(255, 255, 255));
+        logoutBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutBarMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel1.setText("Logout");
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FoodDelivery/assets/logout-icon.png"))); // NOI18N
 
-        javax.swing.GroupLayout homeMenuLayout = new javax.swing.GroupLayout(homeMenu);
-        homeMenu.setLayout(homeMenuLayout);
-        homeMenuLayout.setHorizontalGroup(
-            homeMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(homeMenuLayout.createSequentialGroup()
+        javax.swing.GroupLayout logoutBarLayout = new javax.swing.GroupLayout(logoutBar);
+        logoutBar.setLayout(logoutBarLayout);
+        logoutBarLayout.setHorizontalGroup(
+            logoutBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(logoutBarLayout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addContainerGap(86, Short.MAX_VALUE))
         );
-        homeMenuLayout.setVerticalGroup(
-            homeMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeMenuLayout.createSequentialGroup()
+        logoutBarLayout.setVerticalGroup(
+            logoutBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logoutBarLayout.createSequentialGroup()
                 .addGap(0, 6, Short.MAX_VALUE)
                 .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeMenuLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, logoutBarLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        profileMenu.setBackground(new java.awt.Color(255, 255, 255));
+        homeBar.setBackground(new java.awt.Color(255, 255, 255));
+        homeBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                homeBarMouseClicked(evt);
+            }
+        });
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FoodDelivery/assets/home-icon.png"))); // NOI18N
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel2.setText("Home");
 
-        javax.swing.GroupLayout profileMenuLayout = new javax.swing.GroupLayout(profileMenu);
-        profileMenu.setLayout(profileMenuLayout);
-        profileMenuLayout.setHorizontalGroup(
-            profileMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profileMenuLayout.createSequentialGroup()
+        javax.swing.GroupLayout homeBarLayout = new javax.swing.GroupLayout(homeBar);
+        homeBar.setLayout(homeBarLayout);
+        homeBarLayout.setHorizontalGroup(
+            homeBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeBarLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addContainerGap(88, Short.MAX_VALUE))
         );
-        profileMenuLayout.setVerticalGroup(
-            profileMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(profileMenuLayout.createSequentialGroup()
+        homeBarLayout.setVerticalGroup(
+            homeBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(homeBarLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(profileMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(homeBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(9, Short.MAX_VALUE))
         );
 
-        orderHistoryMenu.setBackground(new java.awt.Color(255, 255, 255));
+        profileBar.setBackground(new java.awt.Color(255, 255, 255));
+        profileBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                profileBarMouseClicked(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel5.setText("Edit Profile");
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FoodDelivery/assets/account-icon.png"))); // NOI18N
 
-        javax.swing.GroupLayout orderHistoryMenuLayout = new javax.swing.GroupLayout(orderHistoryMenu);
-        orderHistoryMenu.setLayout(orderHistoryMenuLayout);
-        orderHistoryMenuLayout.setHorizontalGroup(
-            orderHistoryMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(orderHistoryMenuLayout.createSequentialGroup()
+        javax.swing.GroupLayout profileBarLayout = new javax.swing.GroupLayout(profileBar);
+        profileBar.setLayout(profileBarLayout);
+        profileBarLayout.setHorizontalGroup(
+            profileBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(profileBarLayout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addContainerGap(48, Short.MAX_VALUE))
         );
-        orderHistoryMenuLayout.setVerticalGroup(
-            orderHistoryMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(orderHistoryMenuLayout.createSequentialGroup()
+        profileBarLayout.setVerticalGroup(
+            profileBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(profileBarLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addComponent(jLabel5)
                 .addContainerGap(11, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, orderHistoryMenuLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profileBarLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        homeMenu1.setBackground(new java.awt.Color(255, 255, 255));
+        historyBar.setBackground(new java.awt.Color(255, 255, 255));
+        historyBar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                historyBarMouseClicked(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel7.setText("History Order");
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FoodDelivery/assets/history icon.png"))); // NOI18N
 
-        javax.swing.GroupLayout homeMenu1Layout = new javax.swing.GroupLayout(homeMenu1);
-        homeMenu1.setLayout(homeMenu1Layout);
-        homeMenu1Layout.setHorizontalGroup(
-            homeMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(homeMenu1Layout.createSequentialGroup()
+        javax.swing.GroupLayout historyBarLayout = new javax.swing.GroupLayout(historyBar);
+        historyBar.setLayout(historyBarLayout);
+        historyBarLayout.setHorizontalGroup(
+            historyBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(historyBarLayout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addComponent(jLabel8)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel7)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        homeMenu1Layout.setVerticalGroup(
-            homeMenu1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeMenu1Layout.createSequentialGroup()
+        historyBarLayout.setVerticalGroup(
+            historyBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, historyBarLayout.createSequentialGroup()
                 .addGap(0, 6, Short.MAX_VALUE)
                 .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeMenu1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, historyBarLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel7)
                 .addContainerGap())
@@ -313,30 +368,35 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         slideBar.setLayout(slideBarLayout);
         slideBarLayout.setHorizontalGroup(
             slideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(slideBarLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(historyBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(slideBarLayout.createSequentialGroup()
                 .addGroup(slideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(profileMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(orderHistoryMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(homeMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(homeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(slideBarLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addGroup(slideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(homeBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(profileBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(logoutBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         slideBarLayout.setVerticalGroup(
             slideBarLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(slideBarLayout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(90, 90, 90)
-                .addComponent(profileMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(homeBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(20, 20, 20)
-                .addComponent(orderHistoryMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20)
-                .addComponent(homeMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(22, 22, 22)
+                .addComponent(profileBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(historyBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(24, 24, 24)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(278, 278, 278)
-                .addComponent(homeMenu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(logoutBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         sidebarIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/FoodDelivery/assets/sidebar-icon.png"))); // NOI18N
@@ -379,7 +439,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
                     .addGroup(homeLayout.createSequentialGroup()
                         .addGap(85, 85, 85)
                         .addComponent(allRestaurantsLabel)))
-                .addContainerGap(742, Short.MAX_VALUE))
+                .addContainerGap(762, Short.MAX_VALUE))
         );
         homeLayout.setVerticalGroup(
             homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -391,10 +451,152 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
                 .addComponent(allRestaurantsLabel)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(8, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panelContainer.add(home, "card2");
+
+        profile.setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel13.setText("Email ");
+
+        emailField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel14.setText("Password ");
+
+        passwordField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordFieldActionPerformed(evt);
+            }
+        });
+
+        submitButtonLoginRestaurant.setBackground(new java.awt.Color(1, 127, 245));
+        submitButtonLoginRestaurant.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        submitButtonLoginRestaurant.setForeground(new java.awt.Color(255, 255, 255));
+        submitButtonLoginRestaurant.setText("Edit");
+        submitButtonLoginRestaurant.setMaximumSize(new java.awt.Dimension(75, 25));
+        submitButtonLoginRestaurant.setMinimumSize(new java.awt.Dimension(75, 25));
+        submitButtonLoginRestaurant.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                submitButtonLoginRestaurantActionPerformed(evt);
+            }
+        });
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
+        jLabel16.setText("Edit Profile");
+
+        userNameField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                userNameFieldActionPerformed(evt);
+            }
+        });
+
+        jLabel17.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel17.setText("Username");
+
+        jLabel18.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        jLabel18.setText("Address");
+
+        Email3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        Email3.setText("Phone Number:");
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(phoneField)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(Email3)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel16)
+                                .addComponent(submitButtonLoginRestaurant, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                                .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                                .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(addressField)
+                                .addComponent(userNameField)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
+                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel13)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel14)
+                .addGap(18, 18, 18)
+                .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel17)
+                .addGap(22, 22, 22)
+                .addComponent(userNameField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(addressField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(Email3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addComponent(submitButtonLoginRestaurant, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(22, 22, 22))
+        );
+
+        javax.swing.GroupLayout profileLayout = new javax.swing.GroupLayout(profile);
+        profile.setLayout(profileLayout);
+        profileLayout.setHorizontalGroup(
+            profileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profileLayout.createSequentialGroup()
+                .addContainerGap(499, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(493, 493, 493))
+        );
+        profileLayout.setVerticalGroup(
+            profileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profileLayout.createSequentialGroup()
+                .addContainerGap(66, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(55, 55, 55))
+        );
+
+        panelContainer.add(profile, "card3");
+
+        javax.swing.GroupLayout historyLayout = new javax.swing.GroupLayout(history);
+        history.setLayout(historyLayout);
+        historyLayout.setHorizontalGroup(
+            historyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1403, Short.MAX_VALUE)
+        );
+        historyLayout.setVerticalGroup(
+            historyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 759, Short.MAX_VALUE)
+        );
+
+        panelContainer.add(history, "card4");
+
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jLabel12.setText("DelivEat");
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -402,21 +604,26 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addComponent(slideBar, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(panelContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 1403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
                     .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
                         .addComponent(sidebarIcon)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(panelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())))
+                        .addGap(36, 36, 36)
+                        .addComponent(jLabel12)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(sidebarIcon)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(sidebarIcon)
+                    .addComponent(jLabel12))
+                .addGap(43, 43, 43)
                 .addComponent(panelContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(slideBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
@@ -432,7 +639,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setBounds(0, 0, 1421, 763);
+        setBounds(0, 0, 1421, 878);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblCloseMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMenuMouseClicked
@@ -442,6 +649,57 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     private void sidebarIconMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_sidebarIconMouseClicked
         openMenu();
     }//GEN-LAST:event_sidebarIconMouseClicked
+
+    private void homeBarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_homeBarMouseClicked
+        home.setVisible(true);
+        profile.setVisible(false);
+        history.setVisible(false);
+        closeMenu();
+    }//GEN-LAST:event_homeBarMouseClicked
+
+    private void logoutBarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutBarMouseClicked
+        this.dispose();
+        LoginChooser login = new LoginChooser();
+        login.setVisible(true);
+    }//GEN-LAST:event_logoutBarMouseClicked
+
+    private void profileBarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_profileBarMouseClicked
+        profile.setVisible(true);
+        home.setVisible(false);
+        history.setVisible(false);
+        closeMenu();    }//GEN-LAST:event_profileBarMouseClicked
+
+    private void historyBarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historyBarMouseClicked
+        history.setVisible(true);
+        profile.setVisible(false);
+        home.setVisible(false);
+        closeMenu();
+    }//GEN-LAST:event_historyBarMouseClicked
+
+    private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_emailFieldActionPerformed
+
+    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordFieldActionPerformed
+
+    private void submitButtonLoginRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonLoginRestaurantActionPerformed
+        int userId = this.userId;
+        String username = userNameField.getText();
+        String email = emailField.getText();
+        String address = addressField.getText();
+        String phoneNumber = phoneField.getText();
+        String password = new String(passwordField.getPassword());
+        UserDAO userDB = new UserDAO();
+        User user = new User(userId, username, email, address, phoneNumber, password);
+        userDB.updateUser(user);
+        updateUserData();
+    }//GEN-LAST:event_submitButtonLoginRestaurantActionPerformed
+
+    private void userNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_userNameFieldActionPerformed
 
     /**
      * @param args the command line arguments
@@ -479,11 +737,21 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Email3;
+    private javax.swing.JTextField addressField;
     private javax.swing.JLabel allRestaurantsLabel;
+    private javax.swing.JTextField emailField;
+    private javax.swing.JPanel history;
+    private javax.swing.JPanel historyBar;
     private javax.swing.JPanel home;
-    private javax.swing.JPanel homeMenu;
-    private javax.swing.JPanel homeMenu1;
+    private javax.swing.JPanel homeBar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -493,16 +761,22 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblCloseMenu;
+    private javax.swing.JPanel logoutBar;
     private javax.swing.JPanel mainPanel;
-    private javax.swing.JPanel orderHistoryMenu;
     private javax.swing.JPanel panelContainer;
-    private javax.swing.JPanel profileMenu;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JTextField phoneField;
+    private javax.swing.JPanel profile;
+    private javax.swing.JPanel profileBar;
     private javax.swing.JLabel sidebarIcon;
     private javax.swing.JPanel slideBar;
+    private javax.swing.JButton submitButtonLoginRestaurant;
     private javax.swing.JLabel userName;
+    private javax.swing.JTextField userNameField;
     // End of variables declaration//GEN-END:variables
 }
