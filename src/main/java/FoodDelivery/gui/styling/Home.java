@@ -31,7 +31,6 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     private int userId;
     private int restaurantId;
     private UserDAO userDB = new UserDAO();
-    UserDAO userDAO;
 
     public Home() {
         this.setExtendedState(MAXIMIZED_BOTH);
@@ -41,9 +40,8 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     public Home(int userId) {
         this.setExtendedState(MAXIMIZED_BOTH);
         this.userId = userId;
-
         initComponents();
-        updateUserData();
+        updateUserData(userId);
 
         RestaurantDAO restoDB = new RestaurantDAO();
         RestaurantDAO restoDAO = new RestaurantDAO();
@@ -76,13 +74,14 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         setLocationRelativeTo(null);
     }
 
-    public void updateUserData() {
-        this.userDAO = new UserDAO();
+    public void updateUserData(int userId) {
+        UserDAO userDAO = new UserDAO();
         this.userId = userId;
+        System.out.println(userId);
         userName.setText(
                 userDAO.getUserById(userId).getName()
         );
-        this.userDAO = new UserDAO();
+        userDAO = new UserDAO();
         User user = userDAO.getUserById(this.userId);
         emailField.setText(user.getEmail());
         passwordField.setText(user.getPassword());
@@ -188,7 +187,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        mainPanel.setBackground(new java.awt.Color(153, 255, 255));
+        mainPanel.setBackground(new java.awt.Color(255, 255, 255));
 
         slideBar.setBackground(new java.awt.Color(255, 255, 255));
         slideBar.setPreferredSize(new java.awt.Dimension(190, 800));
@@ -459,6 +458,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         profile.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
         jLabel13.setText("Email ");
@@ -514,24 +514,21 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(40, 40, 40)
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(phoneField)
-                    .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(Email3)
-                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel16)
-                                .addComponent(submitButtonLoginRestaurant, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
-                                .addComponent(passwordField, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
-                                .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
-                                .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(addressField)
-                                .addComponent(userNameField)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(phoneField, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                    .addComponent(Email3)
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel16)
+                        .addComponent(submitButtonLoginRestaurant, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                        .addComponent(passwordField)
+                        .addComponent(emailField)
+                        .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(addressField)
+                        .addComponent(userNameField)))
+                .addGap(40, 40, 40))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -568,16 +565,16 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         profileLayout.setHorizontalGroup(
             profileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profileLayout.createSequentialGroup()
-                .addContainerGap(499, Short.MAX_VALUE)
+                .addContainerGap(481, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(493, 493, 493))
+                .addGap(475, 475, 475))
         );
         profileLayout.setVerticalGroup(
             profileLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, profileLayout.createSequentialGroup()
-                .addContainerGap(66, Short.MAX_VALUE)
+                .addContainerGap(61, Short.MAX_VALUE)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(55, 55, 55))
+                .addGap(58, 58, 58))
         );
 
         panelContainer.add(profile, "card3");
@@ -694,7 +691,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         UserDAO userDB = new UserDAO();
         User user = new User(userId, username, email, address, phoneNumber, password);
         userDB.updateUser(user);
-        updateUserData();
+        updateUserData(userId);
     }//GEN-LAST:event_submitButtonLoginRestaurantActionPerformed
 
     private void userNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameFieldActionPerformed
