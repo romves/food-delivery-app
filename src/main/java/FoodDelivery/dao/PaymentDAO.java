@@ -182,4 +182,27 @@ public class PaymentDAO {
         }
     }
 
+    public void deletePaymentById(int paymentId) {
+        String DELETE_PAYMENT_QUERY = "DELETE FROM Payments WHERE payment_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_PAYMENT_QUERY)) {
+            preparedStatement.setInt(1, paymentId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            resetPaymentIdentity();
+        }
+    }
+
+    public void resetPaymentIdentity() {
+        String RESET_IDENTITY_QUERY = "DBCC CHECKIDENT('Payments', RESEED)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(RESET_IDENTITY_QUERY)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+//            closeConnection();
+        }
+    }
+
 }

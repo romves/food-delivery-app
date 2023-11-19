@@ -4,7 +4,9 @@
  */
 package FoodDelivery.gui.styling;
 
+import FoodDelivery.dao.OrderDAO;
 import FoodDelivery.dao.OrderDetailDAO;
+import FoodDelivery.dao.PaymentDAO;
 import FoodDelivery.gui.backup.HomePage;
 import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.dao.ProductDAO;
@@ -337,6 +339,12 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         Home home = new Home(this.userId);
         home.setVisible(true);
+        PaymentDAO payment = new PaymentDAO();
+        OrderDAO order = new OrderDAO();
+        OrderDetailDAO detail = new OrderDetailDAO();
+        detail.deleteOrderDetailByOrderId(orderId);
+        order.deleteOrderById(orderId);
+        payment.deletePaymentById(paymentId);
         this.dispose();
     }//GEN-LAST:event_backButtonActionPerformed
 
@@ -349,7 +357,6 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     private void checkoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutButtonActionPerformed
         if (orderId != -1) {
             OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
-
             // Assuming cartTableModel contains the data from the cartTable
             for (int row = 0; row < cartTableModel.getRowCount(); row++) {
                 int productID = (int) cartTableModel.getValueAt(row, 0);

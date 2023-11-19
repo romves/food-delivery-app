@@ -1,4 +1,3 @@
-
 CREATE DATABASE FoodDeliveryApp
 GO
 USE FoodDeliveryApp
@@ -271,18 +270,18 @@ GO
 CREATE PROCEDURE CreateOrderFromPayment
     @PaymentID INT,
 	@UserID INT,
-	@RestaurantID INT
+	@RestaurantID INT,
+    @OrderID INT OUTPUT
 AS
 BEGIN
     BEGIN TRANSACTION; -- Start the transaction
 
     BEGIN TRY
         -- Insert a new order with the provided payment ID
-        INSERT INTO OrderTable (order_date, order_status, payment_id,user_id,restaurant_id)
-        VALUES (GETDATE(), 'PENDING', @PaymentID,@UserID,@RestaurantID);
+        INSERT INTO OrderTable (order_date, order_status, payment_id, user_id, restaurant_id)
+        VALUES (GETDATE(), 'PENDING', @PaymentID, @UserID, @RestaurantID);
 
         -- Get the newly created order ID
-        DECLARE @OrderID INT;
         SET @OrderID = SCOPE_IDENTITY();
 
         -- Update the payment status to 'PAID' for non-cash payments
@@ -310,3 +309,4 @@ BEGIN
         THROW;
     END CATCH;
 END;
+
