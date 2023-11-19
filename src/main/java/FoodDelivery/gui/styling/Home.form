@@ -527,7 +527,7 @@
                                   <Component id="jLabel18" min="-2" pref="91" max="-2" attributes="0"/>
                                   <Component id="jLabel17" min="-2" pref="91" max="-2" attributes="0"/>
                                   <Component id="jLabel16" alignment="0" min="-2" max="-2" attributes="0"/>
-                                  <Component id="submitButtonLoginRestaurant" alignment="0" pref="365" max="32767" attributes="0"/>
+                                  <Component id="editProfileButton" alignment="0" pref="365" max="32767" attributes="0"/>
                                   <Component id="passwordField" alignment="0" max="32767" attributes="0"/>
                                   <Component id="emailField" alignment="0" max="32767" attributes="0"/>
                                   <Component id="jLabel14" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
@@ -565,7 +565,7 @@
                               <EmptySpace max="32767" attributes="0"/>
                               <Component id="phoneField" min="-2" pref="36" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                              <Component id="submitButtonLoginRestaurant" min="-2" pref="49" max="-2" attributes="0"/>
+                              <Component id="editProfileButton" min="-2" pref="49" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -598,7 +598,7 @@
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordFieldActionPerformed"/>
                       </Events>
                     </Component>
-                    <Component class="javax.swing.JButton" name="submitButtonLoginRestaurant">
+                    <Component class="javax.swing.JButton" name="editProfileButton">
                       <Properties>
                         <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                           <Color blue="f5" green="7f" red="1" type="rgb"/>
@@ -618,7 +618,7 @@
                         </Property>
                       </Properties>
                       <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="submitButtonLoginRestaurantActionPerformed"/>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editProfileButtonActionPerformed"/>
                       </Events>
                     </Component>
                     <Component class="javax.swing.JLabel" name="jLabel16">

@@ -7,6 +7,7 @@ package FoodDelivery.gui.styling;
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
 import FoodDelivery.gui.login.LoginChooser;
+import FoodDelivery.gui.payment.PaymentPopUp;
 import FoodDelivery.gui.styling.components.RestoCard;
 import FoodDelivery.gui.styling.eventlistener.RestoCardClickListener;
 import FoodDelivery.models.Restaurant;
@@ -94,6 +95,12 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     @Override
     public void onRestoCardClick(int restoId) {
         dispose();
+        PaymentPopUp payment = new PaymentPopUp();
+        payment.setVisible(true);
+        this.dispose();
+        Home home = new Home(this.userId);
+        home.setVisible(false);
+        home.dispose();
     }
 
     public void openMenu() {
@@ -169,7 +176,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         emailField = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         passwordField = new javax.swing.JPasswordField();
-        submitButtonLoginRestaurant = new javax.swing.JButton();
+        editProfileButton = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         userNameField = new javax.swing.JTextField();
         jLabel17 = new javax.swing.JLabel();
@@ -442,15 +449,15 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
             }
         });
 
-        submitButtonLoginRestaurant.setBackground(new java.awt.Color(1, 127, 245));
-        submitButtonLoginRestaurant.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
-        submitButtonLoginRestaurant.setForeground(new java.awt.Color(255, 255, 255));
-        submitButtonLoginRestaurant.setText("Edit");
-        submitButtonLoginRestaurant.setMaximumSize(new java.awt.Dimension(75, 25));
-        submitButtonLoginRestaurant.setMinimumSize(new java.awt.Dimension(75, 25));
-        submitButtonLoginRestaurant.addActionListener(new java.awt.event.ActionListener() {
+        editProfileButton.setBackground(new java.awt.Color(1, 127, 245));
+        editProfileButton.setFont(new java.awt.Font("Segoe UI Semibold", 0, 14)); // NOI18N
+        editProfileButton.setForeground(new java.awt.Color(255, 255, 255));
+        editProfileButton.setText("Edit");
+        editProfileButton.setMaximumSize(new java.awt.Dimension(75, 25));
+        editProfileButton.setMinimumSize(new java.awt.Dimension(75, 25));
+        editProfileButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                submitButtonLoginRestaurantActionPerformed(evt);
+                editProfileButtonActionPerformed(evt);
             }
         });
 
@@ -484,7 +491,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
                     .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
-                    .addComponent(submitButtonLoginRestaurant, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                    .addComponent(editProfileButton, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
                     .addComponent(passwordField)
                     .addComponent(emailField)
                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -519,7 +526,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(phoneField, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
-                .addComponent(submitButtonLoginRestaurant, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(editProfileButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(22, 22, 22))
         );
 
@@ -644,7 +651,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordFieldActionPerformed
 
-    private void submitButtonLoginRestaurantActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_submitButtonLoginRestaurantActionPerformed
+    private void editProfileButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editProfileButtonActionPerformed
         int userId = this.userId;
         String username = userNameField.getText();
         String email = emailField.getText();
@@ -655,7 +662,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         User user = new User(userId, username, email, address, phoneNumber, password);
         userDB.updateUser(user);
         updateUserData(userId);
-    }//GEN-LAST:event_submitButtonLoginRestaurantActionPerformed
+    }//GEN-LAST:event_editProfileButtonActionPerformed
 
     private void userNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameFieldActionPerformed
         // TODO add your handling code here:
@@ -700,6 +707,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     private javax.swing.JLabel Email3;
     private javax.swing.JTextField addressField;
     private javax.swing.JLabel allRestaurantsLabel;
+    private javax.swing.JButton editProfileButton;
     private javax.swing.JTextField emailField;
     private javax.swing.JPanel history;
     private javax.swing.JPanel historyBar;
@@ -730,7 +738,6 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     private javax.swing.JPanel profileBar;
     private javax.swing.JLabel sidebarIcon;
     private javax.swing.JPanel slideBar;
-    private javax.swing.JButton submitButtonLoginRestaurant;
     private javax.swing.JLabel userName;
     private javax.swing.JTextField userNameField;
     // End of variables declaration//GEN-END:variables

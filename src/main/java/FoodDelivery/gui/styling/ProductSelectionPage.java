@@ -4,6 +4,7 @@
  */
 package FoodDelivery.gui.styling;
 
+import FoodDelivery.dao.OrderDetailDAO;
 import FoodDelivery.gui.backup.HomePage;
 import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.dao.ProductDAO;
@@ -26,17 +27,20 @@ import javax.swing.table.DefaultTableModel;
  * @author Naufal Romero
  */
 public class ProductSelectionPage extends javax.swing.JFrame implements ProductCardListener {
+
     private int restoId;
     private int userId;
     DefaultTableModel cartTableModel;
+    private int paymentId;
+    private int orderId;
 
     /**
      * Creates new form Home
      */
-    public ProductSelectionPage(int restoId,int userId) {
+    public ProductSelectionPage(int restoId, int userId) {
         this.setExtendedState(MAXIMIZED_BOTH);
-        this.userId=userId;
-        this.restoId=restoId;
+        this.userId = userId;
+        this.restoId = restoId;
         initComponents();
         ProductDAO productDB = new ProductDAO();
         RestaurantDAO restoDB = new RestaurantDAO();
@@ -45,7 +49,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         RestoNameLabel.setText(restoDB.getRestaurantName(restoId));
 
         this.cartTableModel = (DefaultTableModel) cartTable.getModel();
-        
+
         ArrayList<Product> productResto = productDB.getAllProductsByResto(restoId);
 
         JPanel productPanel = new JPanel();
@@ -68,12 +72,61 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         setLocationRelativeTo(null);
     }
 
+    public ProductSelectionPage(int restoId, int userId, int paymentId, int orderID) {
+        this.setExtendedState(MAXIMIZED_BOTH);
+        this.userId = userId;
+        this.restoId = restoId;
+        this.paymentId = paymentId;
+        this.orderId = orderID;
+        initComponents();
+        ProductDAO productDB = new ProductDAO();
+        RestaurantDAO restoDB = new RestaurantDAO();
+        ProductDAO productDAO = new ProductDAO();
+//        productDAO.getTop3FrequentlyBoughtTogetherProducts(restoId);
+        RestoNameLabel.setText(Integer.toString(orderID));
+
+        this.cartTableModel = (DefaultTableModel) cartTable.getModel();
+
+        ArrayList<Product> productResto = productDB.getAllProductsByResto(restoId);
+
+        JPanel productPanel = new JPanel();
+        JPanel productPanel2 = new JPanel();
+
+        productPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
+        productPanel2.setLayout(new GridLayout(0, 3, 10, 10));
+
+        for (Product product : productResto) {
+            int productId = product.getId();
+            String productName = product.getName();
+            double productPrice = product.getPrice();
+
+            productPanel.add(new ProductCard(productId, productName, productPrice, this));
+            productPanel2.add(new ProductCard(productId, productName, productPrice, this));
+        }
+
+        jScrollPane.setViewportView(productPanel);
+        jScrollPane2.setViewportView(productPanel2);
+        setLocationRelativeTo(null);
+    }
+
+    public ArrayList<Object[]> getIdAndQuantityData() {
+        ArrayList<Object[]> idAndQuantityData = new ArrayList<>();
+
+        for (int row = 0; row < cartTableModel.getRowCount(); row++) {
+            Object[] rowData = new Object[2]; // Array to store ID and Quantity
+            rowData[0] = cartTableModel.getValueAt(row, 0); // ID (column index 0)
+            rowData[1] = cartTableModel.getValueAt(row, 2); // Quantity (column index 2)
+            idAndQuantityData.add(rowData);
+        }
+
+        return idAndQuantityData;
+    }
+
     @Override
     public void onAddToCart(int productId, int quantity, Product product) {
         // Implement the logic to update the cart table here
         // For example, you can add a new row to the cartTableModel
         int existingRow = findProductRow(productId);
-
         if (existingRow != -1) {
             // Product already exists, update the quantity
             int existingQuantity = Integer.parseInt(cartTableModel.getValueAt(existingRow, 2).toString());
@@ -91,6 +144,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         }
 
         updateTotalLabel();
+
     }
 
     private int findProductRow(int productId) {
@@ -128,25 +182,21 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     private void initComponents() {
 
         totalLabel = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
         jScrollPane = new javax.swing.JScrollPane();
         jScrollPane1 = new javax.swing.JScrollPane();
         cartTable = new javax.swing.JTable();
-        jButton2 = new javax.swing.JButton();
+        checkoutButton = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
         RestoNameLabel = new javax.swing.JLabel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        backButton = new javax.swing.JButton();
         TotalPriceLabel = new javax.swing.JLabel();
         TotalQtyLabel = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        paymentButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
 
         totalLabel.setDoubleBuffered(false);
-
-        jButton1.setText("Profile");
 
         jScrollPane.setMaximumSize(new java.awt.Dimension(300, 300));
 
@@ -185,19 +235,22 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
             cartTable.getColumnModel().getColumn(3).setPreferredWidth(60);
         }
 
-        jButton2.setText("Checkout");
+        checkoutButton.setText("Checkout");
+        checkoutButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                checkoutButtonActionPerformed(evt);
+            }
+        });
 
         jScrollPane2.setMaximumSize(new java.awt.Dimension(300, 300));
 
         RestoNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         RestoNameLabel.setText("DelivEat");
 
-        jButton3.setText("Logout");
-
-        jButton4.setText("< Back to Home");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        backButton.setText("< Back to Home");
+        backButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                backButtonActionPerformed(evt);
             }
         });
 
@@ -208,10 +261,10 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         TotalQtyLabel.setText("Qty");
         TotalQtyLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        jButton5.setText("Add Payment");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
+        paymentButton.setText("Change Payment");
+        paymentButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                paymentButtonActionPerformed(evt);
             }
         });
 
@@ -226,11 +279,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
                         .addComponent(RestoNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(totalLabelLayout.createSequentialGroup()
-                        .addComponent(jButton4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1)
+                        .addComponent(backButton)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(totalLabelLayout.createSequentialGroup()
                         .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -241,19 +290,15 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
                             .addComponent(TotalQtyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(TotalPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton5, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(paymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(checkoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(24, 24, 24))))
         );
         totalLabelLayout.setVerticalGroup(
             totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(totalLabelLayout.createSequentialGroup()
                 .addGap(16, 16, 16)
-                .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton1)
-                        .addComponent(jButton3))
-                    .addComponent(jButton4))
+                .addComponent(backButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(RestoNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(7, 7, 7)
@@ -265,9 +310,9 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
                         .addGap(12, 12, 12)
                         .addComponent(TotalPriceLabel)
                         .addGap(28, 28, 28)
-                        .addComponent(jButton5)
+                        .addComponent(paymentButton)
                         .addGap(18, 18, 18)
-                        .addComponent(jButton2))
+                        .addComponent(checkoutButton))
                     .addGroup(totalLabelLayout.createSequentialGroup()
                         .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -289,34 +334,45 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         setBounds(0, 0, 1418, 857);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-        
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
         Home home = new Home(this.userId);
         home.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_backButtonActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        PaymentPopUp payment = new PaymentPopUp(this.restoId,this.userId);
+    private void paymentButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_paymentButtonActionPerformed
+        PaymentPopUp payment = new PaymentPopUp(restoId, userId, paymentId);
         payment.setVisible(true);
-        
-    }//GEN-LAST:event_jButton5ActionPerformed
+
+    }//GEN-LAST:event_paymentButtonActionPerformed
+
+    private void checkoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutButtonActionPerformed
+        if (orderId != -1) {
+            OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+
+            // Assuming cartTableModel contains the data from the cartTable
+            for (int row = 0; row < cartTableModel.getRowCount(); row++) {
+                int productID = (int) cartTableModel.getValueAt(row, 0);
+                int qty = (int) cartTableModel.getValueAt(row, 2);
+
+                orderDetailDAO.checkDetail(orderId, productID, qty);
+                System.out.println(orderId);
+            }
+        }
+    }//GEN-LAST:event_checkoutButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel RestoNameLabel;
     private javax.swing.JLabel TotalPriceLabel;
     private javax.swing.JLabel TotalQtyLabel;
+    private javax.swing.JButton backButton;
     private javax.swing.JTable cartTable;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton checkoutButton;
     private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton paymentButton;
     private javax.swing.JPanel totalLabel;
     // End of variables declaration//GEN-END:variables
 
