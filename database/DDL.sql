@@ -1,3 +1,5 @@
+use master
+drop database FoodDeliveryApp
 CREATE DATABASE FoodDeliveryApp
 GO
 USE FoodDeliveryApp
@@ -80,167 +82,6 @@ CREATE TABLE OrderDetails (
 GO
 
 
--- Trigger to update subtotal in OrderDetails when a new product is added
-CREATE TRIGGER UpdateSubtotalAndTotal
-ON OrderDetails
-AFTER INSERT, UPDATE, DELETE
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Update order_total in OrderTable for all affected orders
-    UPDATE ot
-    SET ot.order_total = ISNULL((SELECT SUM(p.product_price * i.quantity)
-                                FROM OrderDetails od
-                                INNER JOIN inserted i ON od.product_id = i.product_id
-                                INNER JOIN Products p ON i.product_id = p.product_id
-                                WHERE od.order_id = ot.order_id), 0)
-    FROM OrderTable ot
-    INNER JOIN inserted i ON ot.order_id = i.order_id;
-END;
-GO
-
--- Trigger to update order_status to 'ON_PROCESS' when payment_method is not null
-CREATE TRIGGER UpdateOrderStatusOnPayment
-ON Payments
-AFTER UPDATE
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Update order_status for all affected orders
-    UPDATE ot
-    SET ot.order_status = 'ON_PROCESS'
-    FROM OrderTable ot
-    INNER JOIN inserted i ON ot.payment_id = i.payment_id
-    WHERE i.payment_method IS NOT NULL;
-END;
-GO
-
-
-
--- Trigger to update restaurant_balance when order_status is FINISHED
-CREATE TRIGGER UpdateRestaurantBalance
-ON OrderTable
-AFTER UPDATE
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Check if order_status is changed to FINISHED
-    IF UPDATE(order_status) 
-    BEGIN
-        DECLARE @OrderID INT;
-        DECLARE @OrderTotal DECIMAL(10, 2);
-        DECLARE @RestaurantID INT;
-
-        -- Get the order_id, order_total, and restaurant_id
-        SELECT @OrderID = i.order_id,
-               @OrderTotal = d.order_total,
-               @RestaurantID = p.restaurant_id
-        FROM inserted i
-        INNER JOIN deleted d ON i.order_id = d.order_id
-        INNER JOIN OrderDetails od ON i.order_id = od.order_id
-        INNER JOIN Products p ON od.product_id = p.product_id
-        WHERE i.order_status = 'FINISHED';
-
-        -- Update restaurant_balance
-        UPDATE Restaurant
-        SET restaurant_balance = restaurant_balance + @OrderTotal
-        WHERE restaurant_id = @RestaurantID;
-    END;
-END;
-GO
-
-CREATE TRIGGER UpdateOrderStatus
-ON Couriers
-AFTER UPDATE
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    DECLARE @CourierID INT;
-    DECLARE @NewDeliveryStatus VARCHAR(50);
-
-    SELECT @CourierID = courier_id, @NewDeliveryStatus = courier_status FROM inserted;
-
-    -- Check if the courier_status is changed to FINISHED
-    IF @NewDeliveryStatus = 'DELIVERED'
-    BEGIN
-        -- Update order_status in OrderTable to FINISHED
-        UPDATE OrderTable
-        SET order_status = 'FINISHED'
-        WHERE courier_id = @CourierID;
-    END;
-END;
-GO
-
-
-
-
-
-GO
-
--- Trigger to update delivery_status to 'PENDING' when order_status is FINISHED
-CREATE TRIGGER UpdateCourierDeliveryStatus
-ON OrderTable
-AFTER UPDATE
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Check if order_status is changed to FINISHED
-    IF UPDATE(order_status) 
-    BEGIN
-        DECLARE @CourierID INT;
-        DECLARE @NewOrderStatus VARCHAR(50);
-
-        -- Get the courier_id and new order_status
-        SELECT @CourierID = i.courier_id,
-               @NewOrderStatus = i.order_status
-        FROM inserted i;
-
-        -- Check if the new order_status is FINISHED
-        IF @NewOrderStatus = 'FINISHED'
-        BEGIN
-            -- Update delivery_status to 'PENDING' for the courier
-            UPDATE Couriers
-            SET courier_status = 'AVAILABLE'
-            WHERE courier_id = @CourierID;
-        END;
-    END;
-END;
-GO
-
-
-CREATE TRIGGER UpdatePaymentStatus
-ON OrderTable
-AFTER UPDATE
-AS
-BEGIN
-    SET NOCOUNT ON;
-
-    -- Check if order_status is changed to FINISHED
-    IF UPDATE(order_status) 
-    BEGIN
-        DECLARE @OrderID INT;
-        DECLARE @NewOrderStatus VARCHAR(50);
-
-        -- Get the order_id and new order_status
-        SELECT @OrderID = i.order_id,
-               @NewOrderStatus = i.order_status
-        FROM inserted i;
-
-        -- Check if the new order_status is FINISHED
-        IF @NewOrderStatus = 'FINISHED'
-        BEGIN
-            -- Update payment_status to 'PAID' for cash payments
-            UPDATE Payments
-            SET payment_status = 'PAID'
-            WHERE payment_id IN (SELECT payment_id FROM OrderTable WHERE order_id = @OrderID AND payment_method = 'CASH');
-        END;
-    END;
-END;
 GO
 
 CREATE VIEW TopRestaurantsView AS
@@ -309,4 +150,77 @@ BEGIN
         THROW;
     END CATCH;
 END;
+GO
+CREATE PROCEDURE AssignCourierToOrder
+    @OrderID INT,
+    @CourierID INT OUTPUT
+AS
+BEGIN
+    BEGIN TRANSACTION; 
 
+    BEGIN TRY
+        SELECT TOP 1
+            @CourierID = courier_id
+        FROM
+            Couriers
+        WHERE
+            courier_status = 'AVAILABLE'
+        ORDER BY
+            (SELECT COUNT(*) FROM OrderTable WHERE courier_id = Couriers.courier_id) ASC;
+
+        IF @CourierID IS NOT NULL
+        BEGIN
+            UPDATE OrderTable
+            SET courier_id = @CourierID,
+                order_status = 'ON_PROCESS'
+            WHERE
+                order_id = @OrderID;
+            UPDATE Couriers
+            SET courier_status = 'ON_DELIVERY'
+            WHERE
+                courier_id = @CourierID;
+        END
+        ELSE
+        BEGIN
+            PRINT 'ALL COURIERS ARE BUSY. PLEASE TRY AGAIN IN A FEW MINUTES.';
+            ROLLBACK;
+            RETURN;
+        END
+
+        COMMIT; 
+    END TRY
+    BEGIN CATCH
+        ROLLBACK; 
+        THROW;
+    END CATCH;
+END;
+GO
+
+CREATE TRIGGER UpdateCourierBalanceAndOrderStatus
+ON OrderTable
+AFTER UPDATE
+AS
+BEGIN
+    IF UPDATE(order_status)
+    BEGIN
+        DECLARE @CourierID INT, @ShippingCost DECIMAL(10, 2);
+
+        SELECT
+            @CourierID = i.courier_id,
+            @ShippingCost = i.shipping_cost
+        FROM
+            inserted i
+            JOIN deleted d ON i.order_id = d.order_id
+            JOIN Couriers c ON i.courier_id = c.courier_id
+        WHERE
+            i.order_status = 'FINISHED' AND d.order_status = 'ON_PROCESS';
+
+        IF @CourierID IS NOT NULL
+        BEGIN
+            UPDATE Couriers
+            SET balance = balance + @ShippingCost
+            WHERE courier_id = @CourierID;
+        END
+    END
+END;
+GO

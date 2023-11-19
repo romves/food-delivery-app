@@ -1,3 +1,5 @@
+use master
+GO
 USE FoodDeliveryApp
 GO
 -- Inserting sample data into Users table
@@ -195,21 +197,171 @@ VALUES
     ('Olivia Wang', '081123456789', 'OPQ667S');
 
 
--- Inserting sample data into OrderTable table without payment_id
-INSERT INTO OrderTable (order_date, order_status, user_id, courier_id,restaurant_id)
-VALUES
-    (GETDATE(), 'PENDING', 1, 1,1),
-    (GETDATE(), 'PENDING', 2, 2,2),
-    (GETDATE(), 'PENDING', 3, 3,3),
-    (GETDATE(), 'PENDING', 4, 4,4),
-    (GETDATE(), 'PENDING', 5, 5,5),
-    (GETDATE(), 'PENDING', 6, 6,6),
-    (GETDATE(), 'PENDING', 7, 7,7),
-    (GETDATE(), 'PENDING', 8, 8,8),
-    (GETDATE(), 'PENDING', 9, 9,9),
-    (GETDATE(), 'PENDING', 10, 10,10);
+GO
+DECLARE @OrderID INT;
+DECLARE @UserID INT = 1; -- Replace with the desired user ID
+DECLARE @RestaurantID INT = 1; -- Replace with the desired restaurant ID
 
+-- Create a new payment (replace with your actual payment details)
+INSERT INTO Payments (payment_status, payment_method, payment_date)
+VALUES ('UNPAID', 'CC', GETDATE());
+
+-- Get the ID of the newly created payment
+DECLARE @PaymentID INT = SCOPE_IDENTITY();
+
+-- Execute the stored procedure to create an order from the payment
+EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
+
+GO
+DECLARE @OrderID INT;
+DECLARE @UserID INT = 2; -- Replace with the desired user ID
+DECLARE @RestaurantID INT = 2; -- Replace with the desired restaurant ID
+
+-- Create a new payment (replace with your actual payment details)
+INSERT INTO Payments (payment_status, payment_method, payment_date)
+VALUES ('UNPAID', 'CC', GETDATE());
+
+-- Get the ID of the newly created payment
+DECLARE @PaymentID INT = SCOPE_IDENTITY();
+
+-- Execute the stored procedure to create an order from the payment
+EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
+
+GO
+DECLARE @OrderID INT;
+DECLARE @UserID INT = 3; -- Replace with the desired user ID
+DECLARE @RestaurantID INT = 3; -- Replace with the desired restaurant ID
+
+-- Create a new payment (replace with your actual payment details)
+INSERT INTO Payments (payment_status, payment_method, payment_date)
+VALUES ('UNPAID', 'CC', GETDATE());
+
+-- Get the ID of the newly created payment
+DECLARE @PaymentID INT = SCOPE_IDENTITY();
+
+-- Execute the stored procedure to create an order from the payment
+EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
+
+GO
+DECLARE @OrderID INT;
+DECLARE @UserID INT = 4; -- Replace with the desired user ID
+DECLARE @RestaurantID INT = 4; -- Replace with the desired restaurant ID
+
+-- Create a new payment (replace with your actual payment details)
+INSERT INTO Payments (payment_status, payment_method, payment_date)
+VALUES ('UNPAID', 'CC', GETDATE());
+
+-- Get the ID of the newly created payment
+DECLARE @PaymentID INT = SCOPE_IDENTITY();
+
+-- Execute the stored procedure to create an order from the payment
+EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
+GO
+DECLARE @OrderID INT;
+DECLARE @UserID INT = 5; -- Replace with the desired user ID
+DECLARE @RestaurantID INT = 5; -- Replace with the desired restaurant ID
+
+-- Create a new payment (replace with your actual payment details)
+INSERT INTO Payments (payment_status, payment_method, payment_date)
+VALUES ('UNPAID', 'CC', GETDATE());
+
+-- Get the ID of the newly created payment
+DECLARE @PaymentID INT = SCOPE_IDENTITY();
+
+-- Execute the stored procedure to create an order from the payment
+EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
+
+
+GO
+DECLARE @OrderID INT;
+DECLARE @UserID INT = 5; -- Replace with the desired user ID
+DECLARE @RestaurantID INT = 5; -- Replace with the desired restaurant ID
+
+-- Create a new payment (replace with your actual payment details)
+INSERT INTO Payments (payment_status, payment_method, payment_date)
+VALUES ('UNPAID', 'CC', GETDATE());
+
+-- Get the ID of the newly created payment
+DECLARE @PaymentID INT = SCOPE_IDENTITY();
+
+-- Execute the stored procedure to create an order from the payment
+EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
+
+GO
+DECLARE @OrderID INT;
+DECLARE @UserID INT = 6; -- Replace with the desired user ID
+DECLARE @RestaurantID INT = 6; -- Replace with the desired restaurant ID
+
+-- Create a new payment (replace with your actual payment details)
+INSERT INTO Payments (payment_status, payment_method, payment_date)
+VALUES ('UNPAID', 'CC', GETDATE());
+
+-- Get the ID of the newly created payment
+DECLARE @PaymentID INT = SCOPE_IDENTITY();
+
+-- Execute the stored procedure to create an order from the payment
+EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
+
+GO
+DECLARE @OrderID INT;
+DECLARE @UserID INT = 7; -- Replace with the desired user ID
+DECLARE @RestaurantID INT = 7; -- Replace with the desired restaurant ID
+
+-- Create a new payment (replace with your actual payment details)
+INSERT INTO Payments (payment_status, payment_method, payment_date)
+VALUES ('UNPAID', 'CC', GETDATE());
+
+-- Get the ID of the newly created payment
+DECLARE @PaymentID INT = SCOPE_IDENTITY();
+
+-- Execute the stored procedure to create an order from the payment
+EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
 -- Inserting sample data into OrderDetails table with at least two different products for each order
+
+GO
+DECLARE @OrderID INT;
+DECLARE @UserID INT = 8; -- Replace with the desired user ID
+DECLARE @RestaurantID INT = 8; -- Replace with the desired restaurant ID
+
+-- Create a new payment (replace with your actual payment details)
+INSERT INTO Payments (payment_status, payment_method, payment_date)
+VALUES ('UNPAID', 'CC', GETDATE());
+
+-- Get the ID of the newly created payment
+DECLARE @PaymentID INT = SCOPE_IDENTITY();
+
+-- Execute the stored procedure to create an order from the payment
+EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
+
+GO
+DECLARE @OrderID INT;
+DECLARE @UserID INT = 9; -- Replace with the desired user ID
+DECLARE @RestaurantID INT = 9; -- Replace with the desired restaurant ID
+
+-- Create a new payment (replace with your actual payment details)
+INSERT INTO Payments (payment_status, payment_method, payment_date)
+VALUES ('UNPAID', 'CC', GETDATE());
+
+-- Get the ID of the newly created payment
+DECLARE @PaymentID INT = SCOPE_IDENTITY();
+
+-- Execute the stored procedure to create an order from the payment
+EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
+
+GO
+DECLARE @OrderID INT;
+DECLARE @UserID INT = 10; -- Replace with the desired user ID
+DECLARE @RestaurantID INT = 10; -- Replace with the desired restaurant ID
+
+-- Create a new payment (replace with your actual payment details)
+INSERT INTO Payments (payment_status, payment_method, payment_date)
+VALUES ('UNPAID', 'CC', GETDATE());
+
+-- Get the ID of the newly created payment
+DECLARE @PaymentID INT = SCOPE_IDENTITY();
+
+-- Execute the stored procedure to create an order from the payment
+EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
 INSERT INTO OrderDetails (order_id, product_id, quantity)
 VALUES
     -- Order 1 (Same Restaurant - Hometown Restaurant)
@@ -295,421 +447,87 @@ VALUES
 	(10, 68, 1),
 	(10, 69, 3),
     (10, 70, 2);
+GO
 
--- Inserting sample data into Payment table
-INSERT INTO Payments (payment_status, payment_date,payment_method)
-VALUES
-    ('PAID',GETDATE(), 'CC'),
-    ('UNPAID',GETDATE(), 'CASH'),
-    ('PAID',GETDATE(), 'OVO'),
-    ('PAID',GETDATE(), 'OVO'),
-    ('PAID',GETDATE(), 'DANA'),
-    ('PAID',GETDATE(), 'CC'),
-    ('UNPAID',GETDATE(), 'CASH'),
-    ('PAID',GETDATE(), 'DANA'),
-    ('PAID',GETDATE(), 'OVO'),
-    ('PAID',GETDATE(), 'CC');
+DECLARE @OrderID1 INT = 1;
+DECLARE @CourierID1 INT;
 
+-- Execute the stored procedure
+EXEC AssignCourierToOrder
+    @OrderID = @OrderID1,
+    @CourierID = @CourierID1 OUTPUT;
 
--- Update OrderTable with payment_id
-UPDATE OrderTable
-SET payment_id = 1
-WHERE order_id = 1;
+DECLARE @OrderID2 INT = 2;
+DECLARE @CourierID2 INT;
 
-UPDATE OrderTable
-SET payment_id = 2
-WHERE order_id = 2;
+-- Execute the stored procedure
+EXEC AssignCourierToOrder
+    @OrderID = @OrderID2,
+    @CourierID = @CourierID2 OUTPUT;
 
-UPDATE OrderTable
-SET payment_id = 3
-WHERE order_id = 3;
+DECLARE @OrderID3 INT = 3;
+DECLARE @CourierID3 INT;
 
-UPDATE OrderTable
-SET payment_id = 4
-WHERE order_id = 4;
+-- Execute the stored procedure
+EXEC AssignCourierToOrder
+    @OrderID = @OrderID3,
+    @CourierID = @CourierID3 OUTPUT;
 
-UPDATE OrderTable
-SET payment_id = 5
-WHERE order_id = 5;
+DECLARE @OrderID4 INT = 4;
+DECLARE @CourierID4 INT;
 
-UPDATE OrderTable
-SET payment_id = 6
-WHERE order_id = 6;
+-- Execute the stored procedure
+EXEC AssignCourierToOrder
+    @OrderID = @OrderID4,
+    @CourierID = @CourierID4 OUTPUT;
 
-UPDATE OrderTable
-SET payment_id = 7
-WHERE order_id = 7;
+DECLARE @OrderID5 INT = 5;
+DECLARE @CourierID5 INT;
 
-UPDATE OrderTable
-SET payment_id = 8
-WHERE order_id = 8;
+-- Execute the stored procedure
+EXEC AssignCourierToOrder
+    @OrderID = @OrderID5,
+    @CourierID = @CourierID5 OUTPUT;
 
-UPDATE OrderTable
-SET payment_id = 9
-WHERE order_id = 9;
+DECLARE @OrderID6 INT = 6;
+DECLARE @CourierID6 INT;
 
-UPDATE OrderTable
-SET payment_id = 10
-WHERE order_id = 10;
+-- Execute the stored procedure
+EXEC AssignCourierToOrder
+    @OrderID = @OrderID6,
+    @CourierID = @CourierID6 OUTPUT;
 
--- Update OrderTable with payment_id
-UPDATE OrderTable
-SET payment_id = 11
-WHERE order_id = 11;
+DECLARE @OrderID7 INT = 7;
+DECLARE @CourierID7 INT;
 
-UPDATE OrderTable
-SET payment_id = 12
-WHERE order_id = 12;
+-- Execute the stored procedure
+EXEC AssignCourierToOrder
+    @OrderID = @OrderID7,
+    @CourierID = @CourierID7 OUTPUT;
 
-UPDATE OrderTable
-SET payment_id = 3
-WHERE order_id = 3;
+--DECLARE @OrderID8 INT = 8;
+--DECLARE @CourierID8 INT;
 
-UPDATE OrderTable
-SET payment_id = 4
-WHERE order_id = 4;
+-- Execute the stored procedure
+--EXEC AssignCourierToOrder
+    --@OrderID = @OrderID8,
+   -- @CourierID = @CourierID8 OUTPUT;
 
-UPDATE OrderTable
-SET payment_id = 5
-WHERE order_id = 5;
+--DECLARE @OrderID9 INT = 9;
+--DECLARE @CourierID9 INT;
 
-UPDATE OrderTable
-SET payment_id = 6
-WHERE order_id = 6;
+-- Execute the stored procedure
+--EXEC AssignCourierToOrder
+  --  @OrderID = @OrderID9,
+  --  @CourierID = @CourierID9 OUTPUT;
 
-UPDATE OrderTable
-SET payment_id = 7
-WHERE order_id = 7;
+--DECLARE @OrderID10 INT = 10;
+--DECLARE @CourierID10 INT;
 
-UPDATE OrderTable
-SET payment_id = 8
-WHERE order_id = 8;
-
-UPDATE OrderTable
-SET payment_id = 9
-WHERE order_id = 9;
-
-UPDATE OrderTable
-SET payment_id = 10
-WHERE order_id = 10;
--- Update OrderTable to set order_status to FINISHED
-UPDATE Couriers
-SET courier_status = 'DELIVERED'
-FROM Couriers c
-INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
-WHERE ot.order_id = 1;
-UPDATE Couriers
-SET courier_status = 'DELIVERED'
-FROM Couriers c
-INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
-WHERE ot.order_id = 2;
-UPDATE Couriers
-SET courier_status = 'DELIVERED'
-FROM Couriers c
-INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
-WHERE ot.order_id = 3;
-UPDATE Couriers
-SET courier_status = 'DELIVERED'
-FROM Couriers c
-INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
-WHERE ot.order_id = 4;
-UPDATE Couriers
-SET courier_status = 'DELIVERED'
-FROM Couriers c
-INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
-WHERE ot.order_id = 5;
-UPDATE Couriers
-SET courier_status = 'DELIVERED'
-FROM Couriers c
-INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
-WHERE ot.order_id = 6;
-UPDATE Couriers
-SET courier_status = 'DELIVERED'
-FROM Couriers c
-INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
-WHERE ot.order_id = 7;
-UPDATE Couriers
-SET courier_status = 'DELIVERED'
-FROM Couriers c
-INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
-WHERE ot.order_id = 8;
-UPDATE Couriers
-SET courier_status = 'DELIVERED'
-FROM Couriers c
-INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
-WHERE ot.order_id = 9;
-UPDATE Couriers
-SET courier_status = 'DELIVERED'
-FROM Couriers c
-INNER JOIN OrderTable ot ON c.courier_id = ot.courier_id
-WHERE ot.order_id = 10;
-
-
-
-INSERT INTO OrderTable (order_date, order_status, user_id, courier_id)
-VALUES
-    (GETDATE(), 'PENDING', 1, 2),
-    (GETDATE(), 'PENDING', 3, 4),
-    (GETDATE(), 'PENDING', 4, 5),
-    (GETDATE(), 'PENDING', 5, 7),
-    (GETDATE(), 'PENDING', 6, 6),
-    (GETDATE(), 'PENDING', 8, 2),
-    (GETDATE(), 'PENDING', 9, 9),
-    (GETDATE(), 'PENDING', 10, 10)
-	;
-INSERT INTO OrderTable (order_date, order_status, user_id, courier_id)
-VALUES
-    (GETDATE(), 'PENDING', 2, 2),
-    (GETDATE(), 'PENDING', 2, 4),
-    (GETDATE(), 'PENDING', 4, 5),
-    (GETDATE(), 'PENDING', 5, 7),
-    (GETDATE(), 'PENDING', 1, 6),
-    (GETDATE(), 'PENDING', 8, 2),
-    (GETDATE(), 'PENDING', 4, 9),
-    (GETDATE(), 'PENDING', 10, 10)
-	;
-
-INSERT INTO OrderTable (order_date, order_status, user_id, courier_id)
-VALUES
-    (GETDATE(), 'PENDING', 1, 2),
-    (GETDATE(), 'PENDING', 8, 2),
-    (GETDATE(), 'PENDING', 3, 3),
-    (GETDATE(), 'PENDING', 4, 4),
-    (GETDATE(), 'PENDING', 5, 5),
-    (GETDATE(), 'PENDING', 6, 6),
-    (GETDATE(), 'PENDING', 3, 7),
-    (GETDATE(), 'PENDING', 8, 8),
-    (GETDATE(), 'PENDING', 9, 2),
-	(GETDATE(), 'PENDING', 5, 3),
-	(GETDATE(), 'PENDING', 6, 9),
-	(GETDATE(), 'PENDING', 6, 4),
-	(GETDATE(), 'PENDING', 9, 9),
-    (GETDATE(), 'PENDING', 10, 10);
-
-INSERT INTO OrderDetails (order_id, product_id, quantity)
-VALUES
-    -- Order 1 (Same Restaurant - Hometown Restaurant)
-    (11, 1, 4),
-    (11, 2, 1),
-	(11, 3, 3),
-	(11, 7, 2),
-	
-    -- Order 2 (Same Restaurant - Seafood Paradise)
-    (12, 8, 3),
-    (12, 10, 2),
-	(12, 13, 2),
-    (12, 14, 1),
-
-    -- Order 3 (Same Restaurant - Cookingg Express)
-    (13, 15, 4),
-    (13, 21, 3),
-
-    -- Order 4 (Same Restaurant - King Satay)
-    (14, 22, 4),
-    (14, 23, 4),
-	(14, 24, 2),
-
-    -- Order 5 (Same Restaurant - Meat Ball Corner)
-    (15, 29, 5),
-    (15, 30, 5),
-	(15, 34, 2),
-    (15, 35, 4),
-
-    -- Order 6 (Same Restaurant - Heaven Cook Resto)
-    (16, 41, 1),
-    (16, 42, 4),
-
-    -- Order 7 (Same Restaurant - Chicken Heritage)
-    (17, 43, 3),
-    (17, 49, 2),
-
-    -- Order 8 (Same Restaurant - Steak Palace)
-    (18, 50, 2),
-	(18, 51, 3),
-	(18, 55, 2),
-    (18, 56, 4);
-
-INSERT INTO OrderDetails (order_id, product_id, quantity)
-VALUES
-    -- Order 1 (Same Restaurant - Hometown Restaurant)
-    (19, 1, 3),
-    (19, 2, 6),
-	(19, 3, 3),
-	(19, 4, 2),
-	(19, 7, 6),
-
-    -- Order 3 (Same Restaurant - Cookingg Express)
-    (20, 15, 5),
-    (20, 17, 2),
-	(20, 18, 5),
-    (20, 20, 4),
-
-    -- Order 4 (Same Restaurant - King Satay)
-    (21, 22, 4),
-    (21, 23, 4),
-	(21, 24, 1),
-    (21, 25, 1),
-    (21, 28, 5),
-
-    -- Order 5 (Same Restaurant - Meat Ball Corner)
-    (22, 29, 6),
-    (22, 30, 2),
-	(22, 31, 4),
-    (22, 33, 2),
-	(22, 34, 3),
-    (22, 35, 3),
-
-    -- Order 7 (Same Restaurant - Chicken Heritage)
-    (23, 43, 4),
-	(23, 44, 2),
-	(23, 45, 3),
-    (23, 48, 2),
-    (23, 49, 1),
-
-    -- Order 8 (Same Restaurant - Steak Palace)
-    (24, 50, 3),
-	(24, 51, 3),
-	(24, 52, 3),
-	(24, 53, 1),
-	(24, 54, 2),
-	(24, 55, 4),
-    (24, 56, 5),
-
-    -- Order 9 (Same Restaurant - Meat and Spicy Lovers)
-    (25, 57, 3),
-	(25, 59, 1),
-	(25, 60, 2),
-	(25, 62, 3),
-    (25, 63, 3),
-
-    -- Order 10 (Same Restaurant - Cheff Garden)
-    (26, 64, 3),
-	(26, 65, 1),
-    (26, 66, 4),
-	(26, 67, 2),
-	(26, 68, 1),
-	(26, 69, 2),
-    (26, 70, 1);
-
--- Inserting sample data into OrderDetails table with at least two different products for each order
-INSERT INTO OrderDetails (order_id, product_id, quantity)
-VALUES
-    -- Order 1 (Same Restaurant - Hometown Restaurant)
-    (27, 1, 7),
-    (27, 2, 6),
-	(27, 3, 3),
-	(27, 4, 2),
-    (27, 5, 4),
-    (27, 6, 9),
-	(27, 7, 6),
-	
-    -- Order 2 (Same Restaurant - Seafood Paradise)
-    (28, 8, 4),
-    (28, 10, 1),
-    (28, 11, 1),
-    (28, 12, 1),
-	(28, 13, 1),
-    (28, 14, 2),
-
-    -- Order 3 (Same Restaurant - Cookingg Express)
-    (29, 15, 2),
-    (29, 17, 1),
-	(29, 18, 3),
-    (29, 19, 2),
-    (29, 20, 2),
-    (29, 21, 3),
-
-    -- Order 4 (Same Restaurant - King Satay)
-    (30, 22, 2),
-    (30, 23, 4),
-	(30, 24, 2),
-    (30, 25, 1),
-	(30, 27, 1),
-    (30, 28, 2),
-
-    -- Order 5 (Same Restaurant - Meat Ball Corner)
-    (31, 29, 6),
-    (31, 30, 2),
-	(31, 31, 4),
-    (31, 33, 2),
-	(31, 34, 3),
-    (31, 35, 3),
-
-    -- Order 6 (Same Restaurant - Heaven Cook Resto)
-    (32, 36, 2),
-	(32, 37, 2),
-	(32, 38, 2),
-	(32, 39, 3),
-    (32, 41, 4),
-    (32, 42, 2);
-INSERT INTO OrderDetails (order_id, product_id, quantity)
-VALUES
-    -- Order 7 (Same Restaurant - Chicken Heritage)
-    (33, 43, 4),
-	(33, 44, 5),
-	(33, 45, 3),
-	(33, 46, 1),
-    (33, 48, 2),
-    (33, 49, 1),
-
-    -- Order 8 (Same Restaurant - Steak Palace)
-    (34, 50, 1),
-	(34, 51, 3),
-	(34, 52, 2),
-	(34, 53, 1),
-	(34, 54, 1),
-	(34, 55, 4),
-    (34, 56, 3),
-
-    -- Order 9 (Same Restaurant - Meat and Spicy Lovers)
-    (35, 57, 1),
-    (35, 58, 1),
-	(35, 59, 1),
-	(35, 60, 3),
-	(35, 61, 2),
-	(35, 62, 3),
-    (35, 63, 6),
-
-    -- Order 10 (Same Restaurant - Cheff Garden)
-    (36, 64, 6),
-	(36, 65, 1),
-    (36, 66, 1),
-	(36, 67, 2),
-	(36, 68, 1),
-	(36, 69, 3),
-    (36, 70, 2),
-	
-	-- Order 9 (Same Restaurant - Meat and Spicy Lovers)
-    (37, 57, 3),
-    (37, 58, 3),
-	(37, 59, 2),
-	(37, 60, 2),
-	(37, 61, 1),
-	(37, 62, 5),
-    (37, 63, 3),
-
-    -- Order 3 (Same Restaurant - Cookingg Express)
-    (38, 15, 2),
-    (38, 17, 1),
-    (38, 19, 2),
-    (38, 20, 2),
-    (38, 21, 3),
-	
-    -- Order 8 (Same Restaurant - Steak Palace)
-    (39, 50, 3),
-	(39, 51, 1),
-	(39, 52, 2),
-	(39, 54, 1),
-	(39, 55, 2),
-    (39, 56, 3),
-	
-	    -- Order 7 (Same Restaurant - Chicken Heritage)
-    (40, 43, 1),
-	(40, 44, 2),
-	(40, 45, 4),
-	(40, 46, 4),
-    (40, 48, 5),
-    (40, 49, 3);
+-- Execute the stored procedure
+--EXEC AssignCourierToOrder
+  --  @OrderID = @OrderID10,
+    --@CourierID = @CourierID10 OUTPUT;
 
 GO
 	SELECT * FROM Users

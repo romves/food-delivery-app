@@ -55,12 +55,13 @@
                               <Component id="jScrollPane2" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="337" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
                               <Component id="TotalQtyLabel" min="-2" pref="153" max="-2" attributes="0"/>
-                              <Component id="jScrollPane1" min="-2" pref="277" max="-2" attributes="0"/>
+                              <Component id="jScrollPane1" pref="277" max="32767" attributes="0"/>
                               <Component id="TotalPriceLabel" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
-                              <Component id="paymentButton" alignment="0" min="-2" pref="277" max="-2" attributes="0"/>
-                              <Component id="checkoutButton" min="-2" pref="277" max="-2" attributes="0"/>
+                              <Component id="paymentButton" alignment="0" pref="277" max="32767" attributes="0"/>
+                              <Component id="checkoutButton" pref="277" max="32767" attributes="0"/>
+                              <Component id="orderButton" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       </Group>
@@ -94,6 +95,8 @@
                           <Component id="paymentButton" min="-2" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="checkoutButton" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
+                          <Component id="orderButton" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
                           <Component id="jScrollPane" min="-2" pref="285" max="-2" attributes="0"/>
@@ -166,7 +169,7 @@
         </Container>
         <Component class="javax.swing.JButton" name="checkoutButton">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Checkout"/>
+            <Property name="text" type="java.lang.String" value="Update Order"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="checkoutButtonActionPerformed"/>
@@ -218,6 +221,14 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="paymentButtonActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="orderButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Order Now"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="orderButtonActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
