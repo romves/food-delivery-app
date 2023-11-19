@@ -4,6 +4,7 @@
  */
 package FoodDelivery.gui.styling.components;
 
+import FoodDelivery.gui.payment.PaymentPopUp;
 import FoodDelivery.gui.styling.ProductSelectionPage;
 import FoodDelivery.gui.styling.eventlistener.RestoCardClickListener;
 
@@ -126,9 +127,11 @@ public class RestoCard extends javax.swing.JPanel {
     private void ViewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewBtnActionPerformed
         // TODO add your handling code here:
         if (clickListener != null) {
-            ProductSelectionPage page = new ProductSelectionPage(restoId,this.userId);
-            page.setVisible(true);
-            clickListener.onRestoCardClick(restoId);
+//            ProductSelectionPage page = new ProductSelectionPage(restoId,this.userId);
+//            page.setVisible(true);
+//            clickListener.onRestoCardClick(restoId);
+            PaymentPopUp payment = new PaymentPopUp(restoId, this.userId);
+            payment.setVisible(true);
         }
     }//GEN-LAST:event_ViewBtnActionPerformed
 

@@ -11,6 +11,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,42 +57,17 @@ public class OrderDAO {
         }
     }
 
-//    public int createOrderFromPayment(int paymentId, int restaurantId,int) {
-//        int newOrderId = 0;
-//        try {
-//            // Prepare the stored procedure call
-//            try (CallableStatement callableStatement = connection.prepareCall("{call CreateOrderFromPayment(?, ?, ?)}")) {
-//                // Set the input parameters
-//                callableStatement.setInt(1, paymentId);
-//                callableStatement.setInt(2, restaurantId);
-//
-//                // Register the output parameter
-//                callableStatement.registerOutParameter(3, java.sql.Types.INTEGER);
-//
-//                // Execute the stored procedure
-//                callableStatement.execute();
-//
-//                // Retrieve the output parameter
-//                newOrderId = callableStatement.getInt(3);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace(); // Handle the exception appropriately in your application
-//        } finally {
-//            closeConnection();
-//        }
-//
-//        return newOrderId;
-//    }
-    public void createOrderFromPayment(int paymentID, int userID, int restaurantID) {
+    public int createOrderFromPayment(int paymentID, int userID, int restaurantID) {
         Connection connection = null;
         CallableStatement callableStatement = null;
+        int orderID = -1; // Initialize with a default value
 
         try {
             // Mengambil koneksi dari DatabaseUtility
             connection = DatabaseUtility.getConnection();
 
             // Membuat pemanggilan prosedur penyimpanan
-            String storedProcedureCall = "{call CreateOrderFromPayment(?, ?, ?)}";
+            String storedProcedureCall = "{call CreateOrderFromPayment(?, ?, ?, ?)}";
             callableStatement = connection.prepareCall(storedProcedureCall);
 
             // Menetapkan parameter
@@ -99,8 +75,15 @@ public class OrderDAO {
             callableStatement.setInt(2, userID);
             callableStatement.setInt(3, restaurantID);
 
+            // Menambahkan parameter output untuk order_id
+            callableStatement.registerOutParameter(4, Types.INTEGER);
+
             // Menjalankan pemanggilan prosedur penyimpanan
             callableStatement.execute();
+
+            // Mendapatkan nilai order_id dari parameter output
+            orderID = callableStatement.getInt(4);
+
         } catch (SQLException e) {
             e.printStackTrace();
             // Handle exception as needed
@@ -118,6 +101,8 @@ public class OrderDAO {
                 // Handle exception as needed
             }
         }
+
+        return orderID;
     }
 
     public Order getOrderById(int orderId) {

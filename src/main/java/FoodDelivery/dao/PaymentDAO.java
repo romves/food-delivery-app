@@ -140,4 +140,46 @@ public class PaymentDAO {
         }
     }
 
+    public int getOrderIDFromPayment(int paymentId) {
+        String GET_ORDER_ID_FROM_PAYMENT_QUERY = "SELECT order_id FROM OrderTable WHERE payment_id = ?";
+
+        try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(GET_ORDER_ID_FROM_PAYMENT_QUERY)) {
+            preparedStatement.setInt(1, paymentId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("order_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception as needed
+        }
+        return -1; // Order not found or payment not associated with an order
+    }
+
+    public void updatePaymentMethod(int paymentId, String newPaymentMethod) {
+        String UPDATE_PAYMENT_METHOD_QUERY = "UPDATE Payments SET payment_method = ? WHERE payment_id = ?";
+
+        try (Connection connection = DatabaseUtility.getConnection()) {
+            connection.setAutoCommit(false);
+
+            try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_PAYMENT_METHOD_QUERY)) {
+                preparedStatement.setString(1, newPaymentMethod);
+                preparedStatement.setInt(2, paymentId);
+
+                preparedStatement.executeUpdate();
+                connection.commit();
+            } catch (SQLException e) {
+                connection.rollback();
+                throw e;
+            } finally {
+                connection.setAutoCommit(true);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception as needed
+        }
+    }
+
 }

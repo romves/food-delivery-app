@@ -6,6 +6,7 @@ package FoodDelivery.gui.payment;
 
 import FoodDelivery.dao.OrderDAO;
 import FoodDelivery.dao.PaymentDAO;
+import FoodDelivery.gui.styling.ProductSelectionPage;
 
 /**
  *
@@ -18,6 +19,7 @@ public class PaymentPopUp extends javax.swing.JFrame {
      */
     private int restaurantId;
     private int userId;
+    private int paymentId = -1;
 
     public PaymentPopUp() {
         initComponents();
@@ -27,6 +29,13 @@ public class PaymentPopUp extends javax.swing.JFrame {
         initComponents();
         this.restaurantId = restaurantId;
         this.userId = userId;
+    }
+
+    public PaymentPopUp(int restaurantId, int userId, int paymentId) {
+        initComponents();
+        this.restaurantId = restaurantId;
+        this.userId = userId;
+        this.paymentId = paymentId;
     }
 
     /**
@@ -164,16 +173,27 @@ public class PaymentPopUp extends javax.swing.JFrame {
         String method = (String) paymentMethodCombo.getSelectedItem();
         PaymentDAO paymentDAO = new PaymentDAO();
         OrderDAO orderDAO = new OrderDAO();
-        int paymentID;
-        if (method.equals("CASH")) {
-            paymentID = paymentDAO.insertPayment("UNPAID", method);
-            orderDAO.createOrderFromPayment(paymentID, this.userId, this.restaurantId);
+        int paymentID = this.paymentId;
+        int orderID;
+//        if (method.equals("CASH")) {
+//            paymentID = paymentDAO.insertPayment("UNPAID", method);
+//            orderID=orderDAO.createOrderFromPayment(paymentID, this.userId, this.restaurantId);
+//        } else {
+//            paymentID = paymentDAO.insertPayment("PAID", method);
+//            orderID=orderDAO.createOrderFromPayment(paymentID, this.userId, this.restaurantId);
+//        }
+        if (this.paymentId != -1) {
+            paymentDAO.updatePaymentMethod(paymentId, method);
         } else {
-            paymentID = paymentDAO.insertPayment("PAID", method);
-            orderDAO.createOrderFromPayment(paymentID, this.userId, this.restaurantId);
-
+            paymentId = paymentDAO.insertPayment("UNPAID", method);
+            orderID = orderDAO.createOrderFromPayment(paymentId, this.userId, this.restaurantId);
+            PaymentDAO paymentDB = new PaymentDAO();
+            ProductSelectionPage orderPage = new ProductSelectionPage(restaurantId, userId, paymentID, orderID);
+            orderPage.setVisible(true);
         }
         this.dispose();
+        
+
     }//GEN-LAST:event_submitButtonLoginRestaurantActionPerformed
 
     /**
