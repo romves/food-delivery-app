@@ -7,6 +7,7 @@ package FoodDelivery.gui.restaurant;
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.database.DatabaseUtility;
 import FoodDelivery.gui.backup.LoginPage;
+import FoodDelivery.gui.login.LoginChooser;
 import FoodDelivery.models.Restaurant;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -334,7 +335,7 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
 
     private void LogoutBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_LogoutBtnActionPerformed
         // TODO add your handling code here:
-        LoginPage page = new LoginPage();
+        LoginChooser page = new LoginChooser();
         page.setVisible(true);
         dispose();
     }//GEN-LAST:event_LogoutBtnActionPerformed

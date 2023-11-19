@@ -127,11 +127,9 @@ public class RestoCard extends javax.swing.JPanel {
     private void ViewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewBtnActionPerformed
         // TODO add your handling code here:
         if (clickListener != null) {
-//            ProductSelectionPage page = new ProductSelectionPage(restoId,this.userId);
-//            page.setVisible(true);
-//            clickListener.onRestoCardClick(restoId);
-            PaymentPopUp payment = new PaymentPopUp(restoId, this.userId);
-            payment.setVisible(true);
+            ProductSelectionPage page = new ProductSelectionPage(restoId,this.userId);
+            page.setVisible(true);
+            clickListener.onRestoCardClick(restoId);
         }
     }//GEN-LAST:event_ViewBtnActionPerformed
 

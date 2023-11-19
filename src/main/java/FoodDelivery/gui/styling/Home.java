@@ -95,8 +95,6 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     @Override
     public void onRestoCardClick(int restoId) {
         dispose();
-        PaymentPopUp payment = new PaymentPopUp();
-        payment.setVisible(true);
     }
 
     public void openMenu() {
