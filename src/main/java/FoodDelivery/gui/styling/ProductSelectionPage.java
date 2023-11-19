@@ -4,6 +4,7 @@
  */
 package FoodDelivery.gui.styling;
 
+import FoodDelivery.dao.CourierDAO;
 import FoodDelivery.dao.OrderDAO;
 import FoodDelivery.dao.OrderDetailDAO;
 import FoodDelivery.dao.PaymentDAO;
@@ -13,6 +14,7 @@ import FoodDelivery.dao.ProductDAO;
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.gui.payment.PaymentPopUp;
 import FoodDelivery.gui.styling.components.ProductCard;
+import FoodDelivery.gui.user.DeliveryPage;
 import FoodDelivery.models.Product;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -105,7 +107,6 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
             productPanel.add(new ProductCard(productId, productName, productPrice, this));
             productPanel2.add(new ProductCard(productId, productName, productPrice, this));
         }
-
         jScrollPane.setViewportView(productPanel);
         jScrollPane2.setViewportView(productPanel2);
         setLocationRelativeTo(null);
@@ -173,6 +174,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         TotalQtyLabel.setText("Total item: " + totalQuantity);
 
     }
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -194,6 +196,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         TotalPriceLabel = new javax.swing.JLabel();
         TotalQtyLabel = new javax.swing.JLabel();
         paymentButton = new javax.swing.JButton();
+        orderButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -237,7 +240,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
             cartTable.getColumnModel().getColumn(3).setPreferredWidth(60);
         }
 
-        checkoutButton.setText("Checkout");
+        checkoutButton.setText("Update Order");
         checkoutButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 checkoutButtonActionPerformed(evt);
@@ -270,6 +273,13 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
             }
         });
 
+        orderButton.setText("Order Now");
+        orderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout totalLabelLayout = new javax.swing.GroupLayout(totalLabel);
         totalLabel.setLayout(totalLabelLayout);
         totalLabelLayout.setHorizontalGroup(
@@ -278,23 +288,23 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
                 .addGap(18, 18, 18)
                 .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(totalLabelLayout.createSequentialGroup()
-                        .addComponent(RestoNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(totalLabelLayout.createSequentialGroup()
-                        .addComponent(backButton)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(totalLabelLayout.createSequentialGroup()
                         .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 748, Short.MAX_VALUE)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(337, 337, 337)
-                        .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(TotalQtyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
                             .addComponent(TotalPriceLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(paymentButton, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(checkoutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 277, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(24, 24, 24))))
+                            .addComponent(paymentButton, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                            .addComponent(checkoutButton, javax.swing.GroupLayout.DEFAULT_SIZE, 277, Short.MAX_VALUE)
+                            .addComponent(orderButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(24, 24, 24))
+                    .addGroup(totalLabelLayout.createSequentialGroup()
+                        .addGroup(totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(RestoNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(backButton))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         totalLabelLayout.setVerticalGroup(
             totalLabelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -314,7 +324,9 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
                         .addGap(28, 28, 28)
                         .addComponent(paymentButton)
                         .addGap(18, 18, 18)
-                        .addComponent(checkoutButton))
+                        .addComponent(checkoutButton)
+                        .addGap(28, 28, 28)
+                        .addComponent(orderButton))
                     .addGroup(totalLabelLayout.createSequentialGroup()
                         .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -357,16 +369,23 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     private void checkoutButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_checkoutButtonActionPerformed
         if (orderId != -1) {
             OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
-            // Assuming cartTableModel contains the data from the cartTable
             for (int row = 0; row < cartTableModel.getRowCount(); row++) {
                 int productID = (int) cartTableModel.getValueAt(row, 0);
                 int qty = (int) cartTableModel.getValueAt(row, 2);
-
-                orderDetailDAO.checkDetail(orderId, productID, qty);
+                orderDetailDAO.checkDetail(this.orderId, productID, qty);
                 System.out.println(orderId);
             }
         }
     }//GEN-LAST:event_checkoutButtonActionPerformed
+
+    private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
+        CourierDAO courier = new CourierDAO();
+        int courierId = courier.assignCourierToOrder(orderId);
+        DeliveryPage delivery = new DeliveryPage(restoId, userId, paymentId, orderId, courierId);
+        
+        delivery.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_orderButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -379,6 +398,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     private javax.swing.JScrollPane jScrollPane;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JButton orderButton;
     private javax.swing.JButton paymentButton;
     private javax.swing.JPanel totalLabel;
     // End of variables declaration//GEN-END:variables

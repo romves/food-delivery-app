@@ -10,6 +10,7 @@ package FoodDelivery.dao;
  */
 import FoodDelivery.database.DatabaseUtility;
 import FoodDelivery.models.Courier;
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -128,6 +129,90 @@ public class CourierDAO {
             preparedStatement.setInt(1, courierId);
             preparedStatement.executeUpdate();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
+//    public void assignCourierToOrder(int orderId) {
+//        String storedProcedureCall = "{CALL AssignCourierToOrder(?, ?)}";
+//        try (CallableStatement callableStatement = connection.prepareCall(storedProcedureCall)) {
+//            callableStatement.setInt(1, orderId);
+//            callableStatement.registerOutParameter(2, java.sql.Types.INTEGER); // Output parameter for CourierID
+//            callableStatement.execute();
+//            int courierId = callableStatement.getInt(2);
+//            if (courierId > 0) {
+//                System.out.println("Courier assigned successfully. Courier ID: " + courierId);
+//            } else {
+//                System.out.println("Failed to assign courier. All couriers are busy.");
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        } finally {
+//            closeConnection();
+//        }
+//    }
+    public int assignCourierToOrder(int orderId) {
+        String storedProcedureCall = "{CALL AssignCourierToOrder(?, ?)}";
+        int courierId = 0;
+        try (CallableStatement callableStatement = connection.prepareCall(storedProcedureCall)) {
+            // Set parameter values
+            callableStatement.setInt(1, orderId);
+            callableStatement.registerOutParameter(2, java.sql.Types.INTEGER); // Output parameter for CourierID
+
+            // Execute the stored procedure
+            callableStatement.execute();
+
+            // Retrieve the output parameter value (CourierID)
+            courierId = callableStatement.getInt(2);
+
+            if (courierId > 0) {
+                System.out.println("Courier assigned successfully. Courier ID: " + courierId);
+            } else {
+                System.out.println("Failed to assign courier. All couriers are busy.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+
+        return courierId;
+    }
+
+    public Courier getCourierByOrderID(int orderId) {
+        Courier courier = null;
+        String query = "SELECT c.* FROM Couriers c "
+                + "JOIN OrderTable o ON c.courier_id = o.courier_id "
+                + "WHERE o.order_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, orderId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    courier = new Courier(
+                            resultSet.getInt("courier_id"),
+                            resultSet.getString("courier_status"),
+                            resultSet.getString("courier_name"),
+                            resultSet.getString("courier_phone_number"),
+                            resultSet.getString("courier_plate_number")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        }
+        return courier;
+    }
+
+    public void updateCourierStatusDelivered(int orderId) {
+        String query = "UPDATE Couriers SET courier_status = 'DELIVERED' "
+                + "WHERE courier_id = (SELECT courier_id FROM OrderTable WHERE order_id = ?)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
