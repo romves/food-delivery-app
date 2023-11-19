@@ -1,4 +1,3 @@
-
 USE FoodDeliveryApp
 GO
 -- Inserting sample data into Users table
@@ -713,10 +712,10 @@ VALUES
     (40, 49, 3);
 
 GO
-SELECT * FROM Users
-SELECT * FROM Restaurant
-SELECT * FROM Products
-SELECT * FROM Couriers
-SELECT * FROM OrderTable
-SELECT * FROM OrderDetails
-SELECT * FROM Payments
+	SELECT * FROM Users
+	SELECT * FROM Restaurant
+	SELECT * FROM Products
+	SELECT * FROM Couriers
+	SELECT * FROM OrderTable
+	SELECT * FROM OrderDetails
+	SELECT * FROM Payments

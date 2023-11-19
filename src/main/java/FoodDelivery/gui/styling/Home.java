@@ -97,10 +97,6 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         dispose();
         PaymentPopUp payment = new PaymentPopUp();
         payment.setVisible(true);
-        this.dispose();
-        Home home = new Home(this.userId);
-        home.setVisible(false);
-        home.dispose();
     }
 
     public void openMenu() {

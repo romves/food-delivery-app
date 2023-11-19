@@ -20,16 +20,13 @@ public class OrderDetailDAO {
     private Connection connection;
 
     public OrderDetailDAO() {
-
-    }
-
-    public void closeConnection() {
         try {
-            this.connection.close();
+            connection = DatabaseUtility.getConnection();
         } catch (Exception e) {
-            e.printStackTrace();
         }
     }
+
+
 
     public void checkDetail(int orderId, int productId, int quantity) {
         try (Connection connection = DatabaseUtility.getConnection()) {
@@ -101,6 +98,17 @@ public class OrderDetailDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void deleteOrderDetailByOrderId(int orderId) {
+        String DELETE_ORDER_DETAIL_QUERY = "DELETE FROM OrderDetails WHERE order_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ORDER_DETAIL_QUERY)) {
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
         }
     }
 

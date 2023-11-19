@@ -157,4 +157,27 @@ public class OrderDAO {
         }
         return orders;
     }
+
+    public void deleteOrderById(int orderId) {
+        String DELETE_ORDER_QUERY = "DELETE FROM OrderTable WHERE order_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ORDER_QUERY)) {
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            resetOrderIdentity();
+        }
+    }
+
+    public void resetOrderIdentity() {
+        String RESET_IDENTITY_QUERY = "DBCC CHECKIDENT('OrderTable', RESEED)";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(RESET_IDENTITY_QUERY)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
 }
