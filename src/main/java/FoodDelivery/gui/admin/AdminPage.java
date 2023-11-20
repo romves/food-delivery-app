@@ -55,13 +55,13 @@ public class AdminPage extends javax.swing.JFrame {
         restaurantBalanceField.setText(restaurantBalance);
     }
 
-    public Courier setCourierField(String id, String courierName, String courierPhone, String courierPlate) {
+    public void setCourierField(String id, String courierName, String courierPhone, String courierPlate, double courierBalance) {
         courierIDField.setText(id);
         courierNameField.setText(courierName);
         courierPhoneField.setText(courierPhone);
         courierPlateField.setText(courierPlate);
-        return new Courier(id, courierName, courierPhone, courierPlate);
-    }
+        courierBalanceField.setText(Double.toString(courierBalance));
+    };
 
     private void selectRestaurantRow() {
         restaurantTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -113,16 +113,17 @@ public class AdminPage extends javax.swing.JFrame {
                         Object courierStatusObj = model.getValueAt(selectedRow, 2);
                         Object courierPhoneObj = model.getValueAt(selectedRow, 3);
                         Object courierPlateObj = model.getValueAt(selectedRow, 4);
-
+                        
                         // Check and convert to appropriate types
                         String courierID = (courierIDObj != null) ? courierIDObj.toString() : "";
                         String courierName = (courierNameObj != null) ? courierNameObj.toString() : "";
                         String courierStatus = (courierStatusObj != null) ? courierStatusObj.toString() : "";
                         String courierPhone = (courierPhoneObj != null) ? courierPhoneObj.toString() : "";
                         String courierPlate = (courierPlateObj != null) ? courierPlateObj.toString() : "";
+                        double courierBalance = Double.parseDouble(model.getValueAt(selectedRow, 5).toString());
 
                         // Call the setRestaurantField method to populate the UI fields
-                        setCourierField(courierID, courierName, courierPhone, courierPlate);
+                        setCourierField(courierID, courierName, courierPhone, courierPlate, courierBalance);
                     }
                 }
             }
@@ -146,7 +147,6 @@ public class AdminPage extends javax.swing.JFrame {
                 restaurant.getDescription(),
                 restaurant.getPhoneNumber(),
                 restaurant.getBalance()
-
             });
         }
     }
@@ -157,7 +157,7 @@ public class AdminPage extends javax.swing.JFrame {
         CourierDAO courierDAO = new CourierDAO();
         List<Courier> couriers = courierDAO.getAllCouriers();
         for (Courier courier : couriers) {
-            model.addRow(new Object[]{courier.getCourierId(), courier.getName(), courier.getDeliveryStatus(), courier.getPhoneNumber(), courier.getPlateNumber()});
+            model.addRow(new Object[]{courier.getCourierId(), courier.getName(), courier.getDeliveryStatus(), courier.getPhoneNumber(), courier.getPlateNumber(), courier.getBalance()});
         }
     }
 
@@ -212,6 +212,8 @@ public class AdminPage extends javax.swing.JFrame {
         courierPlateLabel = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         courierTable = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        courierBalanceField = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -421,6 +423,12 @@ public class AdminPage extends javax.swing.JFrame {
             }
         });
 
+        courierPlateField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                courierPlateFieldActionPerformed(evt);
+            }
+        });
+
         courierIDLabel.setText("ID:");
 
         courierNameLabel.setText("Name:");
@@ -431,17 +439,17 @@ public class AdminPage extends javax.swing.JFrame {
 
         courierTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "id", "name", "delivery_status", "phone_number", "plate_number"
+                "id", "name", "delivery_status", "phone_number", "plate_number", "balance"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
+                false, false, false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -449,6 +457,10 @@ public class AdminPage extends javax.swing.JFrame {
             }
         });
         jScrollPane3.setViewportView(courierTable);
+
+        jLabel4.setText("Balance:");
+
+        courierBalanceField.setEnabled(false);
 
         javax.swing.GroupLayout courierPanelLayout = new javax.swing.GroupLayout(courierPanel);
         courierPanel.setLayout(courierPanelLayout);
@@ -460,24 +472,28 @@ public class AdminPage extends javax.swing.JFrame {
                     .addComponent(courierIDLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(courierNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(courierPhoneLabel)
-                    .addComponent(courierPlateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(courierPlateLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(83, 83, 83)
-                .addGroup(courierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(courierPhoneField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(courierNameField, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(courierPlateField)
-                    .addComponent(courierIDField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(40, 40, 40)
                 .addGroup(courierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(courierPanelLayout.createSequentialGroup()
-                        .addComponent(createCourierButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(clearCourier))
-                    .addGroup(courierPanelLayout.createSequentialGroup()
-                        .addComponent(updateCourierButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(courierDeleteButton)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 87, Short.MAX_VALUE)
+                        .addGroup(courierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(courierPhoneField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(courierNameField, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(courierPlateField)
+                            .addComponent(courierIDField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 383, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(40, 40, 40)
+                        .addGroup(courierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(courierPanelLayout.createSequentialGroup()
+                                .addComponent(createCourierButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(clearCourier))
+                            .addGroup(courierPanelLayout.createSequentialGroup()
+                                .addComponent(updateCourierButton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(courierDeleteButton))))
+                    .addComponent(courierBalanceField, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(50, 50, 50))
         );
@@ -506,7 +522,11 @@ public class AdminPage extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(courierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(courierPlateLabel)
-                            .addComponent(courierPlateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(courierPlateField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(courierPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(courierBalanceField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(134, Short.MAX_VALUE))
         );
 
@@ -622,6 +642,10 @@ public class AdminPage extends javax.swing.JFrame {
         loadRestaurantTable();
     }//GEN-LAST:event_createRestaurantButtonActionPerformed
 
+    private void courierPlateFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_courierPlateFieldActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_courierPlateFieldActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -664,6 +688,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JTabbedPane adminPanel;
     private javax.swing.JButton clearCourier;
     private javax.swing.JButton clearRestaurant;
+    private javax.swing.JTextField courierBalanceField;
     private javax.swing.JButton courierDeleteButton;
     private javax.swing.JTextField courierIDField;
     private javax.swing.JLabel courierIDLabel;
@@ -681,6 +706,7 @@ public class AdminPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
