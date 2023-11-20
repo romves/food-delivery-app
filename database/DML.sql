@@ -535,6 +535,7 @@ UPDATE Couriers SET courier_status='DELIVERED'
 UPDATE OrderTable SET order_status='FINISHED'
 UPDATE Couriers SET courier_status='AVAILABLE'
 
+
 use FoodDeliveryApp
 	SELECT * FROM Users
 	SELECT * FROM Restaurant
