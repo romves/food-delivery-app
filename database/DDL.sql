@@ -192,14 +192,14 @@ BEGIN
     END CATCH;
 END;
 GO
-
+DROP TRIGGER UpdateOrderTotal
 CREATE TRIGGER UpdateOrderTotal 
 ON OrderTable 
 AFTER UPDATE, INSERT
 AS
 BEGIN
     update ot
-    set order_total = ISNULL((select SUM(p.product_price) 
+    set order_total = ISNULL((select SUM(p.product_price*quantity) 
                             from OrderDetails od 
                             join Products p on od.product_id=p.product_id 
                             where od.order_id = ot.order_id), 0)
