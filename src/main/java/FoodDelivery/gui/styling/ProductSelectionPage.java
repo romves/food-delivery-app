@@ -20,7 +20,19 @@ import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.gui.styling.components.ProductCard;
 import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.gui.user.DeliveryPage;
+import FoodDelivery.models.OrderDetail;
 import FoodDelivery.models.Product;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -346,39 +358,19 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
 
     private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
         String method = (String) paymentMethodCombo.getSelectedItem();
-        PaymentDAO paymentDAO = new PaymentDAO();
-        OrderDAO orderDAO = new OrderDAO();
-        int paymentID;
-        int orderId;
-        if (method.equals("CASH")) {
-            paymentID = paymentDAO.insertPayment("UNPAID", method);
-            orderId = orderDAO.createOrderFromPayment(paymentID, this.userId, this.restoId);
-            OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
-            for (int row = 0; row < cartTableModel.getRowCount(); row++) {
-                int productID = (int) cartTableModel.getValueAt(row, 0);
-                int qty = (int) cartTableModel.getValueAt(row, 2);
-                orderDetailDAO.insertOrderDetail(orderId, productID, qty);
+        List<OrderDetail> orderDetailsList = new ArrayList<>();
 
-            }
-            CourierDAO courier = new CourierDAO();
-            int courierId = courier.assignCourierToOrder(orderId);
-            DeliveryPage delivery = new DeliveryPage(restoId, userId, paymentId, orderId, courierId);
-            delivery.setVisible(true);
-        } else {
-            paymentID = paymentDAO.insertPayment("PAID", method);
-            orderId = orderDAO.createOrderFromPayment(paymentID, this.userId, this.restoId);
-            OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
-            for (int row = 0; row < cartTableModel.getRowCount(); row++) {
-                int productID = (int) cartTableModel.getValueAt(row, 0);
-                int qty = (int) cartTableModel.getValueAt(row, 2);
-                orderDetailDAO.insertOrderDetail(orderId, productID, qty);
-            }
-            CourierDAO courier = new CourierDAO();
-            int courierId = courier.assignCourierToOrder(orderId);
-            DeliveryPage delivery = new DeliveryPage(restoId, userId, paymentId, orderId, courierId);
-            delivery.setVisible(true);
+        for (int row = 0; row < cartTableModel.getRowCount(); row++) {
+            int productID = (int) cartTableModel.getValueAt(row, 0);
+            int qty = (int) cartTableModel.getValueAt(row, 2);
+            OrderDetail orderDetail = new OrderDetail(productID, qty);
+            orderDetailsList.add(orderDetail);
         }
-        this.dispose();
+        OrderDAO orderDAO = new OrderDAO();
+        Map<String, Integer> generatedIds = orderDAO.createOrder(userId, restoId, "PAID", method, orderDetailsList);
+        DeliveryPage deliveryPage = new DeliveryPage(generatedIds);
+        deliveryPage.setVisible(true);
+        dispose();
     }//GEN-LAST:event_orderButtonActionPerformed
 
     private void updateOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderActionPerformed
