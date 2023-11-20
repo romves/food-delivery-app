@@ -18,12 +18,18 @@ public class Product {
     int id;
     double price;
     ProductType type;
+    int stock;
 
-    public Product( int id, String name, double price, String type) {
+    public Product( int id, String name, double price, String type, int stock) {
         this.name = name;
         this.id = id;
         this.price = price;
         this.type =  type.equals("FOOD") ? ProductType.FOOD : ProductType.DRINK;
+        this.stock = stock;
+    }
+
+    public int getStock() {
+        return stock;
     }
 
     public void setName(String name) {

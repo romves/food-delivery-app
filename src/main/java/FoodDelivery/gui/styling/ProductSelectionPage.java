@@ -43,7 +43,6 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         initComponents();
         ProductDAO productDB = new ProductDAO();
         RestaurantDAO restoDB = new RestaurantDAO();
-        ProductDAO productDAO = new ProductDAO();
 //        productDAO.getTop3FrequentlyBoughtTogetherProducts(restoId);
         RestoNameLabel.setText(restoDB.getRestaurantName(restoId));
 
@@ -61,9 +60,10 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
             int productId = product.getId();
             String productName = product.getName();
             double productPrice = product.getPrice();
+            int productStock = product.getStock();
 
-            productPanel.add(new ProductCard(productId, productName, productPrice, this));
-            productPanel2.add(new ProductCard(productId, productName, productPrice, this));
+            productPanel.add(new ProductCard(productId, productName, productPrice, productStock, this));
+            productPanel2.add(new ProductCard(productId, productName, productPrice, productStock, this));
         }
 
         jScrollPane.setViewportView(productPanel);
@@ -85,27 +85,30 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     }
 
     @Override
-    public void onAddToCart(int productId, int quantity, Product product) {
+    public void onAddToCart(int productId, int quantity, int productStock, Product product) {
         // Implement the logic to update the cart table here
         // For example, you can add a new row to the cartTableModel
         int existingRow = findProductRow(productId);
-        if (existingRow != -1) {
-            // Product already exists, update the quantity
-            int existingQuantity = Integer.parseInt(cartTableModel.getValueAt(existingRow, 2).toString());
-            cartTableModel.setValueAt(existingQuantity + quantity, existingRow, 2);
 
-            double price = product.getPrice();
-            double total = (existingQuantity + quantity) * price;
-            cartTableModel.setValueAt(total, existingRow, 3);
-        } else if (quantity != 0) {
-            // Product doesn't exist, add a new row
-            String name = product.getName();
-            double total = product.getPrice() * quantity;
-            Object[] rowData = {productId, name, quantity, total};
-            cartTableModel.addRow(rowData);
+        if (productStock - quantity >= 0) {
+            if (existingRow != -1) {
+                // Product already exists, update the quantity
+                int existingQuantity = Integer.parseInt(cartTableModel.getValueAt(existingRow, 2).toString());
+                cartTableModel.setValueAt(existingQuantity + quantity, existingRow, 2);
+
+                double price = product.getPrice();
+                double total = (existingQuantity + quantity) * price;
+                cartTableModel.setValueAt(total, existingRow, 3);
+            } else if (quantity != 0) {
+                // Product doesn't exist, add a new row
+                String name = product.getName();
+                double total = product.getPrice() * quantity;
+                Object[] rowData = {productId, name, quantity, total};
+                cartTableModel.addRow(rowData);
+            }
+
+            updateTotalLabel();
         }
-
-        updateTotalLabel();
 
     }
 

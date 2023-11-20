@@ -64,7 +64,8 @@ public class ProductDAO {
                         resultSet.getInt("product_id"),
                         resultSet.getString("product_name"),
                         resultSet.getDouble("product_price"),
-                        resultSet.getString("product_type")
+                        resultSet.getString("product_type"),
+                        resultSet.getInt("stock")
                 );
                 return product;
             }
@@ -88,7 +89,8 @@ public class ProductDAO {
                         resultSet.getInt("product_id"),
                         resultSet.getString("product_name"),
                         resultSet.getDouble("product_price"),
-                        resultSet.getString("product_type")
+                        resultSet.getString("product_type"),
+                        resultSet.getInt("stock")
                 );
                 products.add(product);
             }
@@ -153,7 +155,5 @@ public class ProductDAO {
 
         return topProducts;
     }
-    
-    
 
 }

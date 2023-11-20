@@ -11,5 +11,5 @@ import FoodDelivery.models.Product;
  * @author PC
  */
 public interface ProductCardListener {
-    void onAddToCart(int productId, int quantity, Product product);
+    void onAddToCart(int productId, int quantity, int productStock, Product product);
 }
