@@ -22,7 +22,6 @@ public class Courier {
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.plateNumber = plateNumber;
-        this.balance = balance
     }
 
     public Courier(int courierId, String deliveryStatus, String name, String phoneNumber, String plateNumber) {

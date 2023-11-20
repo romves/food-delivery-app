@@ -81,9 +81,6 @@ CREATE TABLE OrderDetails (
 );
 GO
 
-
-GO
-
 CREATE VIEW TopRestaurantsView AS
 WITH TopRestaurantsCTE AS (
     SELECT
@@ -194,6 +191,20 @@ BEGIN
         THROW;
     END CATCH;
 END;
+GO
+
+CREATE TRIGGER UpdateOrderTotal 
+ON OrderTable 
+AFTER UPDATE, INSERT
+AS
+BEGIN
+    update ot
+    set order_total = ISNULL((select SUM(p.product_price) 
+                            from OrderDetails od 
+                            join Products p on od.product_id=p.product_id 
+                            where od.order_id = ot.order_id), 0)
+    FROM OrderTable ot
+END
 GO
 
 CREATE TRIGGER UpdateCourierBalanceAndOrderStatus
