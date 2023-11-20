@@ -505,31 +505,37 @@ EXEC AssignCourierToOrder
     @OrderID = @OrderID7,
     @CourierID = @CourierID7 OUTPUT;
 
---DECLARE @OrderID8 INT = 8;
---DECLARE @CourierID8 INT;
+DECLARE @OrderID8 INT = 8;
+DECLARE @CourierID8 INT;
 
 -- Execute the stored procedure
---EXEC AssignCourierToOrder
-    --@OrderID = @OrderID8,
-   -- @CourierID = @CourierID8 OUTPUT;
+EXEC AssignCourierToOrder
+    @OrderID = @OrderID8,
+    @CourierID = @CourierID8 OUTPUT;
 
---DECLARE @OrderID9 INT = 9;
---DECLARE @CourierID9 INT;
-
--- Execute the stored procedure
---EXEC AssignCourierToOrder
-  --  @OrderID = @OrderID9,
-  --  @CourierID = @CourierID9 OUTPUT;
-
---DECLARE @OrderID10 INT = 10;
---DECLARE @CourierID10 INT;
+DECLARE @OrderID9 INT = 9;
+DECLARE @CourierID9 INT;
 
 -- Execute the stored procedure
---EXEC AssignCourierToOrder
-  --  @OrderID = @OrderID10,
-    --@CourierID = @CourierID10 OUTPUT;
+EXEC AssignCourierToOrder
+    @OrderID = @OrderID9,
+    @CourierID = @CourierID9 OUTPUT;
+
+DECLARE @OrderID10 INT = 10;
+DECLARE @CourierID10 INT;
+
+-- Execute the stored procedure
+EXEC AssignCourierToOrder
+    @OrderID = @OrderID10,
+    @CourierID = @CourierID10 OUTPUT;
 
 GO
+
+UPDATE Couriers SET courier_status='DELIVERED'
+UPDATE OrderTable SET order_status='FINISHED'
+UPDATE Couriers SET courier_status='AVAILABLE'
+
+use FoodDeliveryApp
 	SELECT * FROM Users
 	SELECT * FROM Restaurant
 	SELECT * FROM Products
