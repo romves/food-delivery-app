@@ -15,11 +15,14 @@ import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.gui.backup.PaymentPopUp;
 import FoodDelivery.gui.styling.components.ProductCard;
 import FoodDelivery.gui.user.DeliveryPage;
+import FoodDelivery.models.OrderDetail;
 import FoodDelivery.models.Product;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
@@ -75,41 +78,6 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         setLocationRelativeTo(null);
     }
 
-//    public ProductSelectionPage(int restoId, int userId, int paymentId, int orderID) {
-//        this.setExtendedState(MAXIMIZED_BOTH);
-//        this.userId = userId;
-//        this.restoId = restoId;
-//        this.paymentId = paymentId;
-//        this.orderId = orderID;
-//        initComponents();
-//        ProductDAO productDB = new ProductDAO();
-//        RestaurantDAO restoDB = new RestaurantDAO();
-//        ProductDAO productDAO = new ProductDAO();
-////        productDAO.getTop3FrequentlyBoughtTogetherProducts(restoId);
-//        RestoNameLabel.setText(Integer.toString(orderID));
-//
-//        this.cartTableModel = (DefaultTableModel) cartTable.getModel();
-//
-//        ArrayList<Product> productResto = productDB.getAllProductsByResto(restoId);
-//
-//        JPanel productPanel = new JPanel();
-//        JPanel productPanel2 = new JPanel();
-//
-//        productPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-//        productPanel2.setLayout(new GridLayout(0, 3, 10, 10));
-//
-//        for (Product product : productResto) {
-//            int productId = product.getId();
-//            String productName = product.getName();
-//            double productPrice = product.getPrice();
-//
-//            productPanel.add(new ProductCard(productId, productName, productPrice, this));
-//            productPanel2.add(new ProductCard(productId, productName, productPrice, this));
-//        }
-//        jScrollPane.setViewportView(productPanel);
-//        jScrollPane2.setViewportView(productPanel2);
-//        setLocationRelativeTo(null);
-//    }
     public ArrayList<Object[]> getIdAndQuantityData() {
         ArrayList<Object[]> idAndQuantityData = new ArrayList<>();
 
@@ -349,41 +317,19 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
 
     private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
         String method = (String) paymentMethodCombo.getSelectedItem();
-        PaymentDAO paymentDAO = new PaymentDAO();
-        OrderDAO orderDAO = new OrderDAO();
-        int paymentID;
-        int orderId;
-        if (method.equals("CASH")) {
-            paymentID = paymentDAO.insertPayment("UNPAID", method);
-            orderId = orderDAO.createOrderFromPayment(paymentID, this.userId, this.restoId);
-            OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
-            for (int row = 0; row < cartTableModel.getRowCount(); row++) {
-                int productID = (int) cartTableModel.getValueAt(row, 0);
-                int qty = (int) cartTableModel.getValueAt(row, 2);
-                orderDetailDAO.insertOrderDetail(orderId, productID, qty);
+        List<OrderDetail> orderDetailsList = new ArrayList<>();
 
-            }
-            CourierDAO courier = new CourierDAO();
-            int courierId = courier.assignCourierToOrder(orderId);
-            DeliveryPage delivery = new DeliveryPage(restoId, userId, paymentId, orderId, courierId);
-            delivery.setVisible(true);
-        } else {
-            paymentID = paymentDAO.insertPayment("PAID", method);
-            orderId = orderDAO.createOrderFromPayment(paymentID, this.userId, this.restoId);
-            OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
-            for (int row = 0; row < cartTableModel.getRowCount(); row++) {
-                int productID = (int) cartTableModel.getValueAt(row, 0);
-                int qty = (int) cartTableModel.getValueAt(row, 2);
-                orderDetailDAO.insertOrderDetail(orderId, productID, qty);
-            }
-            CourierDAO courier = new CourierDAO();
-            int courierId = courier.assignCourierToOrder(orderId);
-            DeliveryPage delivery = new DeliveryPage(restoId, userId, paymentId, orderId, courierId);
-            delivery.setVisible(true);
-
+        for (int row = 0; row < cartTableModel.getRowCount(); row++) {
+            int productID = (int) cartTableModel.getValueAt(row, 0);
+            int qty = (int) cartTableModel.getValueAt(row, 2);
+            OrderDetail orderDetail = new OrderDetail(productID, qty);
+            orderDetailsList.add(orderDetail);
         }
-
-        this.dispose();
+        OrderDAO orderDAO = new OrderDAO();
+        Map<String, Integer> generatedIds = orderDAO.createOrder(userId, restoId, "PAID", method, orderDetailsList);
+        DeliveryPage deliveryPage = new DeliveryPage(generatedIds);
+        deliveryPage.setVisible(true);
+        dispose();
     }//GEN-LAST:event_orderButtonActionPerformed
 
     private void updateOrderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateOrderActionPerformed

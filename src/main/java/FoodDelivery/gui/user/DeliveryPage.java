@@ -5,8 +5,10 @@
 package FoodDelivery.gui.user;
 
 import FoodDelivery.dao.CourierDAO;
+import FoodDelivery.dao.OrderDAO;
 import FoodDelivery.gui.styling.Home;
 import FoodDelivery.models.Courier;
+import java.util.Map;
 
 /**
  *
@@ -17,16 +19,34 @@ public class DeliveryPage extends javax.swing.JFrame {
     private int userId;
     private int courierId;
     private int orderId;
+    private int restaurantId;
+    private int paymentId;
 
     public DeliveryPage() {
         initComponents();
     }
 
+    public DeliveryPage(Map<String, Integer> generatedIds) {
+        initComponents();
+        this.courierId = generatedIds.get("courierId");
+        this.userId = generatedIds.get("userId");
+        this.orderId = generatedIds.get("orderId");
+        this.restaurantId = generatedIds.get("restaurantId");
+        this.paymentId = generatedIds.get("paymentId");
+        finishedPanel.setVisible(false);
+
+        CourierDAO courierDAO = new CourierDAO();
+        Courier courier = courierDAO.getCourierByOrderID(orderId);
+        courierName.setText("Name: " + courier.getName());
+        courierPhone.setText("Phone Number: " + courier.getPhoneNumber());
+        courierPlate.setText("Plate Number: " + courier.getPlateNumber());
+    }
+
     public DeliveryPage(int restoId, int userId, int paymentId, int orderId, int courierId) {
         initComponents();
         this.courierId = courierId;
-        this.userId=userId;
-        this.orderId=orderId;
+        this.userId = userId;
+        this.orderId = orderId;
         finishedPanel.setVisible(false);
 
         CourierDAO courierDAO = new CourierDAO();
@@ -228,6 +248,9 @@ public class DeliveryPage extends javax.swing.JFrame {
         finishedPanel.setVisible(true);
         CourierDAO courier = new CourierDAO();
         courier.updateCourierStatusDelivered(this.orderId);
+        OrderDAO order = new OrderDAO();
+        order.setOrderStatusFinished(this.orderId);
+
     }//GEN-LAST:event_confirmOrderButtonActionPerformed
 
     /**
