@@ -234,3 +234,56 @@ BEGIN
     END
 END;
 GO
+
+-- Create a view to get the top 5 selling products by restaurant
+GO
+CREATE VIEW Top5SellingProductsByResto AS
+SELECT DISTINCT
+    od.product_id,
+    p.product_name,
+    p.product_price,
+    restaurant_id,
+    (SELECT SUM(quantity) FROM OrderDetails WHERE product_id = od.product_id) AS sold
+FROM
+    OrderDetails od
+JOIN
+    (SELECT * FROM Products) p ON od.product_id = p.product_id;
+    
+-- Create a view to get detailed receipts
+GO
+CREATE VIEW ReceiptView AS
+SELECT
+    ot.order_date,
+    c.courier_name,
+    c.courier_plate_number,
+    ot.order_total,
+    od2.product_name,
+    r.restaurant_name,
+    u.user_id,
+    u.user_name,
+    u.user_phone_number,
+    u.user_address,
+    od2.product_price * quantity AS subtotal,
+    ot.shipping_cost,
+    ot.order_id,
+    py.payment_method
+FROM
+    OrderTable ot
+JOIN (
+    SELECT
+        od.order_id,
+        od.product_id,
+        od.quantity,
+        p.product_name,
+        p.product_price,
+        p.restaurant_id
+    FROM
+        OrderDetails od
+    JOIN
+        Products p ON od.product_id = p.product_id
+) od2 ON od2.order_id = ot.order_id
+JOIN Payments py ON ot.payment_id = py.payment_id
+JOIN Couriers c ON ot.courier_id = c.courier_id
+JOIN Restaurant r ON ot.restaurant_id = r.restaurant_id
+JOIN Users u ON ot.user_id = u.user_id;
+GO
