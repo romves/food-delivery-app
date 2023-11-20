@@ -7,7 +7,7 @@ package FoodDelivery.gui.styling;
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
 import FoodDelivery.gui.login.LoginChooser;
-import FoodDelivery.gui.payment.PaymentPopUp;
+import FoodDelivery.gui.backup.PaymentPopUp;
 import FoodDelivery.gui.styling.components.RestoCard;
 import FoodDelivery.gui.styling.eventlistener.RestoCardClickListener;
 import FoodDelivery.models.Restaurant;
@@ -95,8 +95,6 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     @Override
     public void onRestoCardClick(int restoId) {
         dispose();
-        PaymentPopUp payment = new PaymentPopUp();
-        payment.setVisible(true);
     }
 
     public void openMenu() {

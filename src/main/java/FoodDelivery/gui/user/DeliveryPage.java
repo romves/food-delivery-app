@@ -22,7 +22,7 @@ public class DeliveryPage extends javax.swing.JFrame {
         initComponents();
     }
 
-    public DeliveryPage(int restoId, int userId, int paymentId, int orderID, int courierId) {
+    public DeliveryPage(int restoId, int userId, int paymentId, int orderId, int courierId) {
         initComponents();
         this.courierId = courierId;
         this.userId=userId;
@@ -30,7 +30,7 @@ public class DeliveryPage extends javax.swing.JFrame {
         finishedPanel.setVisible(false);
 
         CourierDAO courierDAO = new CourierDAO();
-        Courier courier = courierDAO.getCourierByOrderID(orderID);
+        Courier courier = courierDAO.getCourierByOrderID(orderId);
         courierName.setText("Name: " + courier.getName());
         courierPhone.setText("Phone Number: " + courier.getPhoneNumber());
         courierPlate.setText("Plate Number: " + courier.getPlateNumber());

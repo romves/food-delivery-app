@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package FoodDelivery.gui.payment;
+package FoodDelivery.gui.backup;
 
 import FoodDelivery.dao.OrderDAO;
 import FoodDelivery.dao.PaymentDAO;
@@ -185,9 +185,7 @@ public class PaymentPopUp extends javax.swing.JFrame {
             paymentDAO.updatePaymentMethod(this.paymentId, method);
         } else {
             this.paymentId = paymentDAO.insertPayment("UNPAID", method);
-            orderID = orderDAO.createOrderFromPayment(paymentId, this.userId, this.restaurantId);
-            ProductSelectionPage orderPage = new ProductSelectionPage(restaurantId, userId, this.paymentId, orderID);
-            orderPage.setVisible(true);
+
         }
         this.dispose();
 
