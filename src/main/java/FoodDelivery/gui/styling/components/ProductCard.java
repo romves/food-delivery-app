@@ -7,18 +7,6 @@ package FoodDelivery.gui.styling.components;
 import FoodDelivery.dao.ProductDAO;
 import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.models.Product;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 
 /**
  *

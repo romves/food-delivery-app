@@ -4,12 +4,11 @@
  */
 package FoodDelivery.dao;
 
-import FoodDelivery.database.DatabaseUtility;
-import FoodDelivery.models.OrderDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import FoodDelivery.database.DatabaseUtility;
 
 /**
  *

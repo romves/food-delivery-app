@@ -4,11 +4,11 @@
  */
 package FoodDelivery.gui.backup;
 
-import FoodDelivery.gui.backup.SignUpUserPage;
+import javax.swing.JFrame;
+
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
 import FoodDelivery.gui.restaurant.RestaurantDashboardPage;
-import javax.swing.JFrame;
 
 /**
  *

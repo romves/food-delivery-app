@@ -4,13 +4,6 @@
  */
 package FoodDelivery.gui.login;
 
-import FoodDelivery.gui.styling.*;
-
-import javax.swing.ImageIcon;
-
-import FoodDelivery.dao.RestaurantDAO;
-import FoodDelivery.gui.restaurant.RestaurantDashboardPage;
-
 /**
  *
  * @author author Kenzie Taqiyassar

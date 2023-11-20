@@ -73,7 +73,7 @@ public class CourierDAO {
             while (resultSet.next()) {
                 Courier courier = new Courier(
                         resultSet.getInt("courier_id"),
-                        resultSet.getString("delivery_status"),
+                        resultSet.getString("courier_status"),
                         resultSet.getString("courier_name"),
                         resultSet.getString("courier_phone_number"),
                         resultSet.getString("courier_plate_number")
@@ -103,7 +103,7 @@ public class CourierDAO {
     }
 
     public void updateCourier(Courier courier) {
-        String sql = "UPDATE Couriers SET delivery_status = ?, courier_name = ?, courier_phone_number = ?, courier_plate_number = ? WHERE courier_id = ?";
+        String sql = "UPDATE Couriers SET courier_status = ?, courier_name = ?, courier_phone_number = ?, courier_plate_number = ? WHERE courier_id = ?";
         try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, courier.getDeliveryStatus());

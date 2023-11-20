@@ -4,10 +4,9 @@
  */
 package FoodDelivery.gui.login;
 
-import FoodDelivery.gui.styling.*;
 import FoodDelivery.dao.UserDAO;
-import FoodDelivery.gui.restaurant.RestaurantDashboardPage;
 import FoodDelivery.gui.signUp.SignUpUser;
+import FoodDelivery.gui.styling.Home;
 
 /**
  *
