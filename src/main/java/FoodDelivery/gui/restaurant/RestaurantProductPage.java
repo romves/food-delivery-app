@@ -4,15 +4,16 @@
  */
 package FoodDelivery.gui.restaurant;
 
-import FoodDelivery.database.DatabaseUtility;
 import java.awt.Rectangle;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.Statement;
+
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+
+import FoodDelivery.database.DatabaseUtility;
 
 /**
  *

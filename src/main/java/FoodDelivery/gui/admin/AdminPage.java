@@ -4,18 +4,17 @@
  */
 package FoodDelivery.gui.admin;
 
+import java.util.List;
+
+import javax.swing.JFrame;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+
 import FoodDelivery.dao.CourierDAO;
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.models.Courier;
 import FoodDelivery.models.Restaurant;
-import java.util.List;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *

@@ -4,19 +4,19 @@
  */
 package FoodDelivery.gui.styling;
 
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.util.List;
+
+import javax.swing.JPanel;
+
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
 import FoodDelivery.gui.login.LoginChooser;
-import FoodDelivery.gui.backup.PaymentPopUp;
 import FoodDelivery.gui.styling.components.RestoCard;
 import FoodDelivery.gui.styling.eventlistener.RestoCardClickListener;
 import FoodDelivery.models.Restaurant;
 import FoodDelivery.models.User;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.util.List;
-import javax.accessibility.AccessibleRole;
-import javax.swing.JPanel;
 
 /**
  *

@@ -4,27 +4,23 @@
  */
 package FoodDelivery.gui.styling;
 
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.util.ArrayList;
+
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
 import FoodDelivery.dao.CourierDAO;
 import FoodDelivery.dao.OrderDAO;
 import FoodDelivery.dao.OrderDetailDAO;
 import FoodDelivery.dao.PaymentDAO;
-import FoodDelivery.gui.backup.HomePage;
-import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.dao.ProductDAO;
 import FoodDelivery.dao.RestaurantDAO;
-import FoodDelivery.gui.backup.PaymentPopUp;
 import FoodDelivery.gui.styling.components.ProductCard;
+import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.gui.user.DeliveryPage;
 import FoodDelivery.models.Product;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
