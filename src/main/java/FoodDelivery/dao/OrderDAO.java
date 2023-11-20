@@ -7,6 +7,7 @@ package FoodDelivery.dao;
 import FoodDelivery.database.DatabaseUtility;
 import FoodDelivery.models.Order;
 import FoodDelivery.models.OrderDetail;
+import FoodDelivery.models.Product;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -212,7 +213,14 @@ public class OrderDAO {
             generatedIds.put("orderId", orderId);
             for (OrderDetail orderDetail : orderDetails) {
                 OrderDetailDAO detailDAO = new OrderDetailDAO();
+                ProductDAO productDB = new ProductDAO();
+                
+                Product product = productDB.getProductById(orderId);
+                int productStock = product.getStock();
+                int productQty = orderDetail.getQuantity();
+                productDB.updateStock(productStock - productQty, orderDetail.getProductId());
                 detailDAO.insertOrderDetail(orderId, orderDetail.getProductId(), orderDetail.getQuantity());
+                
             }
             CourierDAO courier = new CourierDAO();
             int courierId = courier.assignCourierToOrder(orderId);

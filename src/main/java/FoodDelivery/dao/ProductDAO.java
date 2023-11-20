@@ -71,9 +71,7 @@ public class ProductDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeConnection();
-        }
+        } 
         return null;
     }
 
@@ -154,6 +152,17 @@ public class ProductDAO {
         }
 
         return topProducts;
+    }
+
+    void updateStock(int stock, int product_id) {
+        String query = "UPDATE Products SET stock = ? WHERE product_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, stock);
+            preparedStatement.setInt(2, product_id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 }

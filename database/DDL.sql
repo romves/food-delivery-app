@@ -192,7 +192,6 @@ BEGIN
     END CATCH;
 END;
 GO
-DROP TRIGGER UpdateOrderTotal
 CREATE TRIGGER UpdateOrderTotal 
 ON OrderTable 
 AFTER UPDATE, INSERT
