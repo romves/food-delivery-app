@@ -74,4 +74,57 @@ public class ReceiptDAO {
 
         return null;
     }
+
+    public List<Map<String, Object>> getOrderHistoryByUserId(int userId) {
+        List<Map<String, Object>> orderHistoryList = new ArrayList<>();
+        Map<Integer, Map<String, Object>> orderMap = new HashMap<>();
+
+        try (Connection connection = DatabaseUtility.getConnection()) {
+            String sql = "SELECT * FROM ReceiptView WHERE user_id = ?";
+            try (PreparedStatement statement = connection.prepareStatement(sql)) {
+                statement.setInt(1, userId);
+
+                try (ResultSet resultSet = statement.executeQuery()) {
+                    while (resultSet.next()) {
+                        int orderId = resultSet.getInt("order_id");
+
+                        // Check if the order ID is already in the map
+                        Map<String, Object> orderHistory = orderMap.get(orderId);
+                        if (orderHistory == null) {
+                            // If not, create a new entry in the map
+                            orderHistory = new HashMap<>();
+                            orderHistory.put("orderId", orderId);
+                            orderHistory.put("orderDate", resultSet.getString("order_date"));
+                            orderHistory.put("restaurantName", resultSet.getString("restaurant_name"));
+                            orderHistory.put("courierName", resultSet.getString("courier_name"));
+                            orderHistory.put("courierPlateNumber", resultSet.getString("courier_plate_number"));
+                            orderHistory.put("userAddress", resultSet.getString("user_address"));
+                            orderHistory.put("shippingCost", resultSet.getDouble("shipping_cost"));
+                            orderHistory.put("orderTotal", resultSet.getDouble("order_total"));
+                            orderHistory.put("paymentMethod", resultSet.getString("payment_method"));
+
+                            // Assuming these columns are in the ReceiptView
+                            List<Map<String, Object>> itemList = new ArrayList<>();
+                            orderHistory.put("items", itemList);
+
+                            // Add the new entry to the map
+                            orderMap.put(orderId, orderHistory);
+                            orderHistoryList.add(orderHistory);
+                        }
+
+                        // Add item data to the existing item list
+                        Map<String, Object> itemData = new HashMap<>();
+                        itemData.put("quantity", resultSet.getInt("quantity"));
+                        itemData.put("product_name", resultSet.getString("product_name"));
+                        itemData.put("subtotal", resultSet.getDouble("subtotal"));
+                        ((List<Map<String, Object>>) orderHistory.get("items")).add(itemData);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return orderHistoryList;
+    }
 }
