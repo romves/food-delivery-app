@@ -172,7 +172,6 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         removeItemBtn = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setPreferredSize(new java.awt.Dimension(1415, 870));
         setResizable(false);
 
         totalLabel.setDoubleBuffered(false);
@@ -323,8 +322,8 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
                         .addGap(12, 12, 12)
                         .addComponent(TotalPriceLabel)
                         .addGap(18, 18, 18)
-                        .addComponent(paymentMethodCombo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
+                        .addComponent(paymentMethodCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(43, 43, 43)
                         .addComponent(orderButton))
                     .addGroup(totalLabelLayout.createSequentialGroup()
                         .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
