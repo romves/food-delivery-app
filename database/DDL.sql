@@ -253,6 +253,8 @@ SELECT DISTINCT
     od.product_id,
     p.product_name,
     p.product_price,
+    p.product_type,
+    p.stock,
     restaurant_id,
     (SELECT SUM(quantity) FROM OrderDetails WHERE product_id = od.product_id) AS sold
 FROM

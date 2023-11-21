@@ -71,7 +71,7 @@ public class ProductDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } 
+        }
         return null;
     }
 
@@ -94,8 +94,6 @@ public class ProductDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeConnection();
         }
         return products;
     }
@@ -163,6 +161,29 @@ public class ProductDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ArrayList<Product> getTopSellingProducts(int restoId) {
+        ArrayList<Product> topProducts = new ArrayList<>();
+        String sql = "select product_id, product_name, product_price, product_type, stock, sold from Top5SellingProductsByResto where restaurant_id= ? order by sold desc";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+            preparedStatement.setInt(1, restoId);
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                Product product = new Product(
+                        resultSet.getInt("product_id"),
+                        resultSet.getString("product_name"),
+                        resultSet.getDouble("product_price"),
+                        resultSet.getString("product_type"),
+                        resultSet.getInt("stock")
+                );
+                topProducts.add(product);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return topProducts;
     }
 
 }

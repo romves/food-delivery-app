@@ -60,6 +60,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
         this.cartTableModel = (DefaultTableModel) cartTable.getModel();
 
         ArrayList<Product> productResto = productDB.getAllProductsByResto(restoId);
+        ArrayList<Product> topSellingProduct = productDB.getTopSellingProducts(restoId);
 
         JPanel productPanel = new JPanel();
         JPanel productPanel2 = new JPanel();
@@ -72,9 +73,16 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
             String productName = product.getName();
             double productPrice = product.getPrice();
             int productStock = product.getStock();
-
-            productPanel.add(new ProductCard(productId, productName, productPrice, productStock, this));
             productPanel2.add(new ProductCard(productId, productName, productPrice, productStock, this));
+        }
+
+        for (Product product : topSellingProduct) {
+            int productId = product.getId();
+            String productName = product.getName();
+            double productPrice = product.getPrice();
+            int productStock = product.getStock();
+            
+            productPanel.add(new ProductCard(productId, productName, productPrice, productStock, this));
         }
 
         jScrollPane.setViewportView(productPanel);
@@ -355,7 +363,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
 
         if (cartTableModel.getRowCount() < 1) {
-            
+
         } else {
             String method = (String) paymentMethodCombo.getSelectedItem();
             List<OrderDetail> orderDetailsList = new ArrayList<>();
