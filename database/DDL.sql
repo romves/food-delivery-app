@@ -224,7 +224,7 @@ BEGIN
             JOIN deleted d ON i.order_id = d.order_id
             JOIN Couriers c ON i.courier_id = c.courier_id
         WHERE
-            i.order_status = 'FINISHED' AND d.order_status = 'ON_PROCESS';
+            i.order_status = 'FINISHED';
 
         IF @CourierID IS NOT NULL
         BEGIN
