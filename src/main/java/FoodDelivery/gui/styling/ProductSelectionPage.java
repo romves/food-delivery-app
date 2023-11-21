@@ -81,7 +81,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
             String productName = product.getName();
             double productPrice = product.getPrice();
             int productStock = product.getStock();
-            
+
             productPanel.add(new ProductCard(productId, productName, productPrice, productStock, this));
         }
 
@@ -105,19 +105,21 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
 
     @Override
     public void onAddToCart(int productId, int quantity, int productStock, Product product) {
-        // Implement the logic to update the cart table here
-        // For example, you can add a new row to the cartTableModel
         int existingRow = findProductRow(productId);
-
         if (productStock - quantity >= 0) {
             if (existingRow != -1) {
-                // Product already exists, update the quantity
+                int currentQty = Integer.parseInt(cartTableModel.getValueAt(existingRow, 2).toString());
                 int existingQuantity = Integer.parseInt(cartTableModel.getValueAt(existingRow, 2).toString());
-                cartTableModel.setValueAt(existingQuantity + quantity, existingRow, 2);
+                if (productStock - (currentQty + quantity) >= 0) {
+                    cartTableModel.setValueAt(existingQuantity + quantity, existingRow, 2);
+                    System.out.println(currentQty);
 
-                double price = product.getPrice();
-                double total = (existingQuantity + quantity) * price;
-                cartTableModel.setValueAt(total, existingRow, 3);
+                    double price = product.getPrice();
+                    double total = (existingQuantity + quantity) * price;
+                    cartTableModel.setValueAt(total, existingRow, 3);
+                } else {
+                    cartTableModel.setValueAt(productStock, existingRow, 2);
+                }
             } else if (quantity != 0) {
                 // Product doesn't exist, add a new row
                 String name = product.getName();
