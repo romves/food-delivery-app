@@ -39,7 +39,15 @@ public class Courier {
         this.phoneNumber = phoneNumber;
         this.plateNumber = plateNumber;
         this.balance = balance;
-        
+
+    }
+
+    public Courier(String name, String phoneNumber, String plateNumber) {
+        this.courierId = courierId;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.plateNumber = plateNumber;
+
     }
 
     public int getCourierId() {
@@ -89,5 +97,5 @@ public class Courier {
     public void setBalance(double balance) {
         this.balance = balance;
     }
-    
+
 }
