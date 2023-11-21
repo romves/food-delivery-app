@@ -36,13 +36,10 @@ public class PaymentDAO {
                     PreparedStatement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, paymentStatus);
                 preparedStatement.setString(2, paymentMethod);
-
                 int affectedRows = preparedStatement.executeUpdate();
-
                 if (affectedRows == 0) {
                     throw new SQLException("Creating payment failed, no rows affected.");
                 }
-
                 try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int paymentId = generatedKeys.getInt(1);
@@ -60,8 +57,7 @@ public class PaymentDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception as needed
-            return -1; // Indicate failure
+            return -1; 
         }
     }
 

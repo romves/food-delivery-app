@@ -128,8 +128,6 @@ BEGIN
         SET payment_status = 'PAID'
         WHERE payment_id = @PaymentID
           AND payment_method <> 'CASH';
-
-        -- Update the new order's status to 'ON_PROCESS' if payment_method is not null
         UPDATE OrderTable
         SET order_status = 'ON_PROCESS'
         WHERE order_id = @OrderID
@@ -140,11 +138,10 @@ BEGIN
                 AND payment_method IS NOT NULL
           );
 
-        COMMIT; -- Commit the transaction if all statements succeed
+        COMMIT; 
     END TRY
     BEGIN CATCH
-        ROLLBACK; -- Roll back the transaction if an error occurs
-        -- Handle the error as needed (log, re-throw, etc.)
+        ROLLBACK; 
         THROW;
     END CATCH;
 END;
@@ -246,7 +243,6 @@ BEGIN
 END;
 GO
 
--- Create a view to get the top 5 selling products by restaurant
 GO
 CREATE VIEW Top5SellingProductsByResto AS
 SELECT DISTINCT
@@ -260,8 +256,8 @@ FROM
 JOIN
     (SELECT * FROM Products) p ON od.product_id = p.product_id;
     
--- Create a view to get detailed receipts
 GO
+
 CREATE VIEW ReceiptView AS
 SELECT
     ot.order_date,
@@ -298,4 +294,17 @@ JOIN Payments py ON ot.payment_id = py.payment_id
 JOIN Couriers c ON ot.courier_id = c.courier_id
 JOIN Restaurant r ON ot.restaurant_id = r.restaurant_id
 JOIN Users u ON ot.user_id = u.user_id;
+GO
+
+CREATE TRIGGER UpdateProductStock
+ON OrderDetails
+AFTER INSERT
+AS
+BEGIN
+    -- Update product stock for each product in the order
+    UPDATE p
+    SET p.stock = p.stock - i.quantity
+    FROM Products p
+    JOIN inserted i ON p.product_id = i.product_id;
+END;
 GO
