@@ -401,6 +401,8 @@ public class DeliveryPage extends javax.swing.JFrame {
         courier.updateCourierStatusDelivered(this.orderId);
         OrderDAO order = new OrderDAO();
         order.setOrderStatusFinished(this.orderId);
+        CourierDAO courierDAO = new CourierDAO();
+        courierDAO.updateCourierStatusAvailable(this.courierId);
     }//GEN-LAST:event_confirmOrderButton2ActionPerformed
 
     private void backToHomeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backToHomeButtonActionPerformed

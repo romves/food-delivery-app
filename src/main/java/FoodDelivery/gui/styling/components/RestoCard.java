@@ -4,7 +4,6 @@
  */
 package FoodDelivery.gui.styling.components;
 
-import FoodDelivery.gui.backup.PaymentPopUp;
 import FoodDelivery.gui.styling.ProductSelectionPage;
 import FoodDelivery.gui.styling.eventlistener.RestoCardClickListener;
 
