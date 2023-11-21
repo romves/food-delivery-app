@@ -7,14 +7,14 @@ package FoodDelivery.gui.styling;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
-import FoodDelivery.dao.CourierDAO;
 import FoodDelivery.dao.OrderDAO;
-import FoodDelivery.dao.OrderDetailDAO;
-import FoodDelivery.dao.PaymentDAO;
 import FoodDelivery.dao.ProductDAO;
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.gui.styling.components.ProductCard;
@@ -22,17 +22,6 @@ import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.gui.user.DeliveryPage;
 import FoodDelivery.models.OrderDetail;
 import FoodDelivery.models.Product;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -106,6 +95,24 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     @Override
     public void onAddToCart(int productId, int quantity, int productStock, Product product) {
         int existingRow = findProductRow(productId);
+        JPanel panel = new JPanel();
+
+        ProductDAO productDB = new ProductDAO();
+        ArrayList<Product> topFrequentBoughtTogether = productDB.getTop3FrequentlyBoughtTogetherProducts(restoId);
+
+        for (Product xproduct : topFrequentBoughtTogether) {
+            int xproductId = xproduct.getId();
+            String xproductName = xproduct.getName();
+            double xproductPrice = xproduct.getPrice();
+            int xproductStock = xproduct.getStock();
+
+            panel.add(new ProductCard(xproductId, xproductName, xproductPrice, xproductStock, this));
+        }
+
+        if (quantity != 0) {
+            JOptionPane.showOptionDialog(this, panel, "Other user also buy this!", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+        }
+
         if (productStock - quantity >= 0) {
             if (existingRow != -1) {
                 int currentQty = Integer.parseInt(cartTableModel.getValueAt(existingRow, 2).toString());
