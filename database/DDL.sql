@@ -105,7 +105,6 @@ SELECT
 FROM TopRestaurants;
 GO
 
-SELECT TOP 5 * FROM TopRestaurantsView
 
 CREATE PROCEDURE CreateOrderFromPayment
     @PaymentID INT,
@@ -269,6 +268,7 @@ SELECT
     c.courier_name,
     c.courier_plate_number,
     ot.order_total,
+	od2.quantity,
     od2.product_name,
     r.restaurant_name,
     u.user_id,
