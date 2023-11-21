@@ -15,6 +15,7 @@ import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
 import FoodDelivery.gui.login.LoginChooser;
 import FoodDelivery.gui.styling.components.OrderCard;
+import FoodDelivery.gui.styling.components.ReceiptCard;
 import FoodDelivery.gui.styling.components.RestoCard;
 import FoodDelivery.gui.styling.eventlistener.RestoCardClickListener;
 import FoodDelivery.models.Restaurant;
@@ -25,6 +26,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import java.util.Map;
 
 /**
  *
@@ -74,6 +76,13 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
             String restoLocation = resto.getAddress();
 
             restoPanel2.add(new RestoCard(this.userId, restoId, restoName, restoLocation, this));
+        }
+        ReceiptDAO receipt = new ReceiptDAO();
+        List<Map<String, Object>> receiptDataList = receipt.getReceiptDataListForUserId(userId);
+
+        JPanel history = new JPanel();
+        for (Map<String, Object> receiptData : receiptDataList) {
+            history.add(new ReceiptCard(this.userId));
         }
 
         jScrollPane.setViewportView(restoPanel);
