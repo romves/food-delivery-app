@@ -208,7 +208,7 @@ public class CourierDAO {
     }
 
     public void updateCourierStatusDelivered(int orderId) {
-        String query = "UPDATE Couriers SET courier_status = 'DELIVERED' "
+        String query = "UPDATE Couriers SET courier_status = 'AVAILABLE' "
                 + "WHERE courier_id = (SELECT courier_id FROM OrderTable WHERE order_id = ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, orderId);

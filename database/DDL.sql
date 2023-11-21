@@ -214,10 +214,13 @@ BEGIN
     IF UPDATE(order_status)
     BEGIN
         DECLARE @CourierID INT, @ShippingCost DECIMAL(10, 2);
+        DECLARE @RestaurantID INT, @OrderTotal DECIMAL(10, 2);
 
         SELECT
             @CourierID = i.courier_id,
-            @ShippingCost = i.shipping_cost
+            @ShippingCost = i.shipping_cost,
+            @RestaurantID = i.restaurant_id,
+            @OrderTotal = i.order_total
         FROM
             inserted i
             JOIN deleted d ON i.order_id = d.order_id
@@ -230,6 +233,13 @@ BEGIN
             UPDATE Couriers
             SET balance = balance + @ShippingCost
             WHERE courier_id = @CourierID;
+        END
+
+        IF @RestaurantID IS NOT NULL
+        BEGIN
+            UPDATE Restaurant
+            SET restaurant_balance = restaurant_balance + @OrderTotal
+            WHERE restaurant_id = @RestaurantID;
         END
     END
 END;
