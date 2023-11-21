@@ -123,32 +123,36 @@ public class ProductDAO {
         }
     }
 
-    public List<String> getTop3FrequentlyBoughtTogetherProducts(int restaurantId) {
-        List<String> topProducts = new ArrayList<>();
-        String query = "SELECT TOP 3 * FROM FrequentlyBoughtTogetherProductView "
-                + "WHERE product_id1 IN (SELECT product_id FROM Products WHERE restaurant_id = ?) "
-                + "OR product_id2 IN (SELECT product_id FROM Products WHERE restaurant_id = ?)";
+    public ArrayList<Product> getTop3FrequentlyBoughtTogetherProducts(int productId) {
+        ArrayList<Product> topProducts = new ArrayList<>();
+        String query = "SELECT TOP 3 od.product_id, p.product_name, p.product_price, p.product_type, p.stock, COUNT(od.product_id) as freq "
+                + "FROM OrderDetails od "
+                + "JOIN Products p ON od.product_id = p.product_id "
+                + "WHERE od.order_id IN ( "
+                + "    SELECT order_id FROM OrderDetails WHERE product_id = ? "
+                + ") "
+                + "AND od.product_id != ? "
+                + "GROUP BY od.product_id, p.product_name, p.product_price, p.product_type, p.stock "
+                + "ORDER BY freq DESC";
 
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, restaurantId);
-            preparedStatement.setInt(2, restaurantId);
+            preparedStatement.setInt(1, productId);
+            preparedStatement.setInt(2, productId);
 
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                String productInfo = resultSet.getString("product_name1") + " and "
-                        + resultSet.getString("product_name2")
-                        + " (Frequency: " + resultSet.getInt("frequency") + ")";
-                topProducts.add(productInfo);
-
-                // Logging for debugging
-                System.out.println("Debug: Product Info - " + productInfo);
+                Product product = new Product(
+                        resultSet.getInt("product_id"),
+                        resultSet.getString("product_name"),
+                        resultSet.getDouble("product_price"),
+                        resultSet.getString("product_type"),
+                        resultSet.getInt("stock")
+                );
+                topProducts.add(product);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            closeConnection();
         }
-
         return topProducts;
     }
 
