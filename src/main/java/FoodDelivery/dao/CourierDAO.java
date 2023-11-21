@@ -217,4 +217,16 @@ public class CourierDAO {
         return courier;
     }
 
+    public void updateCourierStatusAvailable(int courierId) {
+        String query = "UPDATE Couriers SET courier_status = 'AVAILABLE' WHERE courier_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, courierId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
 }
