@@ -65,35 +65,20 @@ public class OrderDAO {
     public int createOrderFromPayment(int paymentID, int userID, int restaurantID) {
         Connection connection = null;
         CallableStatement callableStatement = null;
-        int orderID = -1; // Initialize with a default value
-
+        int orderID = -1; 
         try {
-            // Mengambil koneksi dari DatabaseUtility
             connection = DatabaseUtility.getConnection();
-
-            // Membuat pemanggilan prosedur penyimpanan
             String storedProcedureCall = "{call CreateOrderFromPayment(?, ?, ?, ?)}";
             callableStatement = connection.prepareCall(storedProcedureCall);
-
-            // Menetapkan parameter
             callableStatement.setInt(1, paymentID);
             callableStatement.setInt(2, userID);
             callableStatement.setInt(3, restaurantID);
-
-            // Menambahkan parameter output untuk order_id
             callableStatement.registerOutParameter(4, Types.INTEGER);
-
-            // Menjalankan pemanggilan prosedur penyimpanan
             callableStatement.execute();
-
-            // Mendapatkan nilai order_id dari parameter output
             orderID = callableStatement.getInt(4);
-
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle exception as needed
         } finally {
-            // Menutup koneksi dan pernyataan setelah selesai
             try {
                 if (callableStatement != null) {
                     callableStatement.close();
@@ -103,10 +88,8 @@ public class OrderDAO {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                // Handle exception as needed
             }
         }
-
         return orderID;
     }
 
@@ -202,47 +185,40 @@ public class OrderDAO {
             String paymentStatus, String paymentMethod, List<OrderDetail> orderDetails) {
         Map<String, Integer> generatedIds = new HashMap<>();
         try {
-            connection = DatabaseUtility.getConnection(); // Get your database connection here
-            connection.setAutoCommit(false); // Start the transaction
+            connection = DatabaseUtility.getConnection();
+            connection.setAutoCommit(false);
             PaymentDAO paymentDAO = new PaymentDAO();
             int paymentId = paymentDAO.insertPayment(paymentStatus, paymentMethod);
-            generatedIds.put("userId", userId);
-            generatedIds.put("restaurantId", restaurantId);
-            generatedIds.put("paymentId", paymentId);
             int orderId = createOrderFromPayment(paymentId, userId, restaurantId);
-            generatedIds.put("orderId", orderId);
             for (OrderDetail orderDetail : orderDetails) {
                 OrderDetailDAO detailDAO = new OrderDetailDAO();
                 ProductDAO productDB = new ProductDAO();
-                
                 Product product = productDB.getProductById(orderId);
                 int productStock = product.getStock();
                 int productQty = orderDetail.getQuantity();
                 detailDAO.insertOrderDetail(orderId, orderDetail.getProductId(), orderDetail.getQuantity());
-                
             }
             CourierDAO courier = new CourierDAO();
             int courierId = courier.assignCourierToOrder(orderId);
+            generatedIds.put("userId", userId);
+            generatedIds.put("orderId", orderId);
+            generatedIds.put("restaurantId", restaurantId);
+            generatedIds.put("paymentId", paymentId);
             generatedIds.put("courierId", courierId);
             connection.commit();
-
         } catch (SQLException e) {
-            // Handle exceptions and rollback the transaction
             try {
                 if (connection != null) {
                     connection.rollback();
                 }
             } catch (SQLException rollbackException) {
-                // Log or handle the rollback exception
                 rollbackException.printStackTrace();
-                System.out.println("gagal");
+                System.out.println("Order Failed");
             }
             e.printStackTrace();
         } finally {
-            // Close resources in the reverse order of their creation
-            // Close statements, connection, etc.
+            closeConnection();
         }
-
         return generatedIds;
     }
 }

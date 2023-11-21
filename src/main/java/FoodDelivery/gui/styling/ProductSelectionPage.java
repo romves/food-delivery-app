@@ -397,7 +397,6 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     }//GEN-LAST:event_decrementQtyBtnActionPerformed
 
     private void removeItemBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeItemBtnActionPerformed
-        // TODO add your handling code here:
         int selectedRow = cartTable.getSelectedRow();
         cartTableModel.removeRow(selectedRow);
         updateTotalLabel();
@@ -405,7 +404,6 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     }//GEN-LAST:event_removeItemBtnActionPerformed
 
     private void incrementQtyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_incrementQtyBtnActionPerformed
-        // TODO add your handling code here:
         int selectedRow = cartTable.getSelectedRow();
         int currentQty = Integer.parseInt(cartTableModel.getValueAt(selectedRow, 2).toString());
         cartTable.setValueAt(++currentQty, selectedRow, 2);
@@ -414,7 +412,6 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
     }//GEN-LAST:event_incrementQtyBtnActionPerformed
 
     private void cartTableMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cartTableMousePressed
-        // TODO add your handling code here:
         disableQtyBtn();
     }//GEN-LAST:event_cartTableMousePressed
 
@@ -430,7 +427,6 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
             removeItemBtn.setEnabled(false);
         }
     }
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel RestoNameLabel;
     private javax.swing.JLabel TotalPriceLabel;
