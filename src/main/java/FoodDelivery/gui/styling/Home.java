@@ -51,7 +51,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         JPanel restoPanel = new JPanel();
         JPanel restoPanel2 = new JPanel();
 
-        restoPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        restoPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         restoPanel2.setLayout(new GridLayout(0, 5, 10, 10));
         for (Restaurant resto : topResto) {
             int restoId = resto.getId();

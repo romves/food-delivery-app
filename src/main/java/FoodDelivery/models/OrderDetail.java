@@ -13,6 +13,7 @@ public class OrderDetail {
     private int orderId;
     private int productId;
     private int quantity;
+    private double subTotal;
 
     public OrderDetail(int productId, int quantity) {
         this.productId = productId;
@@ -24,6 +25,18 @@ public class OrderDetail {
         this.productId = productId;
         this.quantity = quantity;
     }
+    public OrderDetail(int orderId, int productId, int quantity, double subTotal){
+        
+    }
+
+    public void setSubTotal(double subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public double getSubTotal() {
+        return subTotal;
+    }
+    
 
     // Getters and setters
     public int getOrderId() {

@@ -82,7 +82,7 @@ CREATE TABLE OrderDetails (
 GO
 
 CREATE VIEW TopRestaurantsView AS
-WITH TopRestaurantsCTE AS (
+WITH TopRestaurants AS (
     SELECT
         r.restaurant_id,
         r.restaurant_name,
@@ -102,8 +102,10 @@ SELECT
     restaurant_id,
     restaurant_name,
     total_sales
-FROM TopRestaurantsCTE;
+FROM TopRestaurants;
 GO
+
+SELECT TOP 5 * FROM TopRestaurantsView
 
 CREATE PROCEDURE CreateOrderFromPayment
     @PaymentID INT,

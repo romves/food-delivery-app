@@ -182,31 +182,6 @@ public class CourierDAO {
         return courierId;
     }
 
-    public Courier getCourierByOrderID(int orderId) {
-        Courier courier = null;
-        String query = "SELECT c.* FROM Couriers c "
-                + "JOIN OrderTable o ON c.courier_id = o.courier_id "
-                + "WHERE o.order_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, orderId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    courier = new Courier(
-                            resultSet.getInt("courier_id"),
-                            resultSet.getString("courier_status"),
-                            resultSet.getString("courier_name"),
-                            resultSet.getString("courier_phone_number"),
-                            resultSet.getString("courier_plate_number")
-                    );
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-        }
-        return courier;
-    }
-
     public void updateCourierStatusDelivered(int orderId) {
         String query = "UPDATE Couriers SET courier_status = 'AVAILABLE' "
                 + "WHERE courier_id = (SELECT courier_id FROM OrderTable WHERE order_id = ?)";
@@ -219,4 +194,27 @@ public class CourierDAO {
             closeConnection();
         }
     }
+
+    public Courier getCourierById(int courierId) {
+        Courier courier = null;
+        String query = "SELECT courier_name, courier_phone_number, courier_plate_number FROM Couriers WHERE courier_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, courierId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    courier = new Courier(
+                            resultSet.getString("courier_name"),
+                            resultSet.getString("courier_phone_number"),
+                            resultSet.getString("courier_plate_number")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return courier;
+    }
+
 }
