@@ -218,7 +218,6 @@ public class OrderDAO {
                 Product product = productDB.getProductById(orderId);
                 int productStock = product.getStock();
                 int productQty = orderDetail.getQuantity();
-                productDB.updateStock(productStock - productQty, orderDetail.getProductId());
                 detailDAO.insertOrderDetail(orderId, orderDetail.getProductId(), orderDetail.getQuantity());
                 
             }

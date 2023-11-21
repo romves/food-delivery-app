@@ -92,7 +92,7 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
 
         jLabel3.setText("Password:");
 
-        jLabel4.setText("balance:");
+        jLabel4.setText("Balance");
 
         restaurantBalanceField.setEnabled(false);
 
