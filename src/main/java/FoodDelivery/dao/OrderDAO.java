@@ -114,7 +114,7 @@ public class OrderDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection();
+//            closeConnection();
         }
         return null;
     }
@@ -166,6 +166,18 @@ public class OrderDAO {
             e.printStackTrace();
         } finally {
             closeConnection();
+        }
+    }
+    
+    public void cancelOrder(int orderId) {
+        String UPDATE_STATUS_QUERY = "UPDATE OrderTable SET order_status = 'CANCELED' WHERE order_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_STATUS_QUERY)) {
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+//            closeConnection();
         }
     }
 
@@ -253,7 +265,7 @@ public class OrderDAO {
             }
             e.printStackTrace();
         } finally {
-            closeConnection();
+//            closeConnection();
         }
         return generatedIds;
     }

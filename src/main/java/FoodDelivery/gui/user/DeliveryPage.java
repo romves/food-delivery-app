@@ -36,15 +36,15 @@ public class DeliveryPage extends javax.swing.JFrame {
         this.orderId = generatedIds.get("orderId");
         this.restaurantId = generatedIds.get("restaurantId");
         this.paymentId = generatedIds.get("paymentId");
-        OrderDAO orderDAO = new OrderDAO();
-        while (!orderDAO.getOrderStatus(orderId).equals("ON_PROCESS")) {
-            try {
-                Thread.sleep(1000); // Tunggu 1 detik sebelum memeriksa lagi
-                statusLabel.setText("Waiting for restaurant accept your order");
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
+//        OrderDAO orderDAO = new OrderDAO();
+//        while (!orderDAO.getOrderStatus(orderId).equals("ON_PROCESS")) {
+//            try {
+//                Thread.sleep(1000); // Tunggu 1 detik sebelum memeriksa lagi
+//                statusLabel.setText("Waiting for restaurant accept your order");
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
         statusLabel.setText("Your order is being delivered by:");
         CourierDAO courierDAO = new CourierDAO();
 //        Courier courier = courierDAO.getCourierById(this.courierId);

@@ -4,6 +4,7 @@
  */
 package FoodDelivery.gui.styling;
 
+import FoodDelivery.dao.CourierDAO;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.ArrayList;
@@ -20,8 +21,12 @@ import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.gui.styling.components.ProductCard;
 import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.gui.user.DeliveryPage;
+import FoodDelivery.models.Order;
 import FoodDelivery.models.OrderDetail;
 import FoodDelivery.models.Product;
+import java.sql.Timestamp;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
 
 /**
  *
@@ -371,9 +376,7 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
 
     private void orderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderButtonActionPerformed
 
-        if (cartTableModel.getRowCount() < 1) {
-
-        } else {
+        if (cartTableModel.getRowCount() >= 1) {
             String method = (String) paymentMethodCombo.getSelectedItem();
             List<OrderDetail> orderDetailsList = new ArrayList<>();
             for (int row = 0; row < cartTableModel.getRowCount(); row++) {
@@ -383,10 +386,45 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
                 orderDetailsList.add(orderDetail);
             }
             OrderDAO orderDAO = new OrderDAO();
+            CourierDAO courierDAO = new CourierDAO();
             Map<String, Integer> generatedIds = orderDAO.createOrder(userId, restoId, "PAID", method, orderDetailsList);
-            DeliveryPage deliveryPage = new DeliveryPage(generatedIds);
-            deliveryPage.setVisible(true);
-            dispose();
+            Order order = orderDAO.getOrderById(generatedIds.get("orderId"));
+
+            long startTimeFromDB = order.getOrderDate().getTime();
+            long timeDifferenceInMillis = System.currentTimeMillis() - startTimeFromDB;
+            long fiveMinutesInMillis = 5 * 60 * 1000;
+            long startTime = startTimeFromDB + timeDifferenceInMillis;
+            long endTime = startTime + fiveMinutesInMillis;
+
+            long currentTime;
+            while (!orderDAO.getOrderStatus(generatedIds.get("orderId")).equals("ON_PROCESS") && System.currentTimeMillis() < endTime) {
+                try {
+                    Thread.sleep(1000); // Tunggu 1 detik sebelum memeriksa lagi
+                    long timeLeftSeconds = (endTime - System.currentTimeMillis()) / 1000;
+                    JOptionPane.showMessageDialog(this,
+                            "Waiting order to be accepted, " + timeLeftSeconds + "s",
+                            "Please Wait...",
+                            JOptionPane.INFORMATION_MESSAGE);
+                    System.out.println("Waiting for acc");
+                    System.out.println("Time Left: " + ((endTime - System.currentTimeMillis()) / 1000));
+                    cartTableModel.setRowCount(0);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (System.currentTimeMillis() >= endTime) {
+                JOptionPane.showMessageDialog(this,
+                        "Order canceled by resto!",
+                        "Canceled!",
+                        JOptionPane.INFORMATION_MESSAGE);
+                orderDAO.cancelOrder(generatedIds.get("orderId"));
+            } else {
+                courierDAO.assignCourierToOrder(generatedIds.get("orderId"));
+                DeliveryPage deliveryPage = new DeliveryPage(generatedIds);
+                deliveryPage.setVisible(true);
+                dispose();
+            }
         }
     }//GEN-LAST:event_orderButtonActionPerformed
 
