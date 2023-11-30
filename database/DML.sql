@@ -1,5 +1,4 @@
-use master
-GO
+
 USE FoodDeliveryApp
 GO
 
@@ -680,13 +679,6 @@ WHERE courier_id = 11;
 UPDATE Couriers
 SET courier_status = 'AVAILABLE'
 WHERE courier_id = 12;
-
-
-
-
-
-
-
 
 
 use FoodDeliveryApp

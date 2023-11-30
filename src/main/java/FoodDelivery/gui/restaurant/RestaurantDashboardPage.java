@@ -4,6 +4,7 @@
  */
 package FoodDelivery.gui.restaurant;
 
+import FoodDelivery.dao.CourierDAO;
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.database.DatabaseUtility;
 import FoodDelivery.gui.login.LoginChooser;
@@ -12,6 +13,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,8 +25,8 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
 
     private int restaurantId;
     private RestaurantDAO restoDB = new RestaurantDAO();
-    DefaultTableModel modelPT;
-    DefaultTableModel modelTopSelling;
+    DefaultTableModel modelorderDetail;
+    DefaultTableModel modelOrderWaitingList;
 
     /**
      * Creates new form RestaurantDashboardPage
@@ -31,12 +34,13 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
     public RestaurantDashboardPage(int id) {
         this.restaurantId = id;
         initComponents();
-        this.modelPT = (DefaultTableModel) ProductTable.getModel();
-        this.modelTopSelling = (DefaultTableModel) TopSellingTable.getModel();
+        this.modelorderDetail = (DefaultTableModel) orderDetailTableList.getModel();
+        this.modelOrderWaitingList = (DefaultTableModel) orderWaitingListTable.getModel();
         disableRestaurantField();
         loadRestaurantData();
-        populateProduct(true);
-        populateTopSelling();
+        populateOrderWaitingList();
+//        populateProduct(true);
+//        populateTopSelling();
     }
 
     /**
@@ -67,21 +71,22 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         restaurantDescArea = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        TopSellingTable = new javax.swing.JTable();
+        orderWaitingListTable = new javax.swing.JTable();
         jScrollPane3 = new javax.swing.JScrollPane();
-        ProductTable = new javax.swing.JTable();
-        jLabel5 = new javax.swing.JLabel();
+        orderDetailTableList = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         editBtn = new javax.swing.JButton();
         saveBtn = new javax.swing.JButton();
         jLabel6 = new javax.swing.JLabel();
         cancelBtn = new javax.swing.JButton();
         LogoutBtn = new javax.swing.JButton();
+        acceptOrderButton = new javax.swing.JButton();
+        refreshButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel1.setText("Top Selling Products");
+        jLabel1.setText("Order Waiting List");
 
         restaurantAddressLabel.setText("Address:");
 
@@ -107,34 +112,31 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         restaurantDescArea.setRows(5);
         jScrollPane1.setViewportView(restaurantDescArea);
 
-        TopSellingTable.setModel(new javax.swing.table.DefaultTableModel(
+        orderWaitingListTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "product_name", "product_price", "product_type", "product_sold"
+                "order_id", "user_id", "order_date", "order_status", "payment_id"
             }
         ));
-        jScrollPane2.setViewportView(TopSellingTable);
+        jScrollPane2.setViewportView(orderWaitingListTable);
 
-        ProductTable.setModel(new javax.swing.table.DefaultTableModel(
+        orderDetailTableList.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {},
-                {},
-                {},
-                {}
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
             },
             new String [] {
-
+                "product_id", "quantity"
             }
         ));
-        jScrollPane3.setViewportView(ProductTable);
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel5.setText("Your Products");
+        jScrollPane3.setViewportView(orderDetailTableList);
 
         jButton1.setText("> Manage products");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -173,6 +175,20 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         LogoutBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 LogoutBtnActionPerformed(evt);
+            }
+        });
+
+        acceptOrderButton.setText("Accept Order");
+        acceptOrderButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                acceptOrderButtonActionPerformed(evt);
+            }
+        });
+
+        refreshButton.setText("Refresh");
+        refreshButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                refreshButtonActionPerformed(evt);
             }
         });
 
@@ -216,26 +232,28 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
                         .addGap(110, 110, 110)
                         .addComponent(jLabel6)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 59, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jLabel1)
-                            .addGap(182, 182, 182))
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(63, 63, 63))
-                        .addGroup(layout.createSequentialGroup()
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jButton1))
-                            .addContainerGap()))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(220, 220, 220))))
+                        .addComponent(jButton1)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(63, 63, 63))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(refreshButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel1)
+                        .addGap(206, 206, 206))))
             .addGroup(layout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addComponent(LogoutBtn)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(acceptOrderButton)
+                .addGap(231, 231, 231))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,14 +261,16 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
-                        .addComponent(jLabel1)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(refreshButton))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel5)
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(18, 18, 18)
+                        .addComponent(acceptOrderButton)
+                        .addGap(30, 30, 30)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
@@ -342,6 +362,20 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_LogoutBtnActionPerformed
 
+    private void acceptOrderButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_acceptOrderButtonActionPerformed
+        CourierDAO courier = new CourierDAO();
+        int selectedRow = orderWaitingListTable.getSelectedRow();
+        if (selectedRow != -1) {
+            int orderId = Integer.parseInt(orderWaitingListTable.getValueAt(selectedRow, 0).toString());
+            int courierId = courier.assignCourierToOrder(orderId);
+        } else {
+            System.out.println("Tidak ada pesanan yang dipilih.");
+        }
+    }//GEN-LAST:event_acceptOrderButtonActionPerformed
+
+    private void refreshButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_refreshButtonActionPerformed
+        System.out.println("");    }//GEN-LAST:event_refreshButtonActionPerformed
+
     void loadRestaurantData() {
         Restaurant resto = restoDB.getRestaurantById(this.restaurantId);
         String id = Integer.toString(resto.getId());
@@ -407,12 +441,116 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         restaurantBalanceField.setEditable(true);
     }
 
-    void populateTopSelling() {
-        this.modelTopSelling.setRowCount(0);
-        String sql = "select product_name, product_price, product_type, sold from Top5SellingProductsByResto where restaurant_id= ? order by sold desc";
+//    void populateTopSelling() {
+//        this.modelTopSelling.setRowCount(0);
+//        String sql = "select product_name, product_price, product_type, sold from Top5SellingProductsByResto where restaurant_id= ? order by sold desc";
+//        try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement statement = connection.prepareStatement(sql);) {
+//            statement.setInt(1, this.restaurantId);
+//
+//            try (ResultSet resultSet = statement.executeQuery()) {
+//                ResultSetMetaData metaData = resultSet.getMetaData();
+//                int columnCount = metaData.getColumnCount();
+//
+//                Object[] rowData = new Object[columnCount];
+//                while (resultSet.next()) {
+//                    for (int i = 1; i <= columnCount; i++) {
+//                        rowData[i - 1] = resultSet.getString(i);
+//                    }
+//                    this.modelTopSelling.addRow(rowData);
+//                }
+//
+//                if (TopSellingTable.getRowCount() > 0) {
+//                    TopSellingTable.setRowSelectionInterval(0, 0);
+//                }
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//    }
+//    void populateOrderWaitingList() {
+//        this.modelOrderWaitingList.setRowCount(0);
+//        String sql = "select order_id, user_id, order_date,order_status, payment_id from OrderTable where restaurant_id= ? and order_status='PENDING'";
+//
+//        try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement statement = connection.prepareStatement(sql);) {
+//            statement.setInt(1, this.restaurantId);
+//            try (ResultSet resultSet = statement.executeQuery()) {
+//                ResultSetMetaData metaData = resultSet.getMetaData();
+//                int columnCount = metaData.getColumnCount();
+//
+//                Object[] rowData = new Object[columnCount];
+//                while (resultSet.next()) {
+//                    for (int i = 1; i <= columnCount; i++) {
+//                        rowData[i - 1] = resultSet.getString(i);
+//                    }
+//                    this.modelOrderWaitingList.addRow(rowData);
+//                }
+//
+//                if (orderWaitingListTable.getRowCount() > 0) {
+//                    orderWaitingListTable.setRowSelectionInterval(0, 0);
+//                }
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//        if (orderWaitingListTable.getRowCount() > 0) {
+//            orderWaitingListTable.setRowSelectionInterval(0, 0);
+//
+//            // Menambahkan listener untuk pemilihan baris pada tabel
+//            orderWaitingListTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+//                @Override
+//                public void valueChanged(ListSelectionEvent e) {
+//                    if (!e.getValueIsAdjusting()) {
+//                        int selectedRow = orderWaitingListTable.getSelectedRow();
+//                        if (selectedRow != -1) {
+//                            // Mendapatkan nilai order_id dari baris yang dipilih
+//                            int orderId = Integer.parseInt(orderWaitingListTable.getValueAt(selectedRow, 0).toString());
+//
+//                            // Memanggil populateOrderDetail dengan order_id sebagai parameter
+//                            populateOrderDetail(orderId);
+//                        }
+//                    }
+//                }
+//            });
+//        }
+//
+//    }
+//
+//    void populateOrderDetail(int orderId) {
+//        this.modelorderDetail.setRowCount(0);
+//        String sql = "select product_id, quantity from OrderDetail where order_id= ?";
+//        try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement statement = connection.prepareStatement(sql);) {
+//            statement.setInt(1, this.restaurantId);
+//
+//            try (ResultSet resultSet = statement.executeQuery()) {
+//                ResultSetMetaData metaData = resultSet.getMetaData();
+//                int columnCount = metaData.getColumnCount();
+//
+//                for (int i = 1; i <= columnCount; i++) {
+//                    this.modelorderDetail.addColumn(metaData.getColumnName(i));
+//                }
+//
+//                Object[] rowData = new Object[columnCount];
+//                while (resultSet.next()) {
+//                    for (int i = 1; i <= columnCount; i++) {
+//                        rowData[i - 1] = resultSet.getString(i);
+//                    }
+//                    this.modelorderDetail.addRow(rowData);
+//                }
+//
+//                if (orderDetailTableList.getRowCount() > 0) {
+//                    orderDetailTableList.setRowSelectionInterval(0, 0);
+//                }
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//    }
+    void populateOrderWaitingList() {
+        this.modelOrderWaitingList.setRowCount(0);
+        String sql = "select order_id, user_id, order_date,order_status, payment_id from OrderTable where restaurant_id= ? and order_status='PENDING'";
+
         try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement statement = connection.prepareStatement(sql);) {
             statement.setInt(1, this.restaurantId);
-
             try (ResultSet resultSet = statement.executeQuery()) {
                 ResultSetMetaData metaData = resultSet.getMetaData();
                 int columnCount = metaData.getColumnCount();
@@ -422,11 +560,28 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
                     for (int i = 1; i <= columnCount; i++) {
                         rowData[i - 1] = resultSet.getString(i);
                     }
-                    this.modelTopSelling.addRow(rowData);
+                    this.modelOrderWaitingList.addRow(rowData);
                 }
 
-                if (TopSellingTable.getRowCount() > 0) {
-                    TopSellingTable.setRowSelectionInterval(0, 0);
+                if (orderWaitingListTable.getRowCount() > 0) {
+                    orderWaitingListTable.setRowSelectionInterval(0, 0);
+
+                    // Menambahkan listener untuk pemilihan baris pada tabel
+                    orderWaitingListTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+                        @Override
+                        public void valueChanged(ListSelectionEvent e) {
+                            if (!e.getValueIsAdjusting()) {
+                                int selectedRow = orderWaitingListTable.getSelectedRow();
+                                if (selectedRow != -1) {
+                                    // Mendapatkan nilai order_id dari baris yang dipilih
+                                    int orderId = Integer.parseInt(orderWaitingListTable.getValueAt(selectedRow, 0).toString());
+
+                                    // Memanggil populateOrderDetail dengan order_id sebagai parameter
+                                    populateOrderDetail(orderId);
+                                }
+                            }
+                        }
+                    });
                 }
             }
         } catch (Exception e) {
@@ -434,20 +589,23 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         }
     }
 
-    void populateProduct(boolean init) {
-        this.modelPT.setRowCount(0);
-        String sql = "select product_id, product_name, product_price, product_type from Products where restaurant_id= ?";
+    void populateOrderDetail(int orderId) {
+        this.modelorderDetail.setRowCount(0); // Hapus semua baris sebelum memuat data baru
+        String sql = "select product_id, quantity from OrderDetails where order_id= ?";
+
         try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement statement = connection.prepareStatement(sql);) {
-            statement.setInt(1, this.restaurantId);
+            statement.setInt(1, orderId);  // Menggunakan orderId sebagai parameter
 
             try (ResultSet resultSet = statement.executeQuery()) {
                 ResultSetMetaData metaData = resultSet.getMetaData();
                 int columnCount = metaData.getColumnCount();
 
-                if (init) {
-                    for (int i = 1; i <= columnCount; i++) {
-                        this.modelPT.addColumn(metaData.getColumnName(i));
-                    }
+                // Hapus kolom yang sudah ada sebelumnya
+                this.modelorderDetail.setColumnCount(0);
+
+                // Tambahkan kolom sesuai dengan metadata
+                for (int i = 1; i <= columnCount; i++) {
+                    this.modelorderDetail.addColumn(metaData.getColumnName(i));
                 }
 
                 Object[] rowData = new Object[columnCount];
@@ -455,11 +613,11 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
                     for (int i = 1; i <= columnCount; i++) {
                         rowData[i - 1] = resultSet.getString(i);
                     }
-                    this.modelPT.addRow(rowData);
+                    this.modelorderDetail.addRow(rowData);
                 }
 
-                if (ProductTable.getRowCount() > 0) {
-                    ProductTable.setRowSelectionInterval(0, 0);
+                if (orderDetailTableList.getRowCount() > 0) {
+                    orderDetailTableList.setRowSelectionInterval(0, 0);
                 }
             }
         } catch (Exception e) {
@@ -467,6 +625,38 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         }
     }
 
+//    void populateProduct(boolean init) {
+//        this.modelPT.setRowCount(0);
+//        String sql = "select product_id, product_name, product_price, product_type from Products where restaurant_id= ?";
+//        try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement statement = connection.prepareStatement(sql);) {
+//            statement.setInt(1, this.restaurantId);
+//
+//            try (ResultSet resultSet = statement.executeQuery()) {
+//                ResultSetMetaData metaData = resultSet.getMetaData();
+//                int columnCount = metaData.getColumnCount();
+//
+//                if (init) {
+//                    for (int i = 1; i <= columnCount; i++) {
+//                        this.modelPT.addColumn(metaData.getColumnName(i));
+//                    }
+//                }
+//
+//                Object[] rowData = new Object[columnCount];
+//                while (resultSet.next()) {
+//                    for (int i = 1; i <= columnCount; i++) {
+//                        rowData[i - 1] = resultSet.getString(i);
+//                    }
+//                    this.modelPT.addRow(rowData);
+//                }
+//
+//                if (orderDetailTableList.getRowCount() > 0) {
+//                    orderDetailTableList.setRowSelectionInterval(0, 0);
+//                }
+//            }
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//    }
     /**
      * @param args the command line arguments
      */
@@ -504,8 +694,7 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton LogoutBtn;
-    private javax.swing.JTable ProductTable;
-    private javax.swing.JTable TopSellingTable;
+    private javax.swing.JButton acceptOrderButton;
     private javax.swing.JButton cancelBtn;
     private javax.swing.JButton editBtn;
     private javax.swing.JButton jButton1;
@@ -513,11 +702,13 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTable orderDetailTableList;
+    private javax.swing.JTable orderWaitingListTable;
+    private javax.swing.JButton refreshButton;
     private javax.swing.JTextField restaurantAddressField;
     private javax.swing.JLabel restaurantAddressLabel;
     private javax.swing.JTextField restaurantBalanceField;

@@ -65,7 +65,7 @@ public class OrderDAO {
     public int createOrderFromPayment(int paymentID, int userID, int restaurantID) {
         Connection connection = null;
         CallableStatement callableStatement = null;
-        int orderID = -1; 
+        int orderID = -1;
         try {
             connection = DatabaseUtility.getConnection();
             String storedProcedureCall = "{call CreateOrderFromPayment(?, ?, ?, ?)}";
@@ -177,8 +177,43 @@ public class OrderDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         } finally {
-            closeConnection();
+//            closeConnection();
         }
+    }
+
+    public String getOrderStatus(int orderId) {
+        String sql = "SELECT order_status FROM OrderTable WHERE order_id = ?";
+        try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, orderId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getString("order_status");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception as needed
+        }
+        return "";
+    }
+
+    public int getOrderIDFromPayment(int paymentId) {
+        String GET_ORDER_ID_FROM_PAYMENT_QUERY = "SELECT order_id FROM OrderTable WHERE payment_id = ?";
+
+        try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(GET_ORDER_ID_FROM_PAYMENT_QUERY)) {
+            preparedStatement.setInt(1, paymentId);
+
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    return resultSet.getInt("order_id");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle the exception as needed
+        }
+        return -1; // Order not found or payment not associated with an order
     }
 
     public Map<String, Integer> createOrder(int userId, int restaurantId,
@@ -198,13 +233,14 @@ public class OrderDAO {
                 int productQty = orderDetail.getQuantity();
                 detailDAO.insertOrderDetail(orderId, orderDetail.getProductId(), orderDetail.getQuantity());
             }
-            CourierDAO courier = new CourierDAO();
-            int courierId = courier.assignCourierToOrder(orderId);
+            if (!getOrderStatus(orderId).equals("PENDING")) {
+
+            }
             generatedIds.put("userId", userId);
             generatedIds.put("orderId", orderId);
             generatedIds.put("restaurantId", restaurantId);
             generatedIds.put("paymentId", paymentId);
-            generatedIds.put("courierId", courierId);
+//            generatedIds.put("courierId", courierId);
             connection.commit();
         } catch (SQLException e) {
             try {
