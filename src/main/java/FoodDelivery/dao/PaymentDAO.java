@@ -36,13 +36,10 @@ public class PaymentDAO {
                     PreparedStatement.RETURN_GENERATED_KEYS)) {
                 preparedStatement.setString(1, paymentStatus);
                 preparedStatement.setString(2, paymentMethod);
-
                 int affectedRows = preparedStatement.executeUpdate();
-
                 if (affectedRows == 0) {
                     throw new SQLException("Creating payment failed, no rows affected.");
                 }
-
                 try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         int paymentId = generatedKeys.getInt(1);
@@ -60,8 +57,7 @@ public class PaymentDAO {
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle the exception as needed
-            return -1; // Indicate failure
+            return -1; 
         }
     }
 
@@ -113,13 +109,14 @@ public class PaymentDAO {
         return null; // Payment not found
     }
 
-    public void createOrderFromPayment(
+    public int createOrderFromPayment(
             String paymentStatus,
             String paymentMethod,
             int restaurantId,
             int userId
     ) {
         String procedureCall = "{call CreateOrderFromPayment(?, ?, ?, ?, ?)}";
+        int paymentId = -1; // Default value in case of an error
 
         try (CallableStatement callableStatement = connection.prepareCall(procedureCall)) {
             callableStatement.registerOutParameter(1, Types.INTEGER); // Output parameter for payment_id
@@ -131,13 +128,16 @@ public class PaymentDAO {
             callableStatement.execute();
 
             // Retrieve the generated payment_id
-            int paymentId = callableStatement.getInt(1);
-
+            paymentId = callableStatement.getInt(1);
             System.out.println("Order created successfully with payment_id: " + paymentId);
         } catch (SQLException e) {
             e.printStackTrace();
+            // Handle the exception or log the error if necessary
         } finally {
+            // Perform any cleanup or resource release if needed
         }
+
+        return paymentId;
     }
 
     public int getOrderIDFromPayment(int paymentId) {

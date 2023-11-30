@@ -7,18 +7,6 @@ package FoodDelivery.gui.styling.components;
 import FoodDelivery.dao.ProductDAO;
 import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.models.Product;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.util.ArrayList;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingUtilities;
 
 /**
  *
@@ -28,15 +16,17 @@ public class ProductCard extends javax.swing.JPanel {
 
     private int productId;
     private int quantity;
+    private int productStock;
     private ProductCardListener listener;
 
     /**
      * Creates new form ProductCard
      */
-    public ProductCard(int productId, String productName, double productPrice, ProductCardListener listener) {
+    public ProductCard(int productId, String productName, double productPrice, int productStock, ProductCardListener listener) {
 
         this.productId = productId;
         this.quantity = 0;
+        this.productStock = productStock;
         this.listener = listener;
         initComponents();
         priceLabel.setText(Double.toString(productPrice));
@@ -165,8 +155,10 @@ public class ProductCard extends javax.swing.JPanel {
 
     private void plusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_plusButtonActionPerformed
         // TODO add your handling code here:
+        if (productStock - quantity > 0) {
         quantity++;
         updateQuantityLabel();
+        }
     }//GEN-LAST:event_plusButtonActionPerformed
 
     private void minusButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minusButtonActionPerformed
@@ -186,7 +178,7 @@ public class ProductCard extends javax.swing.JPanel {
         ProductDAO productDB = new ProductDAO();
         Product product = productDB.getProductById(productId);
         if (listener != null) {
-            listener.onAddToCart(productId, quantity, product);
+            listener.onAddToCart(productId, quantity, productStock, product);
         }
         quantity = 0;
         updateQuantityLabel();

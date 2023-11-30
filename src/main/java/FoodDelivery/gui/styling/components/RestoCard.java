@@ -4,7 +4,6 @@
  */
 package FoodDelivery.gui.styling.components;
 
-import FoodDelivery.gui.payment.PaymentPopUp;
 import FoodDelivery.gui.styling.ProductSelectionPage;
 import FoodDelivery.gui.styling.eventlistener.RestoCardClickListener;
 
@@ -45,6 +44,7 @@ public class RestoCard extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         ViewBtn = new javax.swing.JButton();
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder(null, new java.awt.Color(0, 0, 0)));
         jPanel1.setForeground(new java.awt.Color(204, 204, 204));
         jPanel1.setMaximumSize(new java.awt.Dimension(200, 200));
@@ -54,6 +54,7 @@ public class RestoCard extends javax.swing.JPanel {
         nameLabel.setFont(new java.awt.Font("Segoe UI Semibold", 0, 16)); // NOI18N
         nameLabel.setText("RestoName");
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel2MouseClicked(evt);
@@ -125,11 +126,11 @@ public class RestoCard extends javax.swing.JPanel {
     }//GEN-LAST:event_jPanel2MouseClicked
 
     private void ViewBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ViewBtnActionPerformed
-        // TODO add your handling code here:
         if (clickListener != null) {
             ProductSelectionPage page = new ProductSelectionPage(restoId,this.userId);
             page.setVisible(true);
             clickListener.onRestoCardClick(restoId);
+
         }
     }//GEN-LAST:event_ViewBtnActionPerformed
 

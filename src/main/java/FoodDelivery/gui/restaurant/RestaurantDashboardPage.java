@@ -6,7 +6,6 @@ package FoodDelivery.gui.restaurant;
 
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.database.DatabaseUtility;
-import FoodDelivery.gui.backup.LoginPage;
 import FoodDelivery.gui.login.LoginChooser;
 import FoodDelivery.models.Restaurant;
 import java.sql.Connection;
@@ -24,6 +23,7 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
     private int restaurantId;
     private RestaurantDAO restoDB = new RestaurantDAO();
     DefaultTableModel modelPT;
+    DefaultTableModel modelTopSelling;
 
     /**
      * Creates new form RestaurantDashboardPage
@@ -32,9 +32,11 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         this.restaurantId = id;
         initComponents();
         this.modelPT = (DefaultTableModel) ProductTable.getModel();
+        this.modelTopSelling = (DefaultTableModel) TopSellingTable.getModel();
         disableRestaurantField();
         loadRestaurantData();
         populateProduct(true);
+        populateTopSelling();
     }
 
     /**
@@ -89,7 +91,7 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
 
         jLabel3.setText("Password:");
 
-        jLabel4.setText("balance:");
+        jLabel4.setText("Balance");
 
         restaurantBalanceField.setEnabled(false);
 
@@ -113,7 +115,7 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "product_name", "product_price", "product_type", "product_sold"
             }
         ));
         jScrollPane2.setViewportView(TopSellingTable);
@@ -403,6 +405,33 @@ public class RestaurantDashboardPage extends javax.swing.JFrame {
         restaurantDescArea.setEditable(true);
         restaurantPhoneField.setEditable(true);
         restaurantBalanceField.setEditable(true);
+    }
+
+    void populateTopSelling() {
+        this.modelTopSelling.setRowCount(0);
+        String sql = "select product_name, product_price, product_type, sold from Top5SellingProductsByResto where restaurant_id= ? order by sold desc";
+        try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement statement = connection.prepareStatement(sql);) {
+            statement.setInt(1, this.restaurantId);
+
+            try (ResultSet resultSet = statement.executeQuery()) {
+                ResultSetMetaData metaData = resultSet.getMetaData();
+                int columnCount = metaData.getColumnCount();
+
+                Object[] rowData = new Object[columnCount];
+                while (resultSet.next()) {
+                    for (int i = 1; i <= columnCount; i++) {
+                        rowData[i - 1] = resultSet.getString(i);
+                    }
+                    this.modelTopSelling.addRow(rowData);
+                }
+
+                if (TopSellingTable.getRowCount() > 0) {
+                    TopSellingTable.setRowSelectionInterval(0, 0);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
     void populateProduct(boolean init) {

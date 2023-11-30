@@ -3,5 +3,3 @@ target/
 *.class
 
 .env
-
-DatabaseUtility.java

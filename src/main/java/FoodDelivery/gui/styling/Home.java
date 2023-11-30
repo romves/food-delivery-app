@@ -4,19 +4,29 @@
  */
 package FoodDelivery.gui.styling;
 
+import FoodDelivery.dao.ReceiptDAO;
+import java.awt.FlowLayout;
+import java.awt.GridLayout;
+import java.util.List;
+
+import javax.swing.JPanel;
+
 import FoodDelivery.dao.RestaurantDAO;
 import FoodDelivery.dao.UserDAO;
 import FoodDelivery.gui.login.LoginChooser;
-import FoodDelivery.gui.payment.PaymentPopUp;
+import FoodDelivery.gui.styling.components.OrderCard;
+import FoodDelivery.gui.styling.components.ReceiptCard;
 import FoodDelivery.gui.styling.components.RestoCard;
 import FoodDelivery.gui.styling.eventlistener.RestoCardClickListener;
 import FoodDelivery.models.Restaurant;
 import FoodDelivery.models.User;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import java.util.List;
-import javax.accessibility.AccessibleRole;
-import javax.swing.JPanel;
+import java.awt.BorderLayout;
+import java.util.Map;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
+import java.util.Map;
 
 /**
  *
@@ -34,12 +44,10 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     private UserDAO userDB = new UserDAO();
 
     public Home() {
-        this.setExtendedState(MAXIMIZED_BOTH);
         initComponents();
     }
 
     public Home(int userId) {
-        this.setExtendedState(MAXIMIZED_BOTH);
         this.userId = userId;
         initComponents();
         updateUserData(userId);
@@ -53,7 +61,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         JPanel restoPanel = new JPanel();
         JPanel restoPanel2 = new JPanel();
 
-        restoPanel.setLayout(new FlowLayout(FlowLayout.RIGHT, 10, 10));
+        restoPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
         restoPanel2.setLayout(new GridLayout(0, 5, 10, 10));
         for (Restaurant resto : topResto) {
             int restoId = resto.getId();
@@ -69,9 +77,17 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
 
             restoPanel2.add(new RestoCard(this.userId, restoId, restoName, restoLocation, this));
         }
+        ReceiptDAO receipt = new ReceiptDAO();
+        List<Map<String, Object>> receiptDataList = receipt.getReceiptDataListForUserId(userId);
+
+        JPanel history = new JPanel();
+        for (Map<String, Object> receiptData : receiptDataList) {
+            history.add(new ReceiptCard(this.userId));
+        }
 
         jScrollPane.setViewportView(restoPanel);
         jScrollPane2.setViewportView(restoPanel2);
+
         setLocationRelativeTo(null);
     }
 
@@ -179,6 +195,9 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         Email3 = new javax.swing.JLabel();
         phoneField = new javax.swing.JTextField();
         history = new javax.swing.JPanel();
+        jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -389,33 +408,31 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         home.setLayout(homeLayout);
         homeLayout.setHorizontalGroup(
             homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(27, 27, 27))
             .addGroup(homeLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(homeLayout.createSequentialGroup()
-                        .addGap(87, 87, 87)
-                        .addComponent(jLabel9))
-                    .addGroup(homeLayout.createSequentialGroup()
-                        .addGap(91, 91, 91)
-                        .addComponent(allRestaurantsLabel)))
-                .addContainerGap(762, Short.MAX_VALUE))
+                        .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(allRestaurantsLabel))
+                        .addContainerGap(836, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, homeLayout.createSequentialGroup()
+                        .addGroup(homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(27, 27, 27))))
         );
         homeLayout.setVerticalGroup(
             homeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(homeLayout.createSequentialGroup()
                 .addComponent(jLabel9)
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
+                .addComponent(jScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
                 .addComponent(allRestaurantsLabel)
-                .addGap(30, 30, 30)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 335, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         panelContainer.add(home, "card2");
@@ -543,15 +560,55 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
 
         panelContainer.add(profile, "card3");
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 741, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(31, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(146, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(30, 30, 30))
+        );
+
         javax.swing.GroupLayout historyLayout = new javax.swing.GroupLayout(history);
         history.setLayout(historyLayout);
         historyLayout.setHorizontalGroup(
             historyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 1403, Short.MAX_VALUE)
+            .addGroup(historyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(historyLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         historyLayout.setVerticalGroup(
             historyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 759, Short.MAX_VALUE)
+            .addGroup(historyLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(historyLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
 
         panelContainer.add(history, "card4");
@@ -600,7 +657,7 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
             .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        setBounds(0, 0, 1421, 878);
+        setBounds(0, 0, 1415, 870);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblCloseMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCloseMenuMouseClicked
@@ -631,11 +688,13 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
         closeMenu();    }//GEN-LAST:event_profileBarMouseClicked
 
     private void historyBarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_historyBarMouseClicked
+        displayOrderHistory();
         history.setVisible(true);
         profile.setVisible(false);
         home.setVisible(false);
         closeMenu();
     }//GEN-LAST:event_historyBarMouseClicked
+
 
     private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
         // TODO add your handling code here:
@@ -661,6 +720,34 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     private void userNameFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_userNameFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_userNameFieldActionPerformed
+
+    private void displayOrderHistory() {
+        ReceiptDAO receiptDB = new ReceiptDAO();
+        List<Map<String, Object>> orderHistoryList = receiptDB.getOrderHistoryByUserId(this.userId);
+
+        JPanel orderPanel = new JPanel();
+        orderPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 10, 10));
+
+        for (Map<String, Object> orderHistory : orderHistoryList) {
+            OrderCard orderCard = new OrderCard();
+            orderCard.setOrderDetails(orderHistory);
+
+            orderPanel.add(orderCard);
+
+            orderPanel.add(Box.createVerticalStrut(10));
+        }
+
+        JScrollPane orderScrollPane = new JScrollPane(orderPanel);
+
+        history.removeAll();  // Clear existing components
+        history.setLayout(new BorderLayout());  // Adjust layout as needed
+
+ 
+        history.add(orderScrollPane, BorderLayout.CENTER);
+
+        history.repaint();
+        history.revalidate();
+    }
 
     /**
      * @param args the command line arguments
@@ -718,10 +805,13 @@ public class Home extends javax.swing.JFrame implements RestoCardClickListener {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lblCloseMenu;
     private javax.swing.JPanel logoutBar;
     private javax.swing.JPanel mainPanel;

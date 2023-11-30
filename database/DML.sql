@@ -2,7 +2,7 @@ use master
 GO
 USE FoodDeliveryApp
 GO
--- Inserting sample data into Users table
+
 INSERT INTO Users (user_name, user_email, user_address, user_phone_number, user_password)
 VALUES
     ('Budi', 'budi@gmail.com', 'Street Cipto Mangunkusumo No. 123, Malang', '081234567890', 'Password123'),
@@ -16,7 +16,6 @@ VALUES
     ('Dian', 'dian@gmail.com', 'Street Jend. Sudirman No. 606, Malang', '081012345678', 'DianSecurePass1'),
     ('Faisal', 'faisal@gmail.com', 'Street M.H. Thamrin No. 707, Malang', '081123456789', 'Faisal123Secure');
 
--- Inserting sample data into Restaurant table
 INSERT INTO Restaurant (restaurant_name, restaurant_email, restaurant_password, restaurant_address, restaurant_description, restaurant_phone_number)
 VALUES
     ('Hometown Restaurant', 'hometownrestaurant@example.com', 'HometownPass123', 'Street Pemuda No. 1, Malang', 'Authentic Indonesian cuisine', '081234567800'),
@@ -30,9 +29,7 @@ VALUES
     ('Meat and Spicy Lovers', 'meatandspicylovers@example.com', 'SpicyMeatPass606', 'Street Veteran No. 9, Malang', 'Spicy and flavorful beef dish', '081012345688'),
     ('Cheff Garden', 'cheffgarden@example.com', 'CheffGardenPass707', 'Street Garden No. 10, Malang', 'Vegetable salad with peanut sauce', '081123456799');
 
--- Inserting sample data into Products table
 
--- Foods for Hometown Restaurant
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Special Fried Rice', 25000.00, 'Food', 50, 1),
@@ -41,13 +38,11 @@ VALUES
     ('Padang Beef Rendang', 40000.00, 'Food', 50, 1),
     ('Vegetable Salad with Peanut Sauce', 20000.00, 'Food', 50, 1);
 
--- Drinks for Hometown Restaurant
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Sweet Iced Tea', 5000.00, 'Drink', 50, 1),
     ('Avocado Juice', 10000.00, 'Drink', 50, 1);
 
--- Foods for Seafood Paradise
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Grilled Prawns', 60000.00, 'Food', 50, 2),
@@ -56,13 +51,11 @@ VALUES
     ('Spicy Seafood Soup', 45000.00, 'Food', 50, 2),
     ('Squid Ink Pasta', 35000.00, 'Food', 50, 2);
 
--- Drinks for Seafood Paradise
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Ocean Breeze Cooler', 12000.00, 'Drink', 50, 2),
     ('Tropical Sunset Mocktail', 15000.00, 'Drink', 50, 2);
 
--- Foods for Cookingg Express
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Special Fried Rice with Chicken', 28000.00, 'Food', 50, 3),
@@ -71,13 +64,11 @@ VALUES
     ('Spicy Chicken Noodles', 30000.00, 'Food', 50, 3),
     ('Nasi Goreng with Beef', 35000.00, 'Food', 50, 3);
 
--- Drinks for Cookingg Express
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Iced Lemongrass Tea', 7000.00, 'Drink', 50, 3),
     ('Fresh Orange Juice', 12000.00, 'Drink', 50, 3);
 
--- Foods for Sate King Satay
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Lamb Satay Skewers', 40000.00, 'Food', 50, 4),
@@ -86,13 +77,11 @@ VALUES
     ('Lamb Kofta Kebab', 38000.00, 'Food', 50, 4),
     ('Turmeric Marinated Lamb', 42000.00, 'Food', 50, 4);
 
--- Drinks for King Satay
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Mint Lemonade', 8000.00, 'Drink', 50, 4),
     ('Rosemary Infused Iced Tea', 10000.00, 'Drink', 50, 4);
 
--- Foods for Meat Ball Corner
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Beef Meatball Soup', 18000.00, 'Food', 50, 5),
@@ -101,13 +90,11 @@ VALUES
     ('Bakso Special Mix', 25000.00, 'Food', 50, 5),
     ('Fried Wonton with Meatballs', 22000.00, 'Food', 50, 5);
 
--- Drinks for Meat Ball Corner
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Hot Ginger Tea', 5000.00, 'Drink', 50, 5),
     ('Iced Lychee Punch', 10000.00, 'Drink', 50, 5);
 
--- Foods for Heaven Cook Resto
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Chocolate Banana Martabak', 25000.00, 'Food', 50, 6),
@@ -116,13 +103,11 @@ VALUES
     ('Vanilla Almond Martabak', 28000.00, 'Food', 50, 6),
     ('Caramel Coconut Martabak', 32000.00, 'Food', 50, 6);
 
--- Drinks for Heaven Cook Resto
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Hot Chocolate', 7000.00, 'Drink', 50, 6),
     ('Iced Matcha Latte', 12000.00, 'Drink', 50, 6);
 
--- Foods for Chicken Heritage
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Chicken Soto Soup', 18000.00, 'Food', 50, 7),
@@ -131,13 +116,11 @@ VALUES
     ('Spicy Coconut Chicken Soup', 25000.00, 'Food', 50, 7),
     ('Soto Ayam Special', 22000.00, 'Food', 50, 7);
 
--- Drinks for Chicken Heritage
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Warm Ginger Elixir', 5000.00, 'Drink', 50, 7),
     ('Chrysanthemum Iced Tea', 10000.00, 'Drink', 50, 7);
 
--- Foods for Steak Palace
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Beef Rendang', 25000.00, 'Food', 50, 8),
@@ -146,13 +129,11 @@ VALUES
     ('Petai and Anchovies Stir-Fry', 28000.00, 'Food', 50, 8),
     ('Green Chili Beef Curry', 32000.00, 'Food', 50, 8);
 
--- Drinks for Steak Palace
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Turmeric Tamarind Cooler', 7000.00, 'Drink', 50, 8),
     ('Lime Basil Spritzer', 12000.00, 'Drink', 50, 8);
 
--- Foods for Meat and Spicy Lovers
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Spicy Beef Rendang', 18000.00, 'Food', 50, 9),
@@ -161,13 +142,11 @@ VALUES
     ('Spicy Cajun Blackened Steak', 25000.00, 'Food', 50, 9),
     ('Spicy Chicken Curry', 22000.00, 'Food', 50, 9);
 
--- Drinks for Meat and Spicy Lovers
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Iced Roselle Tea', 5000.00, 'Drink', 50, 9),
     ('Lychee Ginger Elixir', 10000.00, 'Drink', 50, 9);
 
--- Foods for Cheff Garden
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Vegetable Gado-Gado Salad', 20000.00, 'Food', 50, 10),
@@ -176,7 +155,6 @@ VALUES
     ('Balinese Spicy Vegetables', 22000.00, 'Food', 50, 10),
     ('Jicama and Cabbage Slaw', 18000.00, 'Food', 50, 10);
 
--- Drinks for Cheff Garden
 INSERT INTO Products (product_name, product_price, product_type, stock, restaurant_id)
 VALUES
     ('Passionfruit Iced Tea', 6000.00, 'Drink', 50, 10),
@@ -197,339 +175,521 @@ VALUES
     ('Olivia Wang', '081123456789', 'OPQ667S');
 
 
-GO
-DECLARE @OrderID INT;
-DECLARE @UserID INT = 1; -- Replace with the desired user ID
-DECLARE @RestaurantID INT = 1; -- Replace with the desired restaurant ID
+DECLARE @paymentId1 INT, @paymentId2 INT, @paymentId3 INT, @paymentId4 INT, @paymentId5 INT,
+        @paymentId6 INT, @paymentId7 INT, @paymentId8 INT, @paymentId9 INT, @paymentId10 INT;
+DECLARE @orderId1 INT, @orderId2 INT, @orderId3 INT, @orderId4 INT, @orderId5 INT,
+        @orderId6 INT, @orderId7 INT, @orderId8 INT, @orderId9 INT, @orderId10 INT;
+DECLARE @courierID1 INT, @courierID2 INT, @courierID3 INT, @courierID4 INT, @courierID5 INT,
+        @courierID6 INT, @courierID7 INT, @courierID8 INT, @courierID9 INT, @courierID10 INT;
 
--- Create a new payment (replace with your actual payment details)
-INSERT INTO Payments (payment_status, payment_method, payment_date)
-VALUES ('UNPAID', 'CC', GETDATE());
+DECLARE @PaymentOutput1 TABLE (payment_id INT);
+DECLARE @PaymentOutput2 TABLE (payment_id INT);
+DECLARE @PaymentOutput3 TABLE (payment_id INT);
+DECLARE @PaymentOutput4 TABLE (payment_id INT);
+DECLARE @PaymentOutput5 TABLE (payment_id INT);
+DECLARE @PaymentOutput6 TABLE (payment_id INT);
+DECLARE @PaymentOutput7 TABLE (payment_id INT);
+DECLARE @PaymentOutput8 TABLE (payment_id INT);
+DECLARE @PaymentOutput9 TABLE (payment_id INT);
+DECLARE @PaymentOutput10 TABLE (payment_id INT);
 
--- Get the ID of the newly created payment
-DECLARE @PaymentID INT = SCOPE_IDENTITY();
+DECLARE @OrderOutput1 TABLE (order_id INT);
+DECLARE @OrderOutput2 TABLE (order_id INT);
+DECLARE @OrderOutput3 TABLE (order_id INT);
+DECLARE @OrderOutput4 TABLE (order_id INT);
+DECLARE @OrderOutput5 TABLE (order_id INT);
+DECLARE @OrderOutput6 TABLE (order_id INT);
+DECLARE @OrderOutput7 TABLE (order_id INT);
+DECLARE @OrderOutput8 TABLE (order_id INT);
+DECLARE @OrderOutput9 TABLE (order_id INT);
+DECLARE @OrderOutput10 TABLE (order_id INT);
 
--- Execute the stored procedure to create an order from the payment
-EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
-
-GO
-DECLARE @OrderID INT;
-DECLARE @UserID INT = 2; -- Replace with the desired user ID
-DECLARE @RestaurantID INT = 2; -- Replace with the desired restaurant ID
-
--- Create a new payment (replace with your actual payment details)
-INSERT INTO Payments (payment_status, payment_method, payment_date)
-VALUES ('UNPAID', 'CC', GETDATE());
-
--- Get the ID of the newly created payment
-DECLARE @PaymentID INT = SCOPE_IDENTITY();
-
--- Execute the stored procedure to create an order from the payment
-EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
-
-GO
-DECLARE @OrderID INT;
-DECLARE @UserID INT = 3; -- Replace with the desired user ID
-DECLARE @RestaurantID INT = 3; -- Replace with the desired restaurant ID
-
--- Create a new payment (replace with your actual payment details)
-INSERT INTO Payments (payment_status, payment_method, payment_date)
-VALUES ('UNPAID', 'CC', GETDATE());
-
--- Get the ID of the newly created payment
-DECLARE @PaymentID INT = SCOPE_IDENTITY();
-
--- Execute the stored procedure to create an order from the payment
-EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
-
-GO
-DECLARE @OrderID INT;
-DECLARE @UserID INT = 4; -- Replace with the desired user ID
-DECLARE @RestaurantID INT = 4; -- Replace with the desired restaurant ID
-
--- Create a new payment (replace with your actual payment details)
-INSERT INTO Payments (payment_status, payment_method, payment_date)
-VALUES ('UNPAID', 'CC', GETDATE());
-
--- Get the ID of the newly created payment
-DECLARE @PaymentID INT = SCOPE_IDENTITY();
-
--- Execute the stored procedure to create an order from the payment
-EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
-GO
-DECLARE @OrderID INT;
-DECLARE @UserID INT = 5; -- Replace with the desired user ID
-DECLARE @RestaurantID INT = 5; -- Replace with the desired restaurant ID
-
--- Create a new payment (replace with your actual payment details)
-INSERT INTO Payments (payment_status, payment_method, payment_date)
-VALUES ('UNPAID', 'CC', GETDATE());
-
--- Get the ID of the newly created payment
-DECLARE @PaymentID INT = SCOPE_IDENTITY();
-
--- Execute the stored procedure to create an order from the payment
-EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
-
-
-GO
-DECLARE @OrderID INT;
-DECLARE @UserID INT = 5; -- Replace with the desired user ID
-DECLARE @RestaurantID INT = 5; -- Replace with the desired restaurant ID
-
--- Create a new payment (replace with your actual payment details)
-INSERT INTO Payments (payment_status, payment_method, payment_date)
-VALUES ('UNPAID', 'CC', GETDATE());
-
--- Get the ID of the newly created payment
-DECLARE @PaymentID INT = SCOPE_IDENTITY();
-
--- Execute the stored procedure to create an order from the payment
-EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
-
-GO
-DECLARE @OrderID INT;
-DECLARE @UserID INT = 6; -- Replace with the desired user ID
-DECLARE @RestaurantID INT = 6; -- Replace with the desired restaurant ID
-
--- Create a new payment (replace with your actual payment details)
-INSERT INTO Payments (payment_status, payment_method, payment_date)
-VALUES ('UNPAID', 'CC', GETDATE());
-
--- Get the ID of the newly created payment
-DECLARE @PaymentID INT = SCOPE_IDENTITY();
-
--- Execute the stored procedure to create an order from the payment
-EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
-
-GO
-DECLARE @OrderID INT;
-DECLARE @UserID INT = 7; -- Replace with the desired user ID
-DECLARE @RestaurantID INT = 7; -- Replace with the desired restaurant ID
-
--- Create a new payment (replace with your actual payment details)
-INSERT INTO Payments (payment_status, payment_method, payment_date)
-VALUES ('UNPAID', 'CC', GETDATE());
-
--- Get the ID of the newly created payment
-DECLARE @PaymentID INT = SCOPE_IDENTITY();
-
--- Execute the stored procedure to create an order from the payment
-EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
--- Inserting sample data into OrderDetails table with at least two different products for each order
-
-GO
-DECLARE @OrderID INT;
-DECLARE @UserID INT = 8; -- Replace with the desired user ID
-DECLARE @RestaurantID INT = 8; -- Replace with the desired restaurant ID
-
--- Create a new payment (replace with your actual payment details)
-INSERT INTO Payments (payment_status, payment_method, payment_date)
-VALUES ('UNPAID', 'CC', GETDATE());
-
--- Get the ID of the newly created payment
-DECLARE @PaymentID INT = SCOPE_IDENTITY();
-
--- Execute the stored procedure to create an order from the payment
-EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
-
-GO
-DECLARE @OrderID INT;
-DECLARE @UserID INT = 9; -- Replace with the desired user ID
-DECLARE @RestaurantID INT = 9; -- Replace with the desired restaurant ID
-
--- Create a new payment (replace with your actual payment details)
-INSERT INTO Payments (payment_status, payment_method, payment_date)
-VALUES ('UNPAID', 'CC', GETDATE());
-
--- Get the ID of the newly created payment
-DECLARE @PaymentID INT = SCOPE_IDENTITY();
-
--- Execute the stored procedure to create an order from the payment
-EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
-
-GO
-DECLARE @OrderID INT;
-DECLARE @UserID INT = 10; -- Replace with the desired user ID
-DECLARE @RestaurantID INT = 10; -- Replace with the desired restaurant ID
-
--- Create a new payment (replace with your actual payment details)
-INSERT INTO Payments (payment_status, payment_method, payment_date)
-VALUES ('UNPAID', 'CC', GETDATE());
-
--- Get the ID of the newly created payment
-DECLARE @PaymentID INT = SCOPE_IDENTITY();
-
--- Execute the stored procedure to create an order from the payment
-EXEC CreateOrderFromPayment @PaymentID, @UserID, @RestaurantID, @OrderID OUTPUT;
+INSERT INTO Payments (payment_status, payment_method)
+OUTPUT inserted.payment_id INTO @PaymentOutput1
+VALUES ('PAID', 'CC');
+SELECT @paymentId1 = payment_id FROM @PaymentOutput1;
+INSERT INTO OrderTable(user_id, restaurant_id, payment_id)
+OUTPUT inserted.order_id INTO @OrderOutput1
+VALUES (1, 1, @paymentId1);
+SELECT @orderId1 = order_id FROM @OrderOutput1;
 INSERT INTO OrderDetails (order_id, product_id, quantity)
 VALUES
-    -- Order 1 (Same Restaurant - Hometown Restaurant)
-    (1, 1, 3),
-    (1, 2, 6),
-	(1, 3, 3),
-	(1, 4, 2),
-    (1, 5, 2),
-    (1, 6, 3),
-	(1, 7, 6),
-	
+    (@orderId1, 1, 3),
+    (@orderId1, 2, 6),
+    (@orderId1, 3, 3),
+    (@orderId1, 4, 2),
+    (@orderId1, 5, 2),
+    (@orderId1, 6, 3),
+    (@orderId1, 7, 6);
+EXEC AssignCourierToOrder @orderId1, @courierID1 OUTPUT;
+UPDATE OrderTable
+SET courier_id = @courierID1
+WHERE order_id = @orderId1;
+
+INSERT INTO Payments (payment_status, payment_method)
+OUTPUT inserted.payment_id INTO @PaymentOutput2
+VALUES ('PAID', 'DANA');
+
+SELECT @paymentId2 = payment_id FROM @PaymentOutput2;
+
+INSERT INTO OrderTable(user_id, restaurant_id, payment_id)
+OUTPUT inserted.order_id INTO @OrderOutput2
+VALUES (2, 2, @paymentId2);
+
+SELECT @orderId2 = order_id FROM @OrderOutput2;
+
+INSERT INTO OrderDetails (order_id, product_id, quantity)
+VALUES
     -- Order 2 (Same Restaurant - Seafood Paradise)
-    (2, 8, 4),
-    (2, 10, 7),
-    (2, 11, 2),
-    (2, 12, 2),
-	(2, 13, 3),
-    (2, 14, 2),
+    (@orderId2, 8, 4),
+    (@orderId2, 10, 7),
+    (@orderId2, 11, 2),
+    (@orderId2, 12, 2),
+    (@orderId2, 13, 3),
+    (@orderId2, 14, 2);
 
+EXEC AssignCourierToOrder @orderId2, @courierID2 OUTPUT;
+UPDATE OrderTable
+SET courier_id = @courierID2
+WHERE order_id = @orderId2;
+
+INSERT INTO Payments (payment_status, payment_method)
+OUTPUT inserted.payment_id INTO @PaymentOutput3
+VALUES ('PAID', 'OVO');
+
+SELECT @paymentId3 = payment_id FROM @PaymentOutput3;
+
+INSERT INTO OrderTable(user_id, restaurant_id, payment_id)
+OUTPUT inserted.order_id INTO @OrderOutput3
+VALUES (3, 3, @paymentId3);
+
+SELECT @orderId3 = order_id FROM @OrderOutput3;
+
+INSERT INTO OrderDetails (order_id, product_id, quantity)
+VALUES
     -- Order 3 (Same Restaurant - Cookingg Express)
-    (3, 15, 5),
-    (3, 17, 2),
-	(3, 18, 5),
-    (3, 19, 2),
-    (3, 20, 4),
-    (3, 21, 5),
+    (@orderId3, 15, 5),
+    (@orderId3, 17, 2),
+    (@orderId3, 18, 5),
+    (@orderId3, 19, 2),
+    (@orderId3, 20, 4),
+    (@orderId3, 21, 5);
 
+EXEC AssignCourierToOrder @orderId3, @courierID3 OUTPUT;
+UPDATE OrderTable
+SET courier_id = @courierID3
+WHERE order_id = @orderId3;
+
+INSERT INTO Payments (payment_status, payment_method)
+OUTPUT inserted.payment_id INTO @PaymentOutput4
+VALUES ('PAID', 'CC');
+
+SELECT @paymentId4 = payment_id FROM @PaymentOutput4;
+
+INSERT INTO OrderTable(user_id, restaurant_id, payment_id)
+OUTPUT inserted.order_id INTO @OrderOutput4
+VALUES (4, 4, @paymentId4);
+
+SELECT @orderId4 = order_id FROM @OrderOutput4;
+
+INSERT INTO OrderDetails (order_id, product_id, quantity)
+VALUES
     -- Order 4 (Same Restaurant - King Satay)
-    (4, 22, 4),
-    (4, 23, 4),
-	(4, 24, 1),
-    (4, 25, 1),
-	(4, 27, 1),
-    (4, 28, 5),
+    (@orderId4, 22, 4),
+    (@orderId4, 23, 4),
+    (@orderId4, 24, 1),
+    (@orderId4, 25, 1),
+    (@orderId4, 27, 1),
+    (@orderId4, 28, 5);
 
+EXEC AssignCourierToOrder @orderId4, @courierID4 OUTPUT;
+UPDATE OrderTable
+SET courier_id = @courierID4
+WHERE order_id = @orderId4;
+
+
+INSERT INTO Payments (payment_status, payment_method)
+OUTPUT inserted.payment_id INTO @PaymentOutput5
+VALUES ('PAID', 'CC');
+
+SELECT @paymentId5 = payment_id FROM @PaymentOutput5;
+
+INSERT INTO OrderTable(user_id, restaurant_id, payment_id)
+OUTPUT inserted.order_id INTO @OrderOutput5
+VALUES (5, 5, @paymentId5);
+
+SELECT @orderId5 = order_id FROM @OrderOutput5;
+
+
+INSERT INTO OrderDetails (order_id, product_id, quantity)
+VALUES
     -- Order 5 (Same Restaurant - Meat Ball Corner)
-    (5, 29, 6),
-    (5, 30, 2),
-	(5, 31, 4),
-    (5, 33, 2),
-	(5, 34, 3),
-    (5, 35, 3),
+    (@orderId5, 29, 6),
+    (@orderId5, 30, 2),
+    (@orderId5, 31, 4),
+    (@orderId5, 33, 2),
+    (@orderId5, 34, 3),
+    (@orderId5, 35, 3);
 
+
+EXEC AssignCourierToOrder @orderId5, @courierID5 OUTPUT;
+UPDATE OrderTable
+SET courier_id = @courierID5
+WHERE order_id = @orderId5;
+
+INSERT INTO Payments (payment_status, payment_method)
+OUTPUT inserted.payment_id INTO @PaymentOutput6
+VALUES ('PAID', 'CC');
+
+SELECT @paymentId6 = payment_id FROM @PaymentOutput6;
+
+INSERT INTO OrderTable(user_id, restaurant_id, payment_id)
+OUTPUT inserted.order_id INTO @OrderOutput6
+VALUES (6, 6, @paymentId6);
+
+
+SELECT @orderId6 = order_id FROM @OrderOutput6;
+
+-- 
+INSERT INTO OrderDetails (order_id, product_id, quantity)
+VALUES
     -- Order 6 (Same Restaurant - Heaven Cook Resto)
-    (6, 36, 3),
-	(6, 37, 2),
-	(6, 38, 2),
-	(6, 39, 1),
-    (6, 41, 4),
-    (6, 42, 2),
+    (@orderId6, 36, 3),
+    (@orderId6, 37, 2),
+    (@orderId6, 38, 2),
+    (@orderId6, 39, 1),
+    (@orderId6, 41, 4),
+    (@orderId6, 42, 2);
 
+EXEC AssignCourierToOrder @orderId6, @courierID6 OUTPUT;
+UPDATE OrderTable
+SET courier_id = @courierID6
+WHERE order_id = @orderId6;
+
+INSERT INTO Payments (payment_status, payment_method)
+OUTPUT inserted.payment_id INTO @PaymentOutput7
+VALUES ('PAID', 'CC');
+
+SELECT @paymentId7 = payment_id FROM @PaymentOutput7;
+
+INSERT INTO OrderTable(user_id, restaurant_id, payment_id)
+OUTPUT inserted.order_id INTO @OrderOutput7
+VALUES (7, 7, @paymentId7);
+
+SELECT @orderId7 = order_id FROM @OrderOutput7;
+
+
+INSERT INTO OrderDetails (order_id, product_id, quantity)
+VALUES
     -- Order 7 (Same Restaurant - Chicken Heritage)
-    (7, 43, 4),
-	(7, 44, 3),
-	(7, 45, 3),
-	(7, 46, 1),
-    (7, 48, 4),
-    (7, 49, 3),
+    (@orderId7, 43, 4),
+    (@orderId7, 44, 3),
+    (@orderId7, 45, 3),
+    (@orderId7, 46, 1),
+    (@orderId7, 48, 4),
+    (@orderId7, 49, 3);
 
+
+EXEC AssignCourierToOrder @orderId7, @courierID7 OUTPUT;
+UPDATE OrderTable
+SET courier_id = @courierID7
+WHERE order_id = @orderId7;
+
+INSERT INTO Payments (payment_status, payment_method)
+OUTPUT inserted.payment_id INTO @PaymentOutput8
+VALUES ('PAID', 'CC');
+
+
+SELECT @paymentId8 = payment_id FROM @PaymentOutput8;
+
+INSERT INTO OrderTable(user_id, restaurant_id, payment_id)
+OUTPUT inserted.order_id INTO @OrderOutput8
+VALUES (8, 8, @paymentId8);
+
+SELECT @orderId8 = order_id FROM @OrderOutput8;
+
+INSERT INTO OrderDetails (order_id, product_id, quantity)
+VALUES
     -- Order 8 (Same Restaurant - Steak Palace)
-    (8, 50, 3),
-	(8, 51, 3),
-	(8, 52, 2),
-	(8, 53, 1),
-	(8, 54, 1),
-	(8, 55, 6),
-    (8, 56, 3),
+    (@orderId8, 50, 3),
+    (@orderId8, 51, 3),
+    (@orderId8, 52, 2),
+    (@orderId8, 53, 1),
+    (@orderId8, 54, 1),
+    (@orderId8, 55, 6),
+    (@orderId8, 56, 3);
 
+EXEC AssignCourierToOrder @orderId8, @courierID8 OUTPUT;
+UPDATE OrderTable
+SET courier_id = @courierID8
+WHERE order_id = @orderId8;
+
+INSERT INTO Payments (payment_status, payment_method)
+OUTPUT inserted.payment_id INTO @PaymentOutput9
+VALUES ('PAID', 'CC');
+
+SELECT @paymentId9 = payment_id FROM @PaymentOutput9;
+
+INSERT INTO OrderTable(user_id, restaurant_id, payment_id)
+OUTPUT inserted.order_id INTO @OrderOutput9
+VALUES (9, 9, @paymentId9);
+
+SELECT @orderId9 = order_id FROM @OrderOutput9;
+
+INSERT INTO OrderDetails (order_id, product_id, quantity)
+VALUES
     -- Order 9 (Same Restaurant - Meat and Spicy Lovers)
-    (9, 57, 3),
-    (9, 58, 1),
-	(9, 59, 1),
-	(9, 60, 2),
-	(9, 61, 2),
-	(9, 62, 3),
-    (9, 63, 3),
+    (@orderId9, 57, 3),
+    (@orderId9, 58, 1),
+    (@orderId9, 59, 1),
+    (@orderId9, 60, 2),
+    (@orderId9, 61, 2),
+    (@orderId9, 62, 3),
+    (@orderId9, 63, 3);
 
+EXEC AssignCourierToOrder @orderId9, @courierID9 OUTPUT;
+UPDATE OrderTable
+SET courier_id = @courierID9
+WHERE order_id = @orderId9;
+
+INSERT INTO Payments (payment_status, payment_method)
+OUTPUT inserted.payment_id INTO @PaymentOutput10
+VALUES ('PAID', 'CC');
+SELECT @paymentId10 = payment_id FROM @PaymentOutput10;
+INSERT INTO OrderTable(user_id, restaurant_id, payment_id)
+OUTPUT inserted.order_id INTO @OrderOutput10
+VALUES (10, 10, @paymentId10);
+SELECT @orderId10 = order_id FROM @OrderOutput10;
+INSERT INTO OrderDetails (order_id, product_id, quantity)
+VALUES
     -- Order 10 (Same Restaurant - Cheff Garden)
-    (10, 64, 6),
-	(10, 65, 1),
-    (10, 66, 1),
-	(10, 67, 2),
-	(10, 68, 1),
-	(10, 69, 3),
-    (10, 70, 2);
-GO
+    (@orderId10, 64, 6),
+    (@orderId10, 65, 1),
+    (@orderId10, 66, 1),
+    (@orderId10, 67, 2),
+    (@orderId10, 68, 1),
+    (@orderId10, 69, 3),
+    (@orderId10, 70, 2);
 
-DECLARE @OrderID1 INT = 1;
-DECLARE @CourierID1 INT;
+EXEC AssignCourierToOrder @orderId10, @courierID10 OUTPUT;
+UPDATE OrderTable
+SET courier_id = @courierID10
+WHERE order_id = @orderId10;
 
--- Execute the stored procedure
-EXEC AssignCourierToOrder
-    @OrderID = @OrderID1,
-    @CourierID = @CourierID1 OUTPUT;
+UPDATE Couriers
+SET courier_status='DELIVERED'
+WHERE courier_id=1;
+UPDATE Couriers
+SET courier_status = 'DELIVERED'
+WHERE courier_id = 2;
+UPDATE Couriers
+SET courier_status = 'DELIVERED'
+WHERE courier_id = 3;
+UPDATE Couriers
+SET courier_status = 'DELIVERED'
+WHERE courier_id = 4;
+UPDATE Couriers
+SET courier_status = 'DELIVERED'
+WHERE courier_id = 5;
+UPDATE Couriers
+SET courier_status = 'DELIVERED'
+WHERE courier_id = 6;
+UPDATE Couriers
+SET courier_status = 'DELIVERED'
+WHERE courier_id = 7;
 
-DECLARE @OrderID2 INT = 2;
-DECLARE @CourierID2 INT;
+UPDATE Couriers
+SET courier_status = 'DELIVERED'
+WHERE courier_id = 8;
 
--- Execute the stored procedure
-EXEC AssignCourierToOrder
-    @OrderID = @OrderID2,
-    @CourierID = @CourierID2 OUTPUT;
+UPDATE Couriers
+SET courier_status = 'DELIVERED'
+WHERE courier_id = 9;
 
-DECLARE @OrderID3 INT = 3;
-DECLARE @CourierID3 INT;
+UPDATE Couriers
+SET courier_status = 'DELIVERED'
+WHERE courier_id = 10;
 
--- Execute the stored procedure
-EXEC AssignCourierToOrder
-    @OrderID = @OrderID3,
-    @CourierID = @CourierID3 OUTPUT;
+UPDATE OrderTable
+SET order_status = 'FINISHED'
+WHERE order_id = 1;
 
-DECLARE @OrderID4 INT = 4;
-DECLARE @CourierID4 INT;
+UPDATE OrderTable
+SET order_status = 'FINISHED'
+WHERE order_id = 2;
 
--- Execute the stored procedure
-EXEC AssignCourierToOrder
-    @OrderID = @OrderID4,
-    @CourierID = @CourierID4 OUTPUT;
+UPDATE OrderTable
+SET order_status = 'FINISHED'
+WHERE order_id = 3;
 
-DECLARE @OrderID5 INT = 5;
-DECLARE @CourierID5 INT;
+UPDATE OrderTable
+SET order_status = 'FINISHED'
+WHERE order_id = 4;
 
--- Execute the stored procedure
-EXEC AssignCourierToOrder
-    @OrderID = @OrderID5,
-    @CourierID = @CourierID5 OUTPUT;
+UPDATE OrderTable
+SET order_status = 'FINISHED'
+WHERE order_id = 5;
 
-DECLARE @OrderID6 INT = 6;
-DECLARE @CourierID6 INT;
+UPDATE OrderTable
+SET order_status = 'FINISHED'
+WHERE order_id = 6;
 
--- Execute the stored procedure
-EXEC AssignCourierToOrder
-    @OrderID = @OrderID6,
-    @CourierID = @CourierID6 OUTPUT;
+UPDATE OrderTable
+SET order_status = 'FINISHED'
+WHERE order_id = 7;
 
-DECLARE @OrderID7 INT = 7;
-DECLARE @CourierID7 INT;
+UPDATE OrderTable
+SET order_status = 'FINISHED'
+WHERE order_id = 8;
 
--- Execute the stored procedure
-EXEC AssignCourierToOrder
-    @OrderID = @OrderID7,
-    @CourierID = @CourierID7 OUTPUT;
+UPDATE OrderTable
+SET order_status = 'FINISHED'
+WHERE order_id = 9;
 
---DECLARE @OrderID8 INT = 8;
---DECLARE @CourierID8 INT;
+UPDATE OrderTable
+SET order_status = 'FINISHED'
+WHERE order_id = 10;
 
--- Execute the stored procedure
---EXEC AssignCourierToOrder
-    --@OrderID = @OrderID8,
-   -- @CourierID = @CourierID8 OUTPUT;
 
---DECLARE @OrderID9 INT = 9;
---DECLARE @CourierID9 INT;
+UPDATE Couriers
+SET courier_status = 'AVAILABLE'
+WHERE courier_id = 1;
 
--- Execute the stored procedure
---EXEC AssignCourierToOrder
-  --  @OrderID = @OrderID9,
-  --  @CourierID = @CourierID9 OUTPUT;
+UPDATE Couriers
+SET courier_status = 'AVAILABLE'
+WHERE courier_id = 2;
 
---DECLARE @OrderID10 INT = 10;
---DECLARE @CourierID10 INT;
+UPDATE Couriers
+SET courier_status = 'AVAILABLE'
+WHERE courier_id = 3;
 
--- Execute the stored procedure
---EXEC AssignCourierToOrder
-  --  @OrderID = @OrderID10,
-    --@CourierID = @CourierID10 OUTPUT;
+UPDATE Couriers
+SET courier_status = 'AVAILABLE'
+WHERE courier_id = 4;
 
-GO
+UPDATE Couriers
+SET courier_status = 'AVAILABLE'
+WHERE courier_id = 5;
+
+UPDATE Couriers
+SET courier_status = 'AVAILABLE'
+WHERE courier_id = 6;
+
+UPDATE Couriers
+SET courier_status = 'AVAILABLE'
+WHERE courier_id = 7;
+
+UPDATE Couriers
+SET courier_status = 'AVAILABLE'
+WHERE courier_id = 8;
+
+UPDATE Couriers
+SET courier_status = 'AVAILABLE'
+WHERE courier_id = 9;
+
+UPDATE Couriers
+SET courier_status = 'AVAILABLE'
+WHERE courier_id = 10;
+
+
+
+DECLARE @paymentId11 INT, @paymentId12 INT, @paymentId13 INT, @paymentId14 INT, @paymentId15 INT;
+DECLARE @orderId11 INT, @orderId12 INT, @orderId13 INT, @orderId14 INT, @orderId15 INT;
+DECLARE @courierID11 INT, @courierID12 INT, @courierID13 INT, @courierID14 INT, @courierID15 INT;
+
+DECLARE @PaymentOutput11 TABLE (payment_id INT);
+DECLARE @PaymentOutput12 TABLE (payment_id INT);
+DECLARE @PaymentOutput13 TABLE (payment_id INT);
+DECLARE @PaymentOutput14 TABLE (payment_id INT);
+DECLARE @PaymentOutput15 TABLE (payment_id INT);
+
+DECLARE @OrderOutput11 TABLE (order_id INT);
+DECLARE @OrderOutput12 TABLE (order_id INT);
+DECLARE @OrderOutput13 TABLE (order_id INT);
+DECLARE @OrderOutput14 TABLE (order_id INT);
+DECLARE @OrderOutput15 TABLE (order_id INT);
+
+INSERT INTO Payments (payment_status, payment_method)
+OUTPUT inserted.payment_id INTO @PaymentOutput11
+VALUES ('PAID', 'CC');
+
+SELECT @paymentId11 = payment_id FROM @PaymentOutput11;
+
+INSERT INTO OrderTable(user_id, restaurant_id, payment_id)
+OUTPUT inserted.order_id INTO @OrderOutput11
+VALUES (1, 1, @paymentId11);
+
+SELECT @orderId11 = order_id FROM @OrderOutput11;
+
+INSERT INTO OrderDetails (order_id, product_id, quantity)
+VALUES
+    (@orderId11, 1, 4),
+    (@orderId11, 2, 1),
+    (@orderId11, 3, 3),
+    (@orderId11, 7, 2);
+
+EXEC AssignCourierToOrder @orderId11, @courierID11 OUTPUT;
+UPDATE OrderTable
+SET courier_id = @courierID11
+WHERE order_id = @orderId11;
+
+INSERT INTO Payments (payment_status, payment_method)
+OUTPUT inserted.payment_id INTO @PaymentOutput12
+VALUES ('PAID', 'DANA');
+
+SELECT @paymentId12 = payment_id FROM @PaymentOutput12;
+
+INSERT INTO OrderTable(user_id, restaurant_id, payment_id)
+OUTPUT inserted.order_id INTO @OrderOutput12
+VALUES (2, 2, @paymentId12);
+
+SELECT @orderId12 = order_id FROM @OrderOutput12;
+
+INSERT INTO OrderDetails (order_id, product_id, quantity)
+VALUES
+    ( @orderId12, 8, 3),
+    ( @orderId12, 10, 2),
+    ( @orderId12, 13, 2),
+    ( @orderId12, 14, 1);
+
+EXEC AssignCourierToOrder @orderId12, @courierID12 OUTPUT;
+UPDATE OrderTable
+SET courier_id = @courierID12
+WHERE order_id = @orderId12;
+
+UPDATE Couriers
+SET courier_status = 'DELIVERED'
+WHERE courier_id = 11;
+
+UPDATE Couriers
+SET courier_status = 'DELIVERED'
+WHERE courier_id = 12;
+
+UPDATE OrderTable
+SET order_status = 'FINISHED'
+WHERE order_id = 11;
+
+UPDATE OrderTable
+SET order_status = 'FINISHED'
+WHERE order_id = 12;
+
+UPDATE Couriers
+SET courier_status = 'AVAILABLE'
+WHERE courier_id = 11;
+
+UPDATE Couriers
+SET courier_status = 'AVAILABLE'
+WHERE courier_id = 12;
+
+
+
+
+
+
+
+
+
+use FoodDeliveryApp
 	SELECT * FROM Users
 	SELECT * FROM Restaurant
 	SELECT * FROM Products

@@ -1,21 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package FoodDelivery.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-/**
- *
- * @author Kenzie Taqiyassar
- */
 public class DatabaseUtility {
-
     private static final String DB_URL = "jdbc:sqlserver://localhost:1433;databaseName=FoodDeliveryApp;trustServerCertificate=true;encrypt=false";
     private static final String DB_USER = "sa";
     private static final String DB_PASSWORD = "Y2FwdGFpbnNpbGVuY2VzbGlwbWU=";

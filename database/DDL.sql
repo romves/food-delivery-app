@@ -81,11 +81,8 @@ CREATE TABLE OrderDetails (
 );
 GO
 
-
-GO
-
 CREATE VIEW TopRestaurantsView AS
-WITH TopRestaurantsCTE AS (
+WITH TopRestaurants AS (
     SELECT
         r.restaurant_id,
         r.restaurant_name,
@@ -105,8 +102,9 @@ SELECT
     restaurant_id,
     restaurant_name,
     total_sales
-FROM TopRestaurantsCTE;
+FROM TopRestaurants;
 GO
+
 
 CREATE PROCEDURE CreateOrderFromPayment
     @PaymentID INT,
@@ -130,8 +128,6 @@ BEGIN
         SET payment_status = 'PAID'
         WHERE payment_id = @PaymentID
           AND payment_method <> 'CASH';
-
-        -- Update the new order's status to 'ON_PROCESS' if payment_method is not null
         UPDATE OrderTable
         SET order_status = 'ON_PROCESS'
         WHERE order_id = @OrderID
@@ -142,11 +138,10 @@ BEGIN
                 AND payment_method IS NOT NULL
           );
 
-        COMMIT; -- Commit the transaction if all statements succeed
+        COMMIT; 
     END TRY
     BEGIN CATCH
-        ROLLBACK; -- Roll back the transaction if an error occurs
-        -- Handle the error as needed (log, re-throw, etc.)
+        ROLLBACK; 
         THROW;
     END CATCH;
 END;
@@ -195,6 +190,19 @@ BEGIN
     END CATCH;
 END;
 GO
+CREATE TRIGGER UpdateOrderTotal 
+ON OrderTable 
+AFTER UPDATE, INSERT
+AS
+BEGIN
+    update ot
+    set order_total = ISNULL((select SUM(p.product_price*quantity) 
+                            from OrderDetails od 
+                            join Products p on od.product_id=p.product_id 
+                            where od.order_id = ot.order_id), 0)
+    FROM OrderTable ot
+END
+GO
 
 CREATE TRIGGER UpdateCourierBalanceAndOrderStatus
 ON OrderTable
@@ -204,16 +212,19 @@ BEGIN
     IF UPDATE(order_status)
     BEGIN
         DECLARE @CourierID INT, @ShippingCost DECIMAL(10, 2);
+        DECLARE @RestaurantID INT, @OrderTotal DECIMAL(10, 2);
 
         SELECT
             @CourierID = i.courier_id,
-            @ShippingCost = i.shipping_cost
+            @ShippingCost = i.shipping_cost,
+            @RestaurantID = i.restaurant_id,
+            @OrderTotal = i.order_total
         FROM
             inserted i
             JOIN deleted d ON i.order_id = d.order_id
             JOIN Couriers c ON i.courier_id = c.courier_id
         WHERE
-            i.order_status = 'FINISHED' AND d.order_status = 'ON_PROCESS';
+            i.order_status = 'FINISHED';
 
         IF @CourierID IS NOT NULL
         BEGIN
@@ -221,6 +232,81 @@ BEGIN
             SET balance = balance + @ShippingCost
             WHERE courier_id = @CourierID;
         END
+
+        IF @RestaurantID IS NOT NULL
+        BEGIN
+            UPDATE Restaurant
+            SET restaurant_balance = restaurant_balance + @OrderTotal
+            WHERE restaurant_id = @RestaurantID;
+        END
     END
+END;
+GO
+
+GO
+CREATE VIEW Top5SellingProductsByResto AS
+SELECT DISTINCT
+    od.product_id,
+    p.product_name,
+    p.product_price,
+    p.product_type,
+    p.stock,
+    restaurant_id,
+    (SELECT SUM(quantity) FROM OrderDetails WHERE product_id = od.product_id) AS sold
+FROM
+    OrderDetails od
+JOIN
+    (SELECT * FROM Products) p ON od.product_id = p.product_id;
+    
+GO
+
+CREATE VIEW ReceiptView AS
+SELECT
+    ot.order_date,
+    c.courier_name,
+    c.courier_plate_number,
+    ot.order_total,
+	od2.quantity,
+    od2.product_name,
+    r.restaurant_name,
+    u.user_id,
+    u.user_name,
+    u.user_phone_number,
+    u.user_address,
+    od2.product_price * quantity AS subtotal,
+    ot.shipping_cost,
+    ot.order_id,
+    py.payment_method
+FROM
+    OrderTable ot
+JOIN (
+    SELECT
+        od.order_id,
+        od.product_id,
+        od.quantity,
+        p.product_name,
+        p.product_price,
+        p.restaurant_id
+    FROM
+        OrderDetails od
+    JOIN
+        Products p ON od.product_id = p.product_id
+) od2 ON od2.order_id = ot.order_id
+JOIN Payments py ON ot.payment_id = py.payment_id
+JOIN Couriers c ON ot.courier_id = c.courier_id
+JOIN Restaurant r ON ot.restaurant_id = r.restaurant_id
+JOIN Users u ON ot.user_id = u.user_id;
+GO
+
+CREATE TRIGGER UpdateProductStock
+ON OrderDetails
+AFTER INSERT
+AS
+BEGIN
+    -- Update product stock for each product in the order
+    UPDATE p
+    SET p.stock = p.stock - i.quantity
+    FROM Products p
+    JOIN inserted i ON p.product_id = i.product_id;
 END;
 GO

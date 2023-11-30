@@ -6,14 +6,19 @@ package FoodDelivery.dao;
 
 import FoodDelivery.database.DatabaseUtility;
 import FoodDelivery.models.Order;
+import FoodDelivery.models.OrderDetail;
+import FoodDelivery.models.Product;
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Types;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -60,35 +65,20 @@ public class OrderDAO {
     public int createOrderFromPayment(int paymentID, int userID, int restaurantID) {
         Connection connection = null;
         CallableStatement callableStatement = null;
-        int orderID = -1; // Initialize with a default value
-
+        int orderID = -1; 
         try {
-            // Mengambil koneksi dari DatabaseUtility
             connection = DatabaseUtility.getConnection();
-
-            // Membuat pemanggilan prosedur penyimpanan
             String storedProcedureCall = "{call CreateOrderFromPayment(?, ?, ?, ?)}";
             callableStatement = connection.prepareCall(storedProcedureCall);
-
-            // Menetapkan parameter
             callableStatement.setInt(1, paymentID);
             callableStatement.setInt(2, userID);
             callableStatement.setInt(3, restaurantID);
-
-            // Menambahkan parameter output untuk order_id
             callableStatement.registerOutParameter(4, Types.INTEGER);
-
-            // Menjalankan pemanggilan prosedur penyimpanan
             callableStatement.execute();
-
-            // Mendapatkan nilai order_id dari parameter output
             orderID = callableStatement.getInt(4);
-
         } catch (SQLException e) {
             e.printStackTrace();
-            // Handle exception as needed
         } finally {
-            // Menutup koneksi dan pernyataan setelah selesai
             try {
                 if (callableStatement != null) {
                     callableStatement.close();
@@ -98,10 +88,8 @@ public class OrderDAO {
                 }
             } catch (SQLException e) {
                 e.printStackTrace();
-                // Handle exception as needed
             }
         }
-
         return orderID;
     }
 
@@ -179,5 +167,58 @@ public class OrderDAO {
         } finally {
             closeConnection();
         }
+    }
+
+    public void setOrderStatusFinished(int orderId) {
+        String UPDATE_STATUS_QUERY = "UPDATE OrderTable SET order_status = 'FINISHED' WHERE order_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_STATUS_QUERY)) {
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
+    public Map<String, Integer> createOrder(int userId, int restaurantId,
+            String paymentStatus, String paymentMethod, List<OrderDetail> orderDetails) {
+        Map<String, Integer> generatedIds = new HashMap<>();
+        try {
+            connection = DatabaseUtility.getConnection();
+            connection.setAutoCommit(false);
+            PaymentDAO paymentDAO = new PaymentDAO();
+            int paymentId = paymentDAO.insertPayment(paymentStatus, paymentMethod);
+            int orderId = createOrderFromPayment(paymentId, userId, restaurantId);
+            for (OrderDetail orderDetail : orderDetails) {
+                OrderDetailDAO detailDAO = new OrderDetailDAO();
+                ProductDAO productDB = new ProductDAO();
+                Product product = productDB.getProductById(orderId);
+                int productStock = product.getStock();
+                int productQty = orderDetail.getQuantity();
+                detailDAO.insertOrderDetail(orderId, orderDetail.getProductId(), orderDetail.getQuantity());
+            }
+            CourierDAO courier = new CourierDAO();
+            int courierId = courier.assignCourierToOrder(orderId);
+            generatedIds.put("userId", userId);
+            generatedIds.put("orderId", orderId);
+            generatedIds.put("restaurantId", restaurantId);
+            generatedIds.put("paymentId", paymentId);
+            generatedIds.put("courierId", courierId);
+            connection.commit();
+        } catch (SQLException e) {
+            try {
+                if (connection != null) {
+                    connection.rollback();
+                }
+            } catch (SQLException rollbackException) {
+                rollbackException.printStackTrace();
+                System.out.println("Order Failed");
+            }
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return generatedIds;
     }
 }

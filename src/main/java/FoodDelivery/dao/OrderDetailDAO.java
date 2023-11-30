@@ -4,12 +4,11 @@
  */
 package FoodDelivery.dao;
 
-import FoodDelivery.database.DatabaseUtility;
-import FoodDelivery.models.OrderDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import FoodDelivery.database.DatabaseUtility;
 
 /**
  *
@@ -28,36 +27,36 @@ public class OrderDetailDAO {
 
 
 
-    public void checkDetail(int orderId, int productId, int quantity) {
-        try (Connection connection = DatabaseUtility.getConnection()) {
-            // Check if the record already exists
-            String checkIfExistsQuery = "SELECT * FROM OrderDetails WHERE order_id = ? AND product_id = ?";
-            try (PreparedStatement checkIfExistsStatement = connection.prepareStatement(checkIfExistsQuery)) {
-                checkIfExistsStatement.setInt(1, orderId);
-                checkIfExistsStatement.setInt(2, productId);
+//    public void checkDetail(int orderId, int productId, int quantity) {
+//        try (Connection connection = DatabaseUtility.getConnection()) {
+//            // Check if the record already exists
+//            String checkIfExistsQuery = "SELECT * FROM OrderDetails WHERE order_id = ? AND product_id = ?";
+//            try (PreparedStatement checkIfExistsStatement = connection.prepareStatement(checkIfExistsQuery)) {
+//                checkIfExistsStatement.setInt(1, orderId);
+//                checkIfExistsStatement.setInt(2, productId);
+//
+//                try (ResultSet resultSet = checkIfExistsStatement.executeQuery()) {
+//                    if (resultSet.next()) {
+//                        // If the record already exists, update it or delete if quantity is 0
+//                        if (quantity > 0) {
+//                            updateOrderDetail(orderId, productId, quantity);
+//                        } else {
+//                            deleteOrderDetail(orderId, productId);
+//                        }
+//                    } else {
+//                        // If the record doesn't exist and quantity is greater than 0, insert a new one
+//                        if (quantity > 0) {
+//                            insertOrderDetail(orderId, productId, quantity);
+//                        }
+//                    }
+//                }
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
-                try (ResultSet resultSet = checkIfExistsStatement.executeQuery()) {
-                    if (resultSet.next()) {
-                        // If the record already exists, update it or delete if quantity is 0
-                        if (quantity > 0) {
-                            updateOrderDetail(orderId, productId, quantity);
-                        } else {
-                            deleteOrderDetail(orderId, productId);
-                        }
-                    } else {
-                        // If the record doesn't exist and quantity is greater than 0, insert a new one
-                        if (quantity > 0) {
-                            insertOrderDetail(orderId, productId, quantity);
-                        }
-                    }
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void insertOrderDetail(int orderId, int productId, int quantity) {
+    public void insertOrderDetail(int orderId, int productId, int quantity) {
         try (Connection connection = DatabaseUtility.getConnection()) {
             String insertQuery = "INSERT INTO OrderDetails (order_id, product_id, quantity) VALUES (?, ?, ?)";
             try (PreparedStatement preparedStatement = connection.prepareStatement(insertQuery)) {
@@ -72,7 +71,7 @@ public class OrderDetailDAO {
         }
     }
 
-    private void updateOrderDetail(int orderId, int productId, int quantity) {
+    public void updateOrderDetail(int orderId, int productId, int quantity) {
         try (Connection connection = DatabaseUtility.getConnection()) {
             String updateQuery = "UPDATE OrderDetails SET quantity = ? WHERE order_id = ? AND product_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(updateQuery)) {
@@ -87,7 +86,7 @@ public class OrderDetailDAO {
         }
     }
 
-    private void deleteOrderDetail(int orderId, int productId) {
+    public void deleteOrderDetail(int orderId, int productId) {
         try (Connection connection = DatabaseUtility.getConnection()) {
             String deleteQuery = "DELETE FROM OrderDetails WHERE order_id = ? AND product_id = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(deleteQuery)) {

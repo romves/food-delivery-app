@@ -73,7 +73,7 @@ public class CourierDAO {
             while (resultSet.next()) {
                 Courier courier = new Courier(
                         resultSet.getInt("courier_id"),
-                        resultSet.getString("delivery_status"),
+                        resultSet.getString("courier_status"),
                         resultSet.getString("courier_name"),
                         resultSet.getString("courier_phone_number"),
                         resultSet.getString("courier_plate_number")
@@ -103,7 +103,7 @@ public class CourierDAO {
     }
 
     public void updateCourier(Courier courier) {
-        String sql = "UPDATE Couriers SET delivery_status = ?, courier_name = ?, courier_phone_number = ?, courier_plate_number = ? WHERE courier_id = ?";
+        String sql = "UPDATE Couriers SET courier_status = ?, courier_name = ?, courier_phone_number = ?, courier_plate_number = ? WHERE courier_id = ?";
         try (Connection connection = DatabaseUtility.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setString(1, courier.getDeliveryStatus());
@@ -182,33 +182,8 @@ public class CourierDAO {
         return courierId;
     }
 
-    public Courier getCourierByOrderID(int orderId) {
-        Courier courier = null;
-        String query = "SELECT c.* FROM Couriers c "
-                + "JOIN OrderTable o ON c.courier_id = o.courier_id "
-                + "WHERE o.order_id = ?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
-            preparedStatement.setInt(1, orderId);
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    courier = new Courier(
-                            resultSet.getInt("courier_id"),
-                            resultSet.getString("courier_status"),
-                            resultSet.getString("courier_name"),
-                            resultSet.getString("courier_phone_number"),
-                            resultSet.getString("courier_plate_number")
-                    );
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-        }
-        return courier;
-    }
-
     public void updateCourierStatusDelivered(int orderId) {
-        String query = "UPDATE Couriers SET courier_status = 'DELIVERED' "
+        String query = "UPDATE Couriers SET courier_status = 'AVAILABLE' "
                 + "WHERE courier_id = (SELECT courier_id FROM OrderTable WHERE order_id = ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setInt(1, orderId);
@@ -219,4 +194,39 @@ public class CourierDAO {
             closeConnection();
         }
     }
+
+    public Courier getCourierById(int courierId) {
+        Courier courier = null;
+        String query = "SELECT courier_name, courier_phone_number, courier_plate_number FROM Couriers WHERE courier_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, courierId);
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    courier = new Courier(
+                            resultSet.getString("courier_name"),
+                            resultSet.getString("courier_phone_number"),
+                            resultSet.getString("courier_plate_number")
+                    );
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+        return courier;
+    }
+
+    public void updateCourierStatusAvailable(int courierId) {
+        String query = "UPDATE Couriers SET courier_status = 'AVAILABLE' WHERE courier_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, courierId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            closeConnection();
+        }
+    }
+
 }
