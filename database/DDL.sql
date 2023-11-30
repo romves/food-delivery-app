@@ -1,5 +1,5 @@
 use master
-drop database FoodDeliveryApp
+DROP DATABASE FoodDeliveryApp
 CREATE DATABASE FoodDeliveryApp
 GO
 USE FoodDeliveryApp
@@ -116,7 +116,6 @@ BEGIN
     BEGIN TRANSACTION; -- Start the transaction
 
     BEGIN TRY
-        -- Insert a new order with the provided payment ID
         INSERT INTO OrderTable (order_date, order_status, payment_id, user_id, restaurant_id)
         VALUES (GETDATE(), 'PENDING', @PaymentID, @UserID, @RestaurantID);
 
@@ -128,15 +127,7 @@ BEGIN
         SET payment_status = 'PAID'
         WHERE payment_id = @PaymentID
           AND payment_method <> 'CASH';
-        UPDATE OrderTable
-        SET order_status = 'ON_PROCESS'
-        WHERE order_id = @OrderID
-          AND EXISTS (
-              SELECT 1
-              FROM Payments
-              WHERE payment_id = @PaymentID
-                AND payment_method IS NOT NULL
-          );
+
 
         COMMIT; 
     END TRY
@@ -190,6 +181,7 @@ BEGIN
     END CATCH;
 END;
 GO
+
 CREATE TRIGGER UpdateOrderTotal 
 ON OrderTable 
 AFTER UPDATE, INSERT
