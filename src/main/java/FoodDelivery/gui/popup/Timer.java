@@ -67,9 +67,11 @@ public class Timer extends javax.swing.JFrame {
 
         jLabel2.setText("Don't Close Your Tabs");
 
-        timerLable.setText("If 300 secs again not accepted by restaurant, order automatically canceled");
+        timerLable.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        timerLable.setText("Order will automatically canceled in 300 secs");
+        timerLable.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        cancleButton.setText("Cancle Order");
+        cancleButton.setText("Cancel Order");
         cancleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cancleButtonActionPerformed(evt);
@@ -86,15 +88,16 @@ public class Timer extends javax.swing.JFrame {
                         .addGap(51, 51, 51)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(32, 32, 32)
-                        .addComponent(timerLable))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(166, 166, 166)
                         .addComponent(jLabel2))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(175, 175, 175)
                         .addComponent(cancleButton)))
-                .addContainerGap(33, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(0, 22, Short.MAX_VALUE)
+                .addComponent(timerLable, javax.swing.GroupLayout.PREFERRED_SIZE, 406, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,48 +132,7 @@ public class Timer extends javax.swing.JFrame {
     private void cancleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancleButtonActionPerformed
         timerWorker.cancel(true); // Stop the background task
         cancelOrder();
-
-
     }//GEN-LAST:event_cancleButtonActionPerformed
-    private void timerLogic(long orderStartTime) {
-        long timeDifferenceInMillis = System.currentTimeMillis() - orderStartTime;
-        long fiveMinutesInMillis = 5 * 60 * 1000;
-        long startTime = orderStartTime + timeDifferenceInMillis;
-        long endTime = startTime + fiveMinutesInMillis;
-        OrderDAO orderDAO = new OrderDAO();
-        CourierDAO courierDAO = new CourierDAO();
-
-        long currentTime;
-        while (!orderDAO.getOrderStatus(orderId).equals("ON_PROCESS") && System.currentTimeMillis() < endTime) {
-            try {
-                long timeLeftSeconds = (endTime - System.currentTimeMillis()) / 1000;
-                timerLable.setText("If " + timeLeftSeconds + " secs again not accepted by restaurant, order automatically canceled");
-                timeLeftSeconds--;
-                Thread.sleep(1000); // Tunggu 1 detik sebelum memeriksa lagi
-
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        if (System.currentTimeMillis() >= endTime) {
-
-            orderDAO.cancelOrder(orderId);
-        } else {
-
-            int courierId = courierDAO.assignCourierToOrder(orderId);
-            Map<String, Integer> generatedIds = new HashMap<>();
-            generatedIds.put("courierId", courierId);
-            generatedIds.put("userId", userId);
-            generatedIds.put("orderId", orderId);
-            generatedIds.put("restaurantId", restaurantId);
-            generatedIds.put("paymentId", paymentId);
-            dispose();
-            DeliveryPage deliveryPage = new DeliveryPage(generatedIds);
-            deliveryPage.setVisible(true);
-
-        }
-    }
 
     private void cancelOrder() {
         OrderDAO orderDAO = new OrderDAO();
@@ -234,7 +196,7 @@ public class Timer extends javax.swing.JFrame {
 
         private void updateTimerLabel(long timeLeftSeconds) {
             SwingUtilities.invokeLater(()
-                    -> timerLable.setText("If " + timeLeftSeconds + " secs again not accepted by restaurant, order automatically canceled")
+                    -> timerLable.setText ("Order will automatically canceled in " + timeLeftSeconds + " secs")
             );
         }
     }
