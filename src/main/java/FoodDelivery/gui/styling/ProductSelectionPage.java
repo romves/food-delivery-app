@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
 import FoodDelivery.dao.OrderDAO;
 import FoodDelivery.dao.ProductDAO;
 import FoodDelivery.dao.RestaurantDAO;
+import FoodDelivery.gui.popup.Timer;
 import FoodDelivery.gui.styling.components.ProductCard;
 import FoodDelivery.gui.styling.eventlistener.ProductCardListener;
 import FoodDelivery.gui.user.DeliveryPage;
@@ -27,6 +28,7 @@ import FoodDelivery.models.Product;
 import java.sql.Timestamp;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
+import javax.swing.SwingUtilities;
 
 /**
  *
@@ -389,43 +391,13 @@ public class ProductSelectionPage extends javax.swing.JFrame implements ProductC
             CourierDAO courierDAO = new CourierDAO();
             Map<String, Integer> generatedIds = orderDAO.createOrder(userId, restoId, "PAID", method, orderDetailsList);
             Order order = orderDAO.getOrderById(generatedIds.get("orderId"));
-
             long startTimeFromDB = order.getOrderDate().getTime();
-            long timeDifferenceInMillis = System.currentTimeMillis() - startTimeFromDB;
-            long fiveMinutesInMillis = 5 * 60 * 1000;
-            long startTime = startTimeFromDB + timeDifferenceInMillis;
-            long endTime = startTime + fiveMinutesInMillis;
+            Timer timer = new Timer(generatedIds, startTimeFromDB);
+            timer.setVisible(true);
 
-            long currentTime;
-            while (!orderDAO.getOrderStatus(generatedIds.get("orderId")).equals("ON_PROCESS") && System.currentTimeMillis() < endTime) {
-                try {
-                    Thread.sleep(1000); // Tunggu 1 detik sebelum memeriksa lagi
-                    long timeLeftSeconds = (endTime - System.currentTimeMillis()) / 1000;
-                    JOptionPane.showMessageDialog(this,
-                            "Waiting order to be accepted, " + timeLeftSeconds + "s",
-                            "Please Wait...",
-                            JOptionPane.INFORMATION_MESSAGE);
-                    System.out.println("Waiting for acc");
-                    System.out.println("Time Left: " + ((endTime - System.currentTimeMillis()) / 1000));
-                    cartTableModel.setRowCount(0);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (System.currentTimeMillis() >= endTime) {
-                JOptionPane.showMessageDialog(this,
-                        "Order canceled by resto!",
-                        "Canceled!",
-                        JOptionPane.INFORMATION_MESSAGE);
-                orderDAO.cancelOrder(generatedIds.get("orderId"));
-            } else {
-                courierDAO.assignCourierToOrder(generatedIds.get("orderId"));
-                DeliveryPage deliveryPage = new DeliveryPage(generatedIds);
-                deliveryPage.setVisible(true);
-                dispose();
-            }
+            dispose();
         }
+
     }//GEN-LAST:event_orderButtonActionPerformed
 
     private void decrementQtyBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_decrementQtyBtnActionPerformed

@@ -31,7 +31,7 @@ public class DeliveryPage extends javax.swing.JFrame {
 
     public DeliveryPage(Map<String, Integer> generatedIds) {
         initComponents();
-//        this.courierId = generatedIds.get("courierId");
+        this.courierId = generatedIds.get("courierId");
         this.userId = generatedIds.get("userId");
         this.orderId = generatedIds.get("orderId");
         this.restaurantId = generatedIds.get("restaurantId");
@@ -47,9 +47,9 @@ public class DeliveryPage extends javax.swing.JFrame {
 //        }
         statusLabel.setText("Your order is being delivered by:");
         CourierDAO courierDAO = new CourierDAO();
-//        Courier courier = courierDAO.getCourierById(this.courierId);
-//        courierNameLable.setText("Name: " + courier.getName());
-//        courierPhoneLable.setText("Phone Number: " + courier.getPhoneNumber());
+        Courier courier = courierDAO.getCourierById(this.courierId);
+        courierNameLable.setText("Name: " + courier.getName());
+        courierPhoneLable.setText("Phone Number: " + courier.getPhoneNumber());
 //        courierPlateLable.setText("Plate Number: " + courier.getPlateNumber());
         finishedPanel.setVerifyInputWhenFocusTarget(false);
         deliveryPanel2.setVisible(true);
