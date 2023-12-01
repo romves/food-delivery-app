@@ -58,7 +58,7 @@ CREATE TABLE Couriers (
 CREATE TABLE OrderTable (
     order_id INT PRIMARY KEY IDENTITY(1,1),
     order_date DATETIME DEFAULT GETDATE() ,
-    order_status VARCHAR(50) CHECK (order_status IN ('PENDING', 'ON_PROCESS', 'FINISHED')) DEFAULT 'PENDING',
+    order_status VARCHAR(50) CHECK (order_status IN ('PENDING', 'ON_PROCESS', 'FINISHED','CANCELED')) DEFAULT 'PENDING',
     order_total DECIMAL(10,2),
 	shipping_cost DECIMAL(10, 2) DEFAULT 10000,
     user_id INT,

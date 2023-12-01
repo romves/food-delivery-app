@@ -168,7 +168,7 @@ public class OrderDAO {
             closeConnection();
         }
     }
-    
+
     public void cancelOrder(int orderId) {
         String UPDATE_STATUS_QUERY = "UPDATE OrderTable SET order_status = 'CANCELED' WHERE order_id = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_STATUS_QUERY)) {
@@ -268,5 +268,16 @@ public class OrderDAO {
 //            closeConnection();
         }
         return generatedIds;
+    }
+
+    public void setOrderStatusOnProcess(int orderId) {
+        String query = "UPDATE OrderTable SET order_status = 'ON_PROCESS' WHERE order_id = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setInt(1, orderId);
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+        }
     }
 }
