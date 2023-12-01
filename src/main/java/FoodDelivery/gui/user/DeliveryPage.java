@@ -31,16 +31,26 @@ public class DeliveryPage extends javax.swing.JFrame {
 
     public DeliveryPage(Map<String, Integer> generatedIds) {
         initComponents();
-        this.courierId = generatedIds.get("courierId");
+//        this.courierId = generatedIds.get("courierId");
         this.userId = generatedIds.get("userId");
         this.orderId = generatedIds.get("orderId");
         this.restaurantId = generatedIds.get("restaurantId");
         this.paymentId = generatedIds.get("paymentId");
+//        OrderDAO orderDAO = new OrderDAO();
+//        while (!orderDAO.getOrderStatus(orderId).equals("ON_PROCESS")) {
+//            try {
+//                Thread.sleep(1000); // Tunggu 1 detik sebelum memeriksa lagi
+//                statusLabel.setText("Waiting for restaurant accept your order");
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//        }
+        statusLabel.setText("Your order is being delivered by:");
         CourierDAO courierDAO = new CourierDAO();
-        Courier courier = courierDAO.getCourierById(this.courierId);
-        courierNameLable.setText("Name: " + courier.getName());
-        courierPhoneLable.setText("Phone Number: " + courier.getPhoneNumber());
-        courierPlateLable.setText("Plate Number: " + courier.getPlateNumber());
+//        Courier courier = courierDAO.getCourierById(this.courierId);
+//        courierNameLable.setText("Name: " + courier.getName());
+//        courierPhoneLable.setText("Phone Number: " + courier.getPhoneNumber());
+//        courierPlateLable.setText("Plate Number: " + courier.getPlateNumber());
         finishedPanel.setVerifyInputWhenFocusTarget(false);
         deliveryPanel2.setVisible(true);
         ReceiptDAO receipt = new ReceiptDAO();
@@ -100,12 +110,15 @@ public class DeliveryPage extends javax.swing.JFrame {
         courierNameLable = new javax.swing.JLabel();
         courierPhoneLable = new javax.swing.JLabel();
         confirmOrderButton2 = new javax.swing.JButton();
-        jLabel10 = new javax.swing.JLabel();
+        statusLabel = new javax.swing.JLabel();
         courierPlateLable = new javax.swing.JLabel();
         finishedPanel = new javax.swing.JPanel();
         thanksLabel = new javax.swing.JLabel();
         backToHomeButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
+        timerPanel = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -255,8 +268,8 @@ public class DeliveryPage extends javax.swing.JFrame {
             }
         });
 
-        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
-        jLabel10.setText("Your order is being delivered by:");
+        statusLabel.setFont(new java.awt.Font("Segoe UI", 1, 32)); // NOI18N
+        statusLabel.setText("Your order is being delivered by:");
 
         courierPlateLable.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
 
@@ -270,26 +283,26 @@ public class DeliveryPage extends javax.swing.JFrame {
                         .addGap(40, 40, 40)
                         .addGroup(deliveryPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(courierPlateLable)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 505, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(courierNameLable, javax.swing.GroupLayout.PREFERRED_SIZE, 352, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(courierPhoneLable, javax.swing.GroupLayout.PREFERRED_SIZE, 314, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(deliveryPanel2Layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(confirmOrderButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addContainerGap(139, Short.MAX_VALUE))
         );
         deliveryPanel2Layout.setVerticalGroup(
             deliveryPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(deliveryPanel2Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
-                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(statusLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(32, 32, 32)
                 .addComponent(courierNameLable)
                 .addGap(18, 18, 18)
                 .addComponent(courierPhoneLable)
                 .addGap(18, 18, 18)
                 .addComponent(courierPlateLable)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 455, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 464, Short.MAX_VALUE)
                 .addComponent(confirmOrderButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(21, 21, 21))
         );
@@ -331,7 +344,7 @@ public class DeliveryPage extends javax.swing.JFrame {
                     .addGroup(finishedPanelLayout.createSequentialGroup()
                         .addGap(87, 87, 87)
                         .addComponent(backToHomeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(232, Short.MAX_VALUE))
         );
         finishedPanelLayout.setVerticalGroup(
             finishedPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -340,12 +353,45 @@ public class DeliveryPage extends javax.swing.JFrame {
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(thanksLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 507, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 516, Short.MAX_VALUE)
                 .addComponent(backToHomeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27))
         );
 
         panelContainer.add(finishedPanel, "card2");
+
+        timerPanel.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel2.setText("Waiting Order Accepted by Restaurant");
+
+        jLabel3.setText("timer");
+
+        javax.swing.GroupLayout timerPanelLayout = new javax.swing.GroupLayout(timerPanel);
+        timerPanel.setLayout(timerPanelLayout);
+        timerPanelLayout.setHorizontalGroup(
+            timerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(timerPanelLayout.createSequentialGroup()
+                .addGroup(timerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(timerPanelLayout.createSequentialGroup()
+                        .addGap(165, 165, 165)
+                        .addComponent(jLabel2))
+                    .addGroup(timerPanelLayout.createSequentialGroup()
+                        .addGap(324, 324, 324)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(203, Short.MAX_VALUE))
+        );
+        timerPanelLayout.setVerticalGroup(
+            timerPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(timerPanelLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(jLabel2)
+                .addGap(78, 78, 78)
+                .addComponent(jLabel3)
+                .addContainerGap(584, Short.MAX_VALUE))
+        );
+
+        panelContainer.add(timerPanel, "card4");
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -354,27 +400,24 @@ public class DeliveryPage extends javax.swing.JFrame {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGap(83, 83, 83)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(delivEatLable, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addComponent(receiptPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(panelContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(999, 999, 999))))
+                    .addComponent(receiptPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(delivEatLable, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1528, 1528, 1528))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
-                .addContainerGap(22, Short.MAX_VALUE)
-                .addComponent(delivEatLable)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addGap(112, 112, 112)
+                        .addComponent(panelContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainPanelLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(delivEatLable)
                         .addGap(18, 18, 18)
-                        .addComponent(receiptPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addComponent(panelContainer, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(receiptPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(64, 64, 64))
         );
 
@@ -458,7 +501,8 @@ public class DeliveryPage extends javax.swing.JFrame {
     private javax.swing.JPanel deliveryPanel2;
     private javax.swing.JPanel finishedPanel;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
@@ -472,7 +516,9 @@ public class DeliveryPage extends javax.swing.JFrame {
     private javax.swing.JPanel receiptPanel;
     private javax.swing.JLabel restaurantName;
     private javax.swing.JLabel shippingCost;
+    private javax.swing.JLabel statusLabel;
     private javax.swing.JLabel thanksLabel;
+    private javax.swing.JPanel timerPanel;
     private javax.swing.JLabel userAddress;
     private javax.swing.JLabel userName;
     private javax.swing.JLabel userPhone;
